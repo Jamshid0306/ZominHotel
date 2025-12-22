@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", "Helvetica Neue", sans-serif;
+  --font-display: "Playfair Display", "Times New Roman", serif;
+  --color-clay-950: #1f120c;
+  --color-clay-900: #2d1a12;
+  --color-clay-800: #3f2418;
+  --color-clay-700: #5b3623;
+  --color-clay-500: #8c5b39;
+  --color-clay-300: #c99565;
+  --color-clay-200: #dec5a7;
+  --color-clay-100: #f2e6db;
+  --color-sand-200: #f0e6d8;
+  --color-sand-100: #f6eee3;
+  --color-sand-50: #fdfbf8;
+}
+
+@layer base {
+  :root {
+    color: var(--color-clay-900);
+    background-color: var(--color-sand-50);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    font-weight: 400;
+    margin: 0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(200, 156, 111, 0.18), transparent 28%),
+      radial-gradient(circle at 80% 10%, rgba(140, 93, 59, 0.12), transparent 32%),
+      var(--color-sand-50);
+    color: var(--color-clay-900);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+}
