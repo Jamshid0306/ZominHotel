@@ -1,5 +1,14 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { supportedLocales } from './i18n'
+
+const { t, locale } = useI18n()
+const year = new Date().getFullYear()
+
+const setLocale = (code) => {
+  locale.value = code
+}
 </script>
 
 <template>
@@ -17,59 +26,101 @@ import { RouterLink, RouterView } from "vue-router";
             to="/"
             class="text-lg font-display font-semibold tracking-[0.1em] text-clay-900 transition hover:text-clay-700"
           >
-            <img src="./assets/images/logo.png" alt="Logo" class="w-15" />
+            <img src="./assets/images/logo.png" :alt="t('common.logoAlt')" class="w-15" />
           </RouterLink>
         </div>
         <div class="hidden items-center gap-2 md:flex">
           <RouterLink
             :to="{ path: '/', hash: '#rooms' }"
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
-            >Xonalar</RouterLink
+            >{{ t('nav.rooms') }}</RouterLink
           >
           <RouterLink
             :to="{ path: '/', hash: '#amenities' }"
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
-            >Xizmatlar</RouterLink
+            >{{ t('nav.amenities') }}</RouterLink
           >
           <RouterLink
             :to="{ path: '/', hash: '#contact' }"
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
-            >Aloqa</RouterLink
+            >{{ t('nav.contact') }}</RouterLink
           >
           <RouterLink
             to="/rooms"
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
-            >Hammasi</RouterLink
+            >{{ t('nav.all') }}</RouterLink
           >
+          <div
+            class="ml-2 flex items-center gap-1 rounded-full border border-clay-200/80 bg-white/70 p-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-clay-700"
+            :aria-label="t('nav.language')"
+            role="group"
+          >
+            <button
+              v-for="language in supportedLocales"
+              :key="language.code"
+              type="button"
+              class="rounded-full px-2.5 py-1 transition"
+              :class="
+                locale === language.code
+                  ? 'bg-clay-500 text-white shadow shadow-clay-950/15'
+                  : 'text-clay-700 hover:text-clay-900'
+              "
+              :aria-pressed="locale === language.code"
+              @click="setLocale(language.code)"
+            >
+              {{ language.label }}
+            </button>
+          </div>
         </div>
         <RouterLink
           :to="{ path: '/', hash: '#booking' }"
           class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
         >
-          Bron qilish
+          {{ t('actions.book') }}
         </RouterLink>
       </div>
-      <div class="flex items-center gap-2 px-4 pb-3 md:hidden">
+      <div class="flex flex-wrap items-center gap-2 px-4 pb-3 md:hidden">
         <RouterLink
           class="rounded-full px-3 py-2 text-sm font-semibold text-clay-800"
           :to="{ path: '/', hash: '#rooms' }"
-          >Xonalar</RouterLink
+          >{{ t('nav.rooms') }}</RouterLink
         >
         <RouterLink
           class="rounded-full px-3 py-2 text-sm font-semibold text-clay-800"
           :to="{ path: '/', hash: '#amenities' }"
-          >Xizmatlar</RouterLink
+          >{{ t('nav.amenities') }}</RouterLink
         >
         <RouterLink
           class="rounded-full px-3 py-2 text-sm font-semibold text-clay-800"
           :to="{ path: '/', hash: '#contact' }"
-          >Aloqa</RouterLink
+          >{{ t('nav.contact') }}</RouterLink
         >
         <RouterLink
           class="rounded-full px-3 py-2 text-sm font-semibold text-clay-800"
           to="/rooms"
-          >Hammasi</RouterLink
+          >{{ t('nav.all') }}</RouterLink
         >
+        <div
+          class="ml-auto flex items-center gap-1 rounded-full border border-clay-200/80 bg-white/70 p-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-clay-700"
+          :aria-label="t('nav.language')"
+          role="group"
+        >
+          <button
+            v-for="language in supportedLocales"
+            :key="language.code"
+            type="button"
+            class="rounded-full px-2 py-1 transition"
+            :class="
+              locale === language.code
+                ? 'bg-clay-500 text-white shadow shadow-clay-950/15'
+                : 'text-clay-700 hover:text-clay-900'
+            "
+            :aria-pressed="locale === language.code"
+            @click="setLocale(language.code)"
+          >
+            {{ language.label }}
+          </button>
+        </div>
       </div>
     </header>
 
@@ -80,26 +131,25 @@ import { RouterLink, RouterView } from "vue-router";
         class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 md:flex-row md:items-start md:justify-between"
       >
         <div class="space-y-3 max-w-md">
-          <img src="./assets/images/logo.png" alt="Logo" class="w-15">
+          <img src="./assets/images/logo.png" :alt="t('common.logoAlt')" class="w-15" />
           <p class="text-sm text-clay-800">
-            Minimalistik dizayn, jigarrang ohanglar va sokin tunash uchun qulay
-            manzil. Shahar markazida, ammo shovqindan yiroq.
+            {{ t('footer.description') }}
           </p>
           <div
             class="flex flex-wrap items-center gap-3 text-sm font-semibold text-clay-800"
           >
-            <span>Telefon:</span>
+            <span>{{ t('common.phoneLabel') }}</span>
             <a
               class="rounded-full bg-clay-500/12 px-3 py-1 hover:bg-clay-500/18"
-              href="tel:+998998001010"
-              >+998 99 800 10 10</a
+              href="tel:+998702289999"
+              >+998 70 228 99 99</a
             >
             <span class="text-clay-700">•</span>
-            <span>Email:</span>
+            <span>{{ t('common.emailLabel') }}</span>
             <a
               class="rounded-full bg-clay-500/12 px-3 py-1 hover:bg-clay-500/18"
-              href="mailto:stay@zafaronpremium.com"
-              >stay@zafaronpremium.com</a
+              href="mailto:zafaronpremiumhotel@gmail.com"
+              >zafaronpremiumhotel@gmail.com</a
             >
           </div>
         </div>
@@ -109,47 +159,47 @@ import { RouterLink, RouterView } from "vue-router";
             <p
               class="text-xs font-semibold uppercase tracking-[0.22em] text-clay-700"
             >
-              Navigatsiya
+              {{ t('footer.navTitle') }}
             </p>
             <RouterLink
               class="block rounded px-0 py-1 hover:text-clay-900"
               :to="{ path: '/', hash: '#rooms' }"
-              >Xonalar</RouterLink
+              >{{ t('nav.rooms') }}</RouterLink
             >
             <RouterLink
               class="block rounded px-0 py-1 hover:text-clay-900"
               :to="{ path: '/', hash: '#amenities' }"
-              >Xizmatlar</RouterLink
+              >{{ t('nav.amenities') }}</RouterLink
             >
             <RouterLink
               class="block rounded px-0 py-1 hover:text-clay-900"
               :to="{ path: '/', hash: '#contact' }"
-              >Aloqa</RouterLink
+              >{{ t('nav.contact') }}</RouterLink
             >
             <RouterLink
               class="block rounded px-0 py-1 hover:text-clay-900"
               to="/rooms"
-              >Hammasi</RouterLink
+              >{{ t('nav.all') }}</RouterLink
             >
           </div>
           <div class="space-y-3">
             <p
               class="text-xs font-semibold uppercase tracking-[0.22em] text-clay-700"
             >
-              Bron
+              {{ t('footer.bookingTitle') }}
             </p>
             <RouterLink
               class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
               :to="{ path: '/', hash: '#booking' }"
             >
-              Bron qilish
+              {{ t('actions.book') }}
             </RouterLink>
             <p class="text-xs text-clay-700">
-              Savollar uchun:
+              {{ t('footer.questionsLabel') }}
               <a
                 class="font-semibold text-clay-800"
-                href="mailto:stay@zafaronpremium.com"
-                >stay@zafaronpremium.com</a
+                href="mailto:zafaronpremiumhotel@gmail.com"
+                >zafaronpremiumhotel@gmail.com</a
               >
             </p>
           </div>
@@ -159,13 +209,10 @@ import { RouterLink, RouterView } from "vue-router";
         <div
           class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4 text-xs text-clay-700"
         >
-          <span
-            >© {{ new Date().getFullYear() }} Zafaron Premium Hotel. Barcha
-            huquqlar himoyalangan.</span
-          >
+          <span>{{ t('footer.rights', { year }) }}</span>
           <span class="flex items-center gap-3">
             <span class="h-1.5 w-1.5 rounded-full bg-clay-500"></span>
-            Boutique stay & crafted comfort
+            {{ t('footer.tagline') }}
           </span>
         </div>
       </div>

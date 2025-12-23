@@ -1,38 +1,45 @@
 <script setup>
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { rooms } from '../data/rooms'
+import { useI18n } from 'vue-i18n'
+
+const { t, tm } = useI18n()
+
+const rooms = computed(() => {
+  const items = tm('rooms.list')
+  return Array.isArray(items) ? items : []
+})
 </script>
 
 <template>
   <main class="mx-auto max-w-6xl px-4 pb-20">
     <section class="mt-10 flex flex-wrap items-start justify-between gap-6">
       <div class="max-w-3xl space-y-3">
-        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">Xonalar</p>
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">{{ t('roomsPage.label') }}</p>
         <h1 class="font-display text-4xl font-semibold text-clay-950 sm:text-5xl">
-          Zafaron Premium Hotel — barcha xonalar
+          {{ t('roomsPage.title') }}
         </h1>
         <p class="text-base text-clay-800">
-          Har bir xona tabiat ranglari va zamonaviy minimalizm uygʻunligida. Quyi shovqinsiz tunash,
-          yuqori servis va sokin interyer uchun sevimli variantingizni tanlang.
+          {{ t('roomsPage.description') }}
         </p>
         <div class="flex flex-wrap items-center gap-3">
           <RouterLink
             :to="{ path: '/', hash: '#booking' }"
             class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
           >
-            Bron qilish
+            {{ t('actions.book') }}
           </RouterLink>
           <RouterLink
             to="/"
             class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-5 py-3 text-sm font-bold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
           >
-            Asosiy sahifa
+            {{ t('actions.home') }}
           </RouterLink>
         </div>
       </div>
       <div class="rounded-2xl border border-clay-100/80 bg-white/80 px-4 py-3 shadow-sm shadow-clay-950/5">
-        <p class="text-sm font-semibold text-clay-800">6 xil xona</p>
-        <p class="text-xs text-clay-700">Premium, sokin va zamonaviy qulaylik.</p>
+        <p class="text-sm font-semibold text-clay-800">{{ t('roomsPage.summaryTitle') }}</p>
+        <p class="text-xs text-clay-700">{{ t('roomsPage.summarySubtitle') }}</p>
       </div>
     </section>
 
@@ -61,13 +68,13 @@ import { rooms } from '../data/rooms'
             :to="{ path: '/', hash: '#booking' }"
             class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-sm font-bold text-white shadow-md shadow-clay-950/15 transition hover:-translate-y-0.5 hover:shadow-lg"
           >
-            Bronni boshlash
+            {{ t('actions.startBooking') }}
           </RouterLink>
           <RouterLink
             to="/"
             class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-sm font-semibold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
           >
-            Asosiy sahifa
+            {{ t('actions.home') }}
           </RouterLink>
         </div>
       </article>

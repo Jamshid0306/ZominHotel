@@ -9,7 +9,7 @@ export const rooms = [
   },
   {
     id: 'zafaron-suite',
-    name: 'Zafaron Suite',
+    name: "Za'faron Suite",
     price: '$260 / tun',
     size: '52 m²',
     vibe: 'Keng yashash zonasi va katta panorama oynalar.',
