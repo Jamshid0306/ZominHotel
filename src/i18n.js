@@ -31,11 +31,11 @@ const messages = {
     },
     location: {
       label: 'Manzil:',
-      address: 'Toshkent, shahar markazi',
+      address: "Chimgon, Bo'stonliq tumani",
     },
     footer: {
       description:
-        'Minimalistik dizayn, jigarrang ohanglar va sokin tunash uchun qulay manzil. Shahar markazida, ammo shovqindan yiroq.',
+        "Minimalistik dizayn, jigarrang ohanglar va sokin tunash uchun qulay manzil. Chimgon tog'lari bag'rida, shovqindan yiroq.",
       navTitle: 'Navigatsiya',
       bookingTitle: 'Bron',
       questionsLabel: 'Savollar uchun:',
@@ -47,7 +47,7 @@ const messages = {
       title:
         "Za'faron Premium Hotel — minimalistik dizayn va jigarrang ohanglar uygʻunligi.",
       description:
-        "Shahar markazidagi hushyor, sokin makonda qulay tunash. Za'faron Premium Hotel — barchasi tabiat ranglari, yumshoq yoruglik va eʼtibor bilan.",
+        "Chimgon tog'laridagi hushyor, sokin makonda qulay tunash. Za'faron Premium Hotel — barchasi tabiat ranglari, yumshoq yoruglik va eʼtibor bilan.",
       stats: {
         concierge: 'Konsyerj',
         roomTypes: 'Turdagi xona',
@@ -101,7 +101,7 @@ const messages = {
       },
       {
         title: 'Terrasali xona',
-        caption: 'Shahar manzarasi, yumshoq tekstura va ochiq balkon.',
+        caption: "Tog' manzarasi, yumshoq tekstura va ochiq balkon.",
       },
       {
         title: 'Suite lounge',
@@ -126,9 +126,9 @@ const messages = {
           '24/7 konsyerj, shaxsiy transfer, hushtakday toza xonalar va ertalabgi kofe xizmati.',
       },
       {
-        title: 'Shahar markazida',
+        title: "Chimgon tog'larida",
         detail:
-          'Mehmonxona markazga yaqin, mashhur restoran va galereyalarga qisqa yurish masofasida.',
+          "Mehmonxona Chimgon tog'lari bag'rida, sayr yo'llari va tabiatga yaqin.",
       },
     ],
     roomsSection: {
@@ -166,11 +166,11 @@ const messages = {
         },
         {
           id: 'city-twin',
-          name: 'City Twin',
+          name: 'Mountain Twin',
           price: '$210 / tun',
           size: '38 m²',
-          vibe: 'Hamroh bilan sayohatga mos, shahar manzarali ikkita alohida krovat.',
-          perks: ['Twin krovatlar', 'Shahar manzarasi', 'Ertalabgi kofe xizmati'],
+          vibe: "Hamroh bilan sayohatga mos, tog' manzarali ikkita alohida krovat.",
+          perks: ["Twin krovatlar", "Tog' manzarasi", 'Ertalabgi kofe xizmati'],
         },
         {
           id: 'executive-corner',
@@ -254,11 +254,11 @@ const messages = {
     },
     location: {
       label: 'Адрес:',
-      address: 'Ташкент, центр города',
+      address: 'Чимган, Бостанлыкский район',
     },
     footer: {
       description:
-        'Минималистичный дизайн, тёплые коричневые тона и спокойное место для отдыха. В центре города, но вдали от шума.',
+        'Минималистичный дизайн, тёплые коричневые тона и спокойное место для отдыха. В горах Чимгана, вдали от шума.',
       navTitle: 'Навигация',
       bookingTitle: 'Бронирование',
       questionsLabel: 'Для вопросов:',
@@ -270,7 +270,7 @@ const messages = {
       title:
         "Za'faron Premium Hotel — гармония минималистичного дизайна и тёплых коричневых тонов.",
       description:
-        "Уютное проживание в спокойном уголке центра города. Za'faron Premium Hotel — про природные оттенки, мягкий свет и заботу.",
+        "Уютное проживание в спокойном уголке гор Чимгана. Za'faron Premium Hotel — про природные оттенки, мягкий свет и заботу.",
       stats: {
         concierge: 'Консьерж',
         roomTypes: 'Типов номеров',
@@ -323,7 +323,7 @@ const messages = {
       },
       {
         title: 'Terrace room',
-        caption: 'Вид на город, мягкие текстуры и открытый балкон.',
+        caption: 'Вид на горы, мягкие текстуры и открытый балкон.',
       },
       {
         title: 'Suite lounge',
@@ -346,8 +346,8 @@ const messages = {
         detail: 'Консьерж 24/7, личный трансфер, безупречно чистые номера и утренний кофе.',
       },
       {
-        title: 'В центре города',
-        detail: 'Отель рядом с центром; популярные рестораны и галереи в нескольких минутах пешком.',
+        title: 'В горах Чимгана',
+        detail: 'Отель в горах Чимгана, рядом прогулочные тропы и природа.',
       },
     ],
     roomsSection: {
@@ -384,11 +384,11 @@ const messages = {
         },
         {
           id: 'city-twin',
-          name: 'City Twin',
+          name: 'Mountain Twin',
           price: '$210 / ночь',
           size: '38 м²',
-          vibe: 'Две отдельные кровати с видом на город — идеально для поездки вдвоём.',
-          perks: ['Кровати twin', 'Вид на город', 'Утренний кофе'],
+          vibe: 'Две отдельные кровати с видом на горы — идеально для поездки вдвоём.',
+          perks: ['Кровати twin', 'Вид на горы', 'Утренний кофе'],
         },
         {
           id: 'executive-corner',
@@ -472,11 +472,11 @@ const messages = {
     },
     location: {
       label: 'Location:',
-      address: 'Tashkent, city center',
+      address: 'Chimgan, Bostanlik district',
     },
     footer: {
       description:
-        'Minimalist design, warm brown tones, and a calm place to stay. In the city center, yet away from the noise.',
+        'Minimalist design, warm brown tones, and a calm place to stay. In the Chimgan mountains, away from the noise.',
       navTitle: 'Navigation',
       bookingTitle: 'Booking',
       questionsLabel: 'For questions:',
@@ -487,7 +487,7 @@ const messages = {
       tagline: 'Boutique stay — modern, calm, and warm',
       title: "Za'faron Premium Hotel — a harmony of minimalist design and warm brown tones.",
       description:
-        "Comfortable stays in a calm corner of the city center. Za'faron Premium Hotel is all about natural colors, soft light, and care.",
+        "Comfortable stays in a calm corner of the Chimgan mountains. Za'faron Premium Hotel is all about natural colors, soft light, and care.",
       stats: {
         concierge: 'Concierge',
         roomTypes: 'Room types',
@@ -540,7 +540,7 @@ const messages = {
       },
       {
         title: 'Terrace room',
-        caption: 'City views, soft textures, and an open balcony.',
+        caption: 'Mountain views, soft textures, and an open balcony.',
       },
       {
         title: 'Suite lounge',
@@ -563,8 +563,8 @@ const messages = {
         detail: '24/7 concierge, private transfer, spotless rooms, and morning coffee service.',
       },
       {
-        title: 'In the city center',
-        detail: 'The hotel is near the center, with popular restaurants and galleries a short walk away.',
+        title: 'In the Chimgan mountains',
+        detail: 'The hotel sits in the Chimgan mountains, close to trails and nature.',
       },
     ],
     roomsSection: {
@@ -601,11 +601,11 @@ const messages = {
         },
         {
           id: 'city-twin',
-          name: 'City Twin',
+          name: 'Mountain Twin',
           price: '$210 / night',
           size: '38 m²',
-          vibe: 'Two separate beds with a city view, ideal for traveling together.',
-          perks: ['Twin beds', 'City view', 'Morning coffee service'],
+          vibe: 'Two separate beds with a mountain view, ideal for traveling together.',
+          perks: ['Twin beds', 'Mountain view', 'Morning coffee service'],
         },
         {
           id: 'executive-corner',
@@ -649,7 +649,7 @@ const messages = {
       label: 'We are waiting for you',
       title: "Za'faron Premium Hotel — book your stay now",
       description:
-        'A quiet space, gentle service, and modern design — a new address away from the city noise.',
+        'A quiet space, gentle service, and modern design — a new address in the Chimgan mountains.',
       book: 'Book now',
       ask: 'Ask a question',
     },

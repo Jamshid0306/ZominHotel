@@ -1,14 +1,13 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { supportedLocales } from './i18n'
+import LanguageDropdown from './components/LanguageDropdown.vue'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
+const route = useRoute()
 const year = new Date().getFullYear()
-
-const setLocale = (code) => {
-  locale.value = code
-}
+const isAdminRoute = computed(() => route.path.startsWith('/admin'))
 </script>
 
 <template>
@@ -16,6 +15,7 @@ const setLocale = (code) => {
     class="min-h-screen bg-[radial-gradient(circle_at_20%_20%,rgba(200,156,111,0.18),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(140,93,59,0.18),transparent_32%),linear-gradient(180deg,rgba(255,252,248,0.9),rgba(245,235,223,0.95))] text-clay-900"
   >
     <header
+      v-if="!isAdminRoute"
       class="sticky top-0 z-30 border-b border-clay-100/80 bg-sand-50/80 backdrop-blur-lg"
     >
       <div
@@ -50,27 +50,7 @@ const setLocale = (code) => {
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
             >{{ t('nav.all') }}</RouterLink
           >
-          <div
-            class="ml-2 flex items-center gap-1 rounded-full border border-clay-200/80 bg-white/70 p-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-clay-700"
-            :aria-label="t('nav.language')"
-            role="group"
-          >
-            <button
-              v-for="language in supportedLocales"
-              :key="language.code"
-              type="button"
-              class="rounded-full px-2.5 py-1 transition"
-              :class="
-                locale === language.code
-                  ? 'bg-clay-500 text-white shadow shadow-clay-950/15'
-                  : 'text-clay-700 hover:text-clay-900'
-              "
-              :aria-pressed="locale === language.code"
-              @click="setLocale(language.code)"
-            >
-              {{ language.label }}
-            </button>
-          </div>
+          <LanguageDropdown />
         </div>
         <RouterLink
           :to="{ path: '/', hash: '#booking' }"
@@ -100,33 +80,15 @@ const setLocale = (code) => {
           to="/rooms"
           >{{ t('nav.all') }}</RouterLink
         >
-        <div
-          class="ml-auto flex items-center gap-1 rounded-full border border-clay-200/80 bg-white/70 p-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-clay-700"
-          :aria-label="t('nav.language')"
-          role="group"
-        >
-          <button
-            v-for="language in supportedLocales"
-            :key="language.code"
-            type="button"
-            class="rounded-full px-2 py-1 transition"
-            :class="
-              locale === language.code
-                ? 'bg-clay-500 text-white shadow shadow-clay-950/15'
-                : 'text-clay-700 hover:text-clay-900'
-            "
-            :aria-pressed="locale === language.code"
-            @click="setLocale(language.code)"
-          >
-            {{ language.label }}
-          </button>
+        <div class="ml-auto">
+          <LanguageDropdown compact />
         </div>
       </div>
     </header>
 
     <RouterView />
 
-    <footer class="mt-14 border-t border-clay-100/70 bg-sand-50/90">
+    <footer v-if="!isAdminRoute" class="mt-14 border-t border-clay-100/70 bg-sand-50/90">
       <div
         class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 md:flex-row md:items-start md:justify-between"
       >
