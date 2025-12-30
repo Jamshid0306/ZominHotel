@@ -80,7 +80,7 @@ const messages = {
       room: 'Xona',
       roomPlaceholder: 'Xonani tanlang',
       email: 'Elektron pochta',
-      emailPlaceholder: 'you@example.com',
+      emailPlaceholder: 'example',
       submit: 'Bronni yuborish',
       status: {
         required: 'Barcha maydonlarni toʻldiring.',
@@ -303,7 +303,7 @@ const messages = {
       room: 'Номер',
       roomPlaceholder: 'Выберите номер',
       email: 'Эл. почта',
-      emailPlaceholder: 'you@example.com',
+      emailPlaceholder: 'example',
       submit: 'Отправить бронь',
       status: {
         required: 'Заполните все поля.',
@@ -520,7 +520,7 @@ const messages = {
       room: 'Room',
       roomPlaceholder: 'Select a room',
       email: 'Email',
-      emailPlaceholder: 'you@example.com',
+      emailPlaceholder: 'example',
       submit: 'Submit booking',
       status: {
         required: 'Please fill out all fields.',
