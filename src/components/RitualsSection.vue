@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 const { t, tm } = useI18n()
@@ -8,6 +9,8 @@ const rituals = computed(() => {
   const items = tm('rituals')
   return Array.isArray(items) ? items : []
 })
+
+const featuredRitual = computed(() => rituals.value[0])
 </script>
 
 <template>
@@ -46,15 +49,21 @@ const rituals = computed(() => {
       </div>
       <div class="grid gap-3">
         <div
-          v-for="ritual in rituals"
-          :key="ritual.title"
+          v-if="featuredRitual"
           class="rounded-2xl border border-clay-100/90 bg-sand-50/70 p-5 shadow-sm shadow-clay-950/5"
         >
           <h4 class="text-base font-semibold text-clay-950">
-            {{ ritual.title }}
+            {{ featuredRitual.title }}
           </h4>
-          <p class="mt-1 text-sm text-clay-800">{{ ritual.detail }}</p>
+          <p class="mt-1 text-sm text-clay-800">{{ featuredRitual.detail }}</p>
         </div>
+        <RouterLink
+          to="/services"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-clay-800 hover:text-clay-950"
+        >
+          {{ t('actions.viewAll') }}
+          <span aria-hidden="true">→</span>
+        </RouterLink>
       </div>
     </div>
   </section>

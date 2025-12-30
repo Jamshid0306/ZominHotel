@@ -24,19 +24,19 @@ const isAdminRoute = computed(() => route.path.startsWith('/admin'))
         <div class="flex items-center gap-3">
           <RouterLink
             to="/"
-            class="text-lg font-display font-semibold tracking-[0.1em] text-clay-900 transition hover:text-clay-700"
+            class="text-lg font-display font-semibold tracking-widest text-clay-900 transition hover:text-clay-700"
           >
             <img src="./assets/images/logo.png" :alt="t('common.logoAlt')" class="w-15" />
           </RouterLink>
         </div>
         <div class="hidden items-center gap-2 md:flex">
           <RouterLink
-            :to="{ path: '/', hash: '#rooms' }"
+            to="/rooms"
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
             >{{ t('nav.rooms') }}</RouterLink
           >
           <RouterLink
-            :to="{ path: '/', hash: '#amenities' }"
+            to="/services"
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
             >{{ t('nav.amenities') }}</RouterLink
           >
@@ -54,7 +54,7 @@ const isAdminRoute = computed(() => route.path.startsWith('/admin'))
         </div>
         <RouterLink
           :to="{ path: '/', hash: '#booking' }"
-          class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
+          class="inline-flex items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
         >
           {{ t('actions.book') }}
         </RouterLink>
@@ -151,7 +151,7 @@ const isAdminRoute = computed(() => route.path.startsWith('/admin'))
               {{ t('footer.bookingTitle') }}
             </p>
             <RouterLink
-              class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
+              class="inline-flex items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
               :to="{ path: '/', hash: '#booking' }"
             >
               {{ t('actions.book') }}

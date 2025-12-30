@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 const { t, tm } = useI18n()
@@ -8,6 +9,8 @@ const amenities = computed(() => {
   const items = tm('amenities')
   return Array.isArray(items) ? items : []
 })
+
+const featuredAmenity = computed(() => amenities.value.slice(0, 1))
 </script>
 
 <template>
@@ -23,22 +26,45 @@ const amenities = computed(() => {
         {{ t('amenitiesSection.description') }}
       </p>
     </div>
-    <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+    <div class="grid gap-8">
       <article
-        v-for="item in amenities"
+        v-for="(item, index) in featuredAmenity"
         :key="item.title"
-        class="rounded-2xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5 ring-1 ring-transparent transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-clay-100"
+        class="grid items-center gap-6 rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5 ring-1 ring-transparent transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-clay-100 md:grid-cols-2 md:gap-10 md:p-8"
       >
         <div
-          class="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-clay-500/25 to-clay-300/40 text-clay-800"
+          v-if="item.image"
+          class="overflow-hidden rounded-2xl shadow-lg shadow-clay-950/10"
+          :class="index % 2 === 0 ? 'md:order-2' : 'md:order-1'"
         >
-          <span class="text-xl leading-none">•</span>
+          <img
+            :src="item.image"
+            :alt="item.imageAlt || item.title"
+            class="h-56 w-full object-cover md:h-72"
+            loading="lazy"
+          />
         </div>
-        <h3 class="mt-4 text-lg font-semibold text-clay-950">
-          {{ item.title }}
-        </h3>
-        <p class="mt-2 text-sm text-clay-800">{{ item.detail }}</p>
+        <div :class="index % 2 === 0 ? 'md:order-1' : 'md:order-2'">
+          <div
+            class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-clay-500/25 to-clay-300/40 text-clay-800"
+          >
+            <span class="text-2xl leading-none">•</span>
+          </div>
+          <h3 class="mt-5 text-2xl font-semibold text-clay-950 sm:text-3xl">
+            {{ item.title }}
+          </h3>
+          <p class="mt-3 text-base text-clay-800 sm:text-lg">{{ item.detail }}</p>
+        </div>
       </article>
+    </div>
+    <div class="pt-2">
+      <RouterLink
+        to="/services"
+        class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.22em] text-clay-700 transition hover:text-clay-950"
+      >
+        {{ t('actions.viewAll') }}
+        <span aria-hidden="true">→</span>
+      </RouterLink>
     </div>
   </section>
 </template>

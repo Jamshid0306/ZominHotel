@@ -1,5 +1,11 @@
 import { createI18n } from 'vue-i18n'
 
+import amenityQuiet from './assets/images/slide-images/4.jpg'
+import amenityService from './assets/images/slide-images/8.jpg'
+import amenityMountain from './assets/images/slide-images/12.jpg'
+import amenityPool from './assets/images/slide-images/18.jpg'
+import amenityRestaurant from './assets/images/slide-images/21.jpg'
+
 export const supportedLocales = [
   { code: 'uz', label: 'UZ' },
   { code: 'ru', label: 'RU' },
@@ -28,6 +34,7 @@ const messages = {
       phoneLabel: 'Telefon:',
       emailLabel: 'Email:',
       logoAlt: 'Logo',
+      loading: 'Yuklanmoqda...',
     },
     location: {
       label: 'Manzil:',
@@ -114,21 +121,49 @@ const messages = {
       description:
         'Har bir detalda issiq jigarrang ranglar, hidi, yoruglik va ovozga eʼtibor. Siz dam oling, qolganini biz qilamiz.',
     },
+    restaurantSection: {
+      label: 'Restoran',
+      title: 'Zafaron oshxonasi — nafis taʼm va iliq muhit',
+      description:
+        'Mahalliy mahsulotlar, shef taʼlimi va sokin muhitda tayyorlangan taomlar. Har bir taomda ohang va did uygʻunligi.',
+      menuLabel: 'Menyu',
+      menuCount: 'taom',
+    },
     amenities: [
       {
         title: 'Sokinlik va qulaylik',
         detail:
-          'Minimalistik interyer, yumshoq yoruglik va tabiiy materiallar sizni tinchlantiradi.',
+          'Minimalistik interyer, yumshoq yoruglik va tabiiy materiallar sizni tinchlantiradi. Keng krovatlar, sokin ranglar va nozik aromalar har kuni chuqur dam olishga yordam beradi.',
+        image: amenityQuiet,
+        imageAlt: "Sokin interyer va yumshoq yorug'lik",
       },
       {
         title: 'Xizmatlar seleksiyasi',
         detail:
-          '24/7 konsyerj, shaxsiy transfer, hushtakday toza xonalar va ertalabgi kofe xizmati.',
+          '24/7 konsyerj, shaxsiy transfer, hushtakday toza xonalar va ertalabgi kofe xizmati. Har bir so‘rov tezkor va samimiy xizmat bilan hal qilinadi.',
+        image: amenityService,
+        imageAlt: 'Konsyerj xizmati',
       },
       {
         title: "Chimgon tog'larida",
         detail:
-          "Mehmonxona Chimgon tog'lari bag'rida, sayr yo'llari va tabiatga yaqin.",
+          "Mehmonxona Chimgon tog'lari bag'rida, sayr yo'llari va tabiatga yaqin. Atrofda toza havo, qarag'ay hidi va tonggi sokinlik sizni kutadi.",
+        image: amenityMountain,
+        imageAlt: "Tog' manzarasi",
+      },
+      {
+        title: 'Panoramali basseyn',
+        detail:
+          "Isitiladigan basseyn, tog' manzarasi va yumshoq yoritish bilan tongdan kechgacha hordiq. Yengil musiqa, sochiqlar va dam olish zonasi bilan to‘liq relax.",
+        image: amenityPool,
+        imageAlt: 'Panoramali basseyn',
+      },
+      {
+        title: 'Gurme restoran',
+        detail:
+          "Shef menyusi, mahalliy mahsulotlar va sham yorug'ida iliq kechki ovqat. Har bir taom ta’mi muvozanatli, servis esa sokin va nafis.",
+        image: amenityRestaurant,
+        imageAlt: 'Restoran interyeri',
       },
     ],
     roomsSection: {
@@ -210,6 +245,24 @@ const messages = {
         detail: 'Shef tanlagan menyu, xona yoki lounge hududida xizmat.',
       },
     ],
+    servicesPage: {
+      label: 'Xizmatlar',
+      title: "Za'faron Premium Hotel — barcha xizmatlar",
+      description:
+        'Kun davomida muloyim xizmatlar: tonggi kofe, wellness, shaxsiy ovqatlanish va ko‘proq.',
+      summaryTitle: '{count} xizmat',
+      summarySubtitle: 'Sokin ritmlar va eʼtiborli servis.',
+    },
+    restaurantsPage: {
+      label: 'Restoranlar',
+      title: "Za'faron Premium Hotel — barcha restoranlar",
+      description:
+        'Har bir restoran o‘ziga xos taʼm va kayfiyatga ega. Taomlarimizni sekin, did bilan kashf eting.',
+      empty: "Hozircha restoranlar yo'q.",
+      loadError: 'Restoranlarni yuklashda xatolik yuz berdi.',
+      menuLoadError: 'Menyularni yuklashda xatolik yuz berdi.',
+      menuEmpty: 'Menyular mavjud emas.',
+    },
     cta: {
       label: 'Sizni kutamiz',
       title: "Za'faron Premium Hotel — bronni hoziroq belgilang",
@@ -251,6 +304,7 @@ const messages = {
       phoneLabel: 'Телефон:',
       emailLabel: 'Email:',
       logoAlt: 'Логотип',
+      loading: 'Загрузка...',
     },
     location: {
       label: 'Адрес:',
@@ -336,18 +390,49 @@ const messages = {
       description:
         'В каждой детали тёплые коричневые тона, аромат, свет и звук. Отдыхайте, остальное сделаем мы.',
     },
+    restaurantSection: {
+      label: 'Ресторан',
+      title: 'Кухня Zafaron — изысканный вкус и тёплая атмосфера',
+      description:
+        'Локальные продукты, работа шефа и спокойная атмосфера. В каждом блюде — баланс вкуса и стиля.',
+      menuLabel: 'Меню',
+      menuCount: 'блюд',
+    },
     amenities: [
       {
         title: 'Тишина и уют',
-        detail: 'Минималистичный интерьер, мягкий свет и натуральные материалы помогают расслабиться.',
+        detail:
+          'Минималистичный интерьер, мягкий свет и натуральные материалы помогают расслабиться. Просторные кровати, спокойная палитра и деликатные ароматы создают идеальный отдых.',
+        image: amenityQuiet,
+        imageAlt: 'Тёплый интерьер и мягкий свет',
       },
       {
         title: 'Подборка сервисов',
-        detail: 'Консьерж 24/7, личный трансфер, безупречно чистые номера и утренний кофе.',
+        detail:
+          'Консьерж 24/7, личный трансфер, безупречно чистые номера и утренний кофе. Любой запрос решается быстро, вежливо и с вниманием к деталям.',
+        image: amenityService,
+        imageAlt: 'Консьерж сервис',
       },
       {
         title: 'В горах Чимгана',
-        detail: 'Отель в горах Чимгана, рядом прогулочные тропы и природа.',
+        detail:
+          'Отель в горах Чимгана, рядом прогулочные тропы и природа. Свежий воздух, аромат хвои и утреннее спокойствие наполняют каждый день.',
+        image: amenityMountain,
+        imageAlt: 'Горный пейзаж',
+      },
+      {
+        title: 'Панорамный бассейн',
+        detail:
+          'Подогреваемый бассейн с видом на горы и мягкой подсветкой с утра до вечера. Лёгкая музыка, полотенца и зона отдыха включены.',
+        image: amenityPool,
+        imageAlt: 'Панорамный бассейн',
+      },
+      {
+        title: 'Ресторан с авторской кухней',
+        detail:
+          'Авторское меню, локальные продукты и уютные ужины при свечах. Каждое блюдо выверено, подача — аккуратная, сервис — ненавязчивый.',
+        image: amenityRestaurant,
+        imageAlt: 'Интерьер ресторана',
       },
     ],
     roomsSection: {
@@ -428,6 +513,24 @@ const messages = {
         detail: 'Меню от шефа, обслуживание в номере или в зоне лаунжа.',
       },
     ],
+    servicesPage: {
+      label: 'Услуги',
+      title: "Za'faron Premium Hotel — все услуги",
+      description:
+        'В течение дня мы предлагаем мягкие сервисы: утренний кофе, wellness, приватные ужины и другое.',
+      summaryTitle: '{count} услуг',
+      summarySubtitle: 'Спокойные ритуалы и заботливый сервис.',
+    },
+    restaurantsPage: {
+      label: 'Рестораны',
+      title: "Za'faron Premium Hotel — все рестораны",
+      description:
+        'У каждого ресторана свой вкус и настроение. Откройте нашу кухню в спокойном ритме.',
+      empty: 'Пока ресторанов нет.',
+      loadError: 'Ошибка при загрузке ресторанов.',
+      menuLoadError: 'Ошибка при загрузке меню.',
+      menuEmpty: 'Меню пока недоступно.',
+    },
     cta: {
       label: 'Ждём вас',
       title: "Za'faron Premium Hotel — забронируйте прямо сейчас",
@@ -469,6 +572,7 @@ const messages = {
       phoneLabel: 'Phone:',
       emailLabel: 'Email:',
       logoAlt: 'Logo',
+      loading: 'Loading...',
     },
     location: {
       label: 'Location:',
@@ -553,18 +657,49 @@ const messages = {
       description:
         'Warm brown colors, scent, light, and sound in every detail. You relax, we handle the rest.',
     },
+    restaurantSection: {
+      label: 'Restaurant',
+      title: 'Zafaron cuisine — refined flavors and warm atmosphere',
+      description:
+        'Local ingredients, chef craft, and a calm setting. Each dish is a balance of taste and mood.',
+      menuLabel: 'Menu',
+      menuCount: 'dishes',
+    },
     amenities: [
       {
         title: 'Quiet comfort',
-        detail: 'Minimalist interiors, soft light, and natural materials help you unwind.',
+        detail:
+          'Minimalist interiors, soft light, and natural materials help you unwind. Spacious beds, calm palettes, and delicate aromas support deeper rest.',
+        image: amenityQuiet,
+        imageAlt: 'Warm interior and soft light',
       },
       {
         title: 'Curated services',
-        detail: '24/7 concierge, private transfer, spotless rooms, and morning coffee service.',
+        detail:
+          '24/7 concierge, private transfer, spotless rooms, and morning coffee service. Every request is handled swiftly, warmly, and with care.',
+        image: amenityService,
+        imageAlt: 'Concierge service',
       },
       {
         title: 'In the Chimgan mountains',
-        detail: 'The hotel sits in the Chimgan mountains, close to trails and nature.',
+        detail:
+          'The hotel sits in the Chimgan mountains, close to trails and nature. Fresh air, pine notes, and quiet mornings surround your stay.',
+        image: amenityMountain,
+        imageAlt: 'Mountain landscape',
+      },
+      {
+        title: 'Panoramic pool',
+        detail:
+          'Heated pool with mountain views and soft lighting from morning to evening. Gentle music, towels, and a calm lounge zone are ready for you.',
+        image: amenityPool,
+        imageAlt: 'Panoramic pool',
+      },
+      {
+        title: "Chef's restaurant",
+        detail:
+          'Chef-led menu, local ingredients, and candlelit dinners in a calm setting. Each dish is balanced, beautifully plated, and served with quiet elegance.',
+        image: amenityRestaurant,
+        imageAlt: 'Restaurant interior',
       },
     ],
     roomsSection: {
@@ -645,6 +780,24 @@ const messages = {
         detail: 'Chef-selected menu served in-room or in the lounge area.',
       },
     ],
+    servicesPage: {
+      label: 'Services',
+      title: "Za'faron Premium Hotel — all services",
+      description:
+        'Throughout the day we offer gentle services: morning coffee, wellness, private dining, and more.',
+      summaryTitle: '{count} services',
+      summarySubtitle: 'Calm rituals with thoughtful care.',
+    },
+    restaurantsPage: {
+      label: 'Restaurants',
+      title: "Za'faron Premium Hotel — all restaurants",
+      description:
+        'Each restaurant has its own mood and flavor. Discover our cuisine in a calm, elegant rhythm.',
+      empty: 'No restaurants yet.',
+      loadError: 'Failed to load restaurants.',
+      menuLoadError: 'Failed to load menus.',
+      menuEmpty: 'No menu items yet.',
+    },
     cta: {
       label: 'We are waiting for you',
       title: "Za'faron Premium Hotel — book your stay now",

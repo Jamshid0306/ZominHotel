@@ -18,6 +18,42 @@ const rooms = ref([])
 const roomsError = ref('')
 const isSaving = ref(false)
 const isDeleting = ref(false)
+const isLoadingRestaurants = ref(false)
+const restaurants = ref([])
+const restaurantsError = ref('')
+const isSavingRestaurant = ref(false)
+const isDeletingRestaurant = ref(false)
+const restaurantStatus = ref({ tone: '', message: '' })
+const isRestaurantModalOpen = ref(false)
+const selectedRestaurant = ref(null)
+const restaurantModalMode = ref('update')
+const restaurantForm = ref({
+  name_uz: '',
+  name_ru: '',
+  name_en: '',
+  description_uz: '',
+  description_ru: '',
+  description_en: '',
+})
+const restaurantImages = ref([])
+const restaurantImagePreviews = ref([])
+const isLoadingMenus = ref(false)
+const restaurantMenus = ref([])
+const menusError = ref('')
+const isSavingMenu = ref(false)
+const isDeletingMenu = ref(false)
+const menuStatus = ref({ tone: '', message: '' })
+const isMenuModalOpen = ref(false)
+const selectedMenu = ref(null)
+const menuModalMode = ref('update')
+const menuForm = ref({
+  restaurant_id: '',
+  name_uz: '',
+  name_ru: '',
+  name_en: '',
+})
+const menuImage = ref(null)
+const menuImagePreview = ref(null)
 
 const isModalOpen = ref(false)
 const selectedRoom = ref(null)
@@ -45,6 +81,22 @@ const clearStatus = () => {
   status.value = { tone: '', message: '' }
 }
 
+const setRestaurantStatus = (tone, message) => {
+  restaurantStatus.value = { tone, message }
+}
+
+const clearRestaurantStatus = () => {
+  restaurantStatus.value = { tone: '', message: '' }
+}
+
+const setMenuStatus = (tone, message) => {
+  menuStatus.value = { tone, message }
+}
+
+const clearMenuStatus = () => {
+  menuStatus.value = { tone: '', message: '' }
+}
+
 const fetchRooms = async () => {
   isLoadingRooms.value = true
   roomsError.value = ''
@@ -60,6 +112,42 @@ const fetchRooms = async () => {
     roomsError.value = error?.message || 'Xonalarni yuklashda xatolik yuz berdi.'
   } finally {
     isLoadingRooms.value = false
+  }
+}
+
+const fetchRestaurants = async () => {
+  isLoadingRestaurants.value = true
+  restaurantsError.value = ''
+  try {
+    const res = await fetch(`${API_BASE_URL}/restaurants`, {
+      headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+    })
+    if (!res.ok) {
+      throw new Error('Restoranlarni yuklashda xatolik yuz berdi.')
+    }
+    restaurants.value = await res.json()
+  } catch (error) {
+    restaurantsError.value = error?.message || 'Restoranlarni yuklashda xatolik yuz berdi.'
+  } finally {
+    isLoadingRestaurants.value = false
+  }
+}
+
+const fetchMenus = async () => {
+  isLoadingMenus.value = true
+  menusError.value = ''
+  try {
+    const res = await fetch(`${API_BASE_URL}/restaurant-menus`, {
+      headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+    })
+    if (!res.ok) {
+      throw new Error('Restoran menyularini yuklashda xatolik yuz berdi.')
+    }
+    restaurantMenus.value = await res.json()
+  } catch (error) {
+    menusError.value = error?.message || 'Restoran menyularini yuklashda xatolik yuz berdi.'
+  } finally {
+    isLoadingMenus.value = false
   }
 }
 
@@ -91,6 +179,8 @@ const login = async () => {
     setCookie('zafaron_access', data.access_token, 60)
     setStatus('success', 'Login muvaffaqiyatli bajarildi.')
     await fetchRooms()
+    await fetchRestaurants()
+    await fetchMenus()
   } catch (error) {
     setStatus('error', error?.message || 'Login muvaffaqiyatsiz.')
   } finally {
@@ -104,6 +194,8 @@ const logout = () => {
   username.value = ''
   password.value = ''
   rooms.value = []
+  restaurants.value = []
+  restaurantMenus.value = []
   setStatus('success', 'Siz tizimdan chiqdingiz.')
 }
 
@@ -147,6 +239,74 @@ const closeModal = () => {
   formImages.value = []
 }
 
+const openRestaurantModal = (restaurant) => {
+  selectedRestaurant.value = restaurant
+  restaurantModalMode.value = 'update'
+  restaurantForm.value = {
+    name_uz: restaurant.name_uz || '',
+    name_ru: restaurant.name_ru || '',
+    name_en: restaurant.name_en || '',
+    description_uz: restaurant.description_uz || '',
+    description_ru: restaurant.description_ru || '',
+    description_en: restaurant.description_en || '',
+  }
+  restaurantImages.value = []
+  isRestaurantModalOpen.value = true
+}
+
+const openCreateRestaurantModal = () => {
+  selectedRestaurant.value = null
+  restaurantModalMode.value = 'create'
+  restaurantForm.value = {
+    name_uz: '',
+    name_ru: '',
+    name_en: '',
+    description_uz: '',
+    description_ru: '',
+    description_en: '',
+  }
+  restaurantImages.value = []
+  isRestaurantModalOpen.value = true
+}
+
+const closeRestaurantModal = () => {
+  isRestaurantModalOpen.value = false
+  selectedRestaurant.value = null
+  restaurantImages.value = []
+}
+
+const openMenuModal = (menu) => {
+  selectedMenu.value = menu
+  menuModalMode.value = 'update'
+  menuForm.value = {
+    restaurant_id: menu.restaurant_id ?? '',
+    name_uz: menu.name_uz || '',
+    name_ru: menu.name_ru || '',
+    name_en: menu.name_en || '',
+  }
+  clearMenuImage()
+  isMenuModalOpen.value = true
+}
+
+const openCreateMenuModal = () => {
+  selectedMenu.value = null
+  menuModalMode.value = 'create'
+  menuForm.value = {
+    restaurant_id: '',
+    name_uz: '',
+    name_ru: '',
+    name_en: '',
+  }
+  clearMenuImage()
+  isMenuModalOpen.value = true
+}
+
+const closeMenuModal = () => {
+  isMenuModalOpen.value = false
+  selectedMenu.value = null
+  clearMenuImage()
+}
+
 const handleImageChange = (event) => {
   const newFiles = Array.from(event.target.files || [])
   if (!newFiles.length) return
@@ -167,8 +327,56 @@ const removeImage = (index) => {
   formImages.value = formImages.value.filter((_, idx) => idx !== index)
 }
 
+const handleRestaurantImageChange = (event) => {
+  const newFiles = Array.from(event.target.files || [])
+  if (!newFiles.length) return
+  const existing = new Map(
+    restaurantImages.value.map((file) => [`${file.name}-${file.size}-${file.lastModified}`, file])
+  )
+  newFiles.forEach((file) => {
+    const key = `${file.name}-${file.size}-${file.lastModified}`
+    if (!existing.has(key)) {
+      existing.set(key, file)
+    }
+  })
+  restaurantImages.value = Array.from(existing.values())
+  event.target.value = ''
+}
+
+const removeRestaurantImage = (index) => {
+  restaurantImages.value = restaurantImages.value.filter((_, idx) => idx !== index)
+}
+
+const handleMenuImageChange = (event) => {
+  const file = event.target.files?.[0]
+  if (!file) return
+  menuImage.value = file
+  menuImagePreview.value = {
+    name: file.name,
+    size: file.size,
+    url: URL.createObjectURL(file),
+  }
+  event.target.value = ''
+}
+
+const clearMenuImage = () => {
+  if (menuImagePreview.value?.url) {
+    URL.revokeObjectURL(menuImagePreview.value.url)
+  }
+  menuImage.value = null
+  menuImagePreview.value = null
+}
+
 const revokePreviews = () => {
   imagePreviews.value.forEach((preview) => {
+    if (preview.url) {
+      URL.revokeObjectURL(preview.url)
+    }
+  })
+}
+
+const revokeRestaurantPreviews = () => {
+  restaurantImagePreviews.value.forEach((preview) => {
     if (preview.url) {
       URL.revokeObjectURL(preview.url)
     }
@@ -188,8 +396,23 @@ watch(
   { deep: true }
 )
 
+watch(
+  restaurantImages,
+  (files) => {
+    revokeRestaurantPreviews()
+    restaurantImagePreviews.value = files.map((file) => ({
+      name: file.name,
+      size: file.size,
+      url: URL.createObjectURL(file),
+    }))
+  },
+  { deep: true }
+)
+
 onBeforeUnmount(() => {
   revokePreviews()
+  revokeRestaurantPreviews()
+  clearMenuImage()
 })
 
 const updateRoom = async () => {
@@ -271,6 +494,207 @@ const submitModal = () => {
   return updateRoom()
 }
 
+const updateRestaurant = async () => {
+  if (!selectedRestaurant.value) return
+  isSavingRestaurant.value = true
+  clearRestaurantStatus()
+  try {
+    const payload = new FormData()
+    payload.append('name_uz', restaurantForm.value.name_uz)
+    payload.append('name_ru', restaurantForm.value.name_ru)
+    payload.append('name_en', restaurantForm.value.name_en)
+    payload.append('description_uz', restaurantForm.value.description_uz)
+    payload.append('description_ru', restaurantForm.value.description_ru)
+    payload.append('description_en', restaurantForm.value.description_en)
+    restaurantImages.value.forEach((file) => payload.append('images', file))
+
+    const res = await fetch(
+      `${API_BASE_URL}/restaurants/${selectedRestaurant.value.id}`,
+      {
+        method: 'PUT',
+        headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+        body: payload,
+      }
+    )
+
+    if (!res.ok) {
+      throw new Error('Restoranni yangilashda xatolik yuz berdi.')
+    }
+
+    setRestaurantStatus('success', 'Restoran muvaffaqiyatli yangilandi.')
+    await fetchRestaurants()
+    closeRestaurantModal()
+  } catch (error) {
+    setRestaurantStatus('error', error?.message || 'Restoranni yangilashda xatolik yuz berdi.')
+  } finally {
+    isSavingRestaurant.value = false
+  }
+}
+
+const createRestaurant = async () => {
+  isSavingRestaurant.value = true
+  clearRestaurantStatus()
+  try {
+    const payload = new FormData()
+    payload.append('name_uz', restaurantForm.value.name_uz)
+    payload.append('name_ru', restaurantForm.value.name_ru)
+    payload.append('name_en', restaurantForm.value.name_en)
+    payload.append('description_uz', restaurantForm.value.description_uz)
+    payload.append('description_ru', restaurantForm.value.description_ru)
+    payload.append('description_en', restaurantForm.value.description_en)
+    restaurantImages.value.forEach((file) => payload.append('images', file))
+
+    const res = await fetch(`${API_BASE_URL}/restaurants`, {
+      method: 'POST',
+      headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+      body: payload,
+    })
+
+    if (!res.ok) {
+      throw new Error('Restoran yaratishda xatolik yuz berdi.')
+    }
+
+    setRestaurantStatus('success', 'Restoran muvaffaqiyatli yaratildi.')
+    await fetchRestaurants()
+    closeRestaurantModal()
+  } catch (error) {
+    setRestaurantStatus('error', error?.message || 'Restoran yaratishda xatolik yuz berdi.')
+  } finally {
+    isSavingRestaurant.value = false
+  }
+}
+
+const submitRestaurantModal = () => {
+  if (restaurantModalMode.value === 'create') {
+    return createRestaurant()
+  }
+  return updateRestaurant()
+}
+
+const deleteRestaurant = async (restaurantId) => {
+  if (!restaurantId) return
+  if (!window.confirm('Restoranni o‘chirishni tasdiqlaysizmi?')) return
+  isDeletingRestaurant.value = true
+  clearRestaurantStatus()
+  try {
+    const res = await fetch(`${API_BASE_URL}/restaurants/${restaurantId}`, {
+      method: 'DELETE',
+      headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+    })
+    if (!res.ok) {
+      throw new Error("Restoranni o'chirishda xatolik yuz berdi.")
+    }
+    setRestaurantStatus('success', "Restoran o'chirildi.")
+    restaurants.value = restaurants.value.filter((item) => item.id !== restaurantId)
+  } catch (error) {
+    setRestaurantStatus('error', error?.message || "Restoranni o'chirishda xatolik yuz berdi.")
+  } finally {
+    isDeletingRestaurant.value = false
+  }
+}
+
+const updateMenu = async () => {
+  if (!selectedMenu.value) return
+  isSavingMenu.value = true
+  clearMenuStatus()
+  try {
+    const payload = new FormData()
+    if (menuForm.value.restaurant_id) {
+      payload.append('restaurant_id', String(menuForm.value.restaurant_id))
+    }
+    payload.append('name_uz', menuForm.value.name_uz)
+    payload.append('name_ru', menuForm.value.name_ru)
+    payload.append('name_en', menuForm.value.name_en)
+    if (menuImage.value) {
+      payload.append('image', menuImage.value)
+    }
+
+    const res = await fetch(
+      `${API_BASE_URL}/restaurant-menus/${selectedMenu.value.id}`,
+      {
+        method: 'PUT',
+        headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+        body: payload,
+      }
+    )
+
+    if (!res.ok) {
+      throw new Error('Menyu yangilashda xatolik yuz berdi.')
+    }
+
+    setMenuStatus('success', 'Menyu muvaffaqiyatli yangilandi.')
+    await fetchMenus()
+    closeMenuModal()
+  } catch (error) {
+    setMenuStatus('error', error?.message || 'Menyu yangilashda xatolik yuz berdi.')
+  } finally {
+    isSavingMenu.value = false
+  }
+}
+
+const createMenu = async () => {
+  isSavingMenu.value = true
+  clearMenuStatus()
+  try {
+    if (!menuImage.value) {
+      throw new Error('Menyu uchun rasm tanlang.')
+    }
+    const payload = new FormData()
+    payload.append('restaurant_id', String(menuForm.value.restaurant_id))
+    payload.append('name_uz', menuForm.value.name_uz)
+    payload.append('name_ru', menuForm.value.name_ru)
+    payload.append('name_en', menuForm.value.name_en)
+    payload.append('image', menuImage.value)
+
+    const res = await fetch(`${API_BASE_URL}/restaurant-menus`, {
+      method: 'POST',
+      headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+      body: payload,
+    })
+
+    if (!res.ok) {
+      throw new Error('Menyu yaratishda xatolik yuz berdi.')
+    }
+
+    setMenuStatus('success', 'Menyu muvaffaqiyatli yaratildi.')
+    await fetchMenus()
+    closeMenuModal()
+  } catch (error) {
+    setMenuStatus('error', error?.message || 'Menyu yaratishda xatolik yuz berdi.')
+  } finally {
+    isSavingMenu.value = false
+  }
+}
+
+const submitMenuModal = () => {
+  if (menuModalMode.value === 'create') {
+    return createMenu()
+  }
+  return updateMenu()
+}
+
+const deleteMenu = async (menuId) => {
+  if (!menuId) return
+  if (!window.confirm('Menyuni o‘chirishni tasdiqlaysizmi?')) return
+  isDeletingMenu.value = true
+  clearMenuStatus()
+  try {
+    const res = await fetch(`${API_BASE_URL}/restaurant-menus/${menuId}`, {
+      method: 'DELETE',
+      headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+    })
+    if (!res.ok) {
+      throw new Error("Menyuni o'chirishda xatolik yuz berdi.")
+    }
+    setMenuStatus('success', "Menyu o'chirildi.")
+    restaurantMenus.value = restaurantMenus.value.filter((item) => item.id !== menuId)
+  } catch (error) {
+    setMenuStatus('error', error?.message || "Menyuni o'chirishda xatolik yuz berdi.")
+  } finally {
+    isDeletingMenu.value = false
+  }
+}
+
 const deleteRoom = async (roomId) => {
   if (!roomId) return
   if (!window.confirm('Xonani o‘chirishni tasdiqlaysizmi?')) return
@@ -295,6 +719,8 @@ const deleteRoom = async (roomId) => {
 onMounted(() => {
   if (token.value) {
     fetchRooms()
+    fetchRestaurants()
+    fetchMenus()
   }
 })
 </script>
@@ -449,6 +875,175 @@ onMounted(() => {
             </article>
             <p v-if="rooms.length === 0" class="text-sm text-clay-700">
               Hozircha xonalar yo'q.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-if="isAuthenticated"
+        class="rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
+      >
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">Restaurants</p>
+            <h2 class="mt-2 text-2xl font-semibold text-clay-950">Restoranlar ro'yxati</h2>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-clay-950/15 transition hover:-translate-y-0.5 hover:shadow-lg"
+              @click="openCreateRestaurantModal"
+            >
+              Create
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-xs font-semibold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
+              @click="fetchRestaurants"
+            >
+              Yangilash
+            </button>
+          </div>
+        </div>
+
+        <p
+          v-if="restaurantStatus.message"
+          class="mt-4 rounded-2xl border px-4 py-3 text-sm font-semibold"
+          :class="
+            restaurantStatus.tone === 'success'
+              ? 'border-green-200 bg-green-50 text-green-700'
+              : 'border-red-200 bg-red-50 text-red-700'
+          "
+        >
+          {{ restaurantStatus.message }}
+        </p>
+
+        <div class="mt-5">
+          <p v-if="isLoadingRestaurants" class="text-sm text-clay-700">Yuklanmoqda...</p>
+          <p v-else-if="restaurantsError" class="text-sm text-red-600">
+            {{ restaurantsError }}
+          </p>
+          <div v-else class="grid gap-4">
+            <article
+              v-for="restaurant in restaurants"
+              :key="restaurant.id"
+              class="rounded-2xl border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-4 shadow-sm shadow-clay-950/5 transition hover:-translate-y-0.5 hover:shadow-lg"
+              @click="openRestaurantModal(restaurant)"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h3 class="text-lg font-semibold text-clay-950">
+                    {{ restaurant.name_uz }}
+                  </h3>
+                  <p class="text-xs text-clay-700">ID: {{ restaurant.id }}</p>
+                </div>
+                <button
+                  type="button"
+                  class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-red-50"
+                  :disabled="isDeletingRestaurant"
+                  @click.stop="deleteRestaurant(restaurant.id)"
+                >
+                  Delete
+                </button>
+              </div>
+              <p class="mt-2 text-sm text-clay-800">{{ restaurant.description_uz }}</p>
+              <div v-if="restaurant.images?.length" class="mt-3 flex flex-wrap gap-2">
+                <img
+                  v-for="image in restaurant.images"
+                  :key="image"
+                  :src="withBaseUrl(image)"
+                  alt="Restaurant image"
+                  class="h-16 w-24 rounded-xl object-cover"
+                />
+              </div>
+            </article>
+            <p v-if="restaurants.length === 0" class="text-sm text-clay-700">
+              Hozircha restoranlar yo'q.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-if="isAuthenticated"
+        class="rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
+      >
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
+              Restaurant Menus
+            </p>
+            <h2 class="mt-2 text-2xl font-semibold text-clay-950">Restoran menyulari</h2>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-clay-950/15 transition hover:-translate-y-0.5 hover:shadow-lg"
+              @click="openCreateMenuModal"
+            >
+              Create
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-xs font-semibold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
+              @click="fetchMenus"
+            >
+              Yangilash
+            </button>
+          </div>
+        </div>
+
+        <p
+          v-if="menuStatus.message"
+          class="mt-4 rounded-2xl border px-4 py-3 text-sm font-semibold"
+          :class="
+            menuStatus.tone === 'success'
+              ? 'border-green-200 bg-green-50 text-green-700'
+              : 'border-red-200 bg-red-50 text-red-700'
+          "
+        >
+          {{ menuStatus.message }}
+        </p>
+
+        <div class="mt-5">
+          <p v-if="isLoadingMenus" class="text-sm text-clay-700">Yuklanmoqda...</p>
+          <p v-else-if="menusError" class="text-sm text-red-600">
+            {{ menusError }}
+          </p>
+          <div v-else class="grid gap-4">
+            <article
+              v-for="menu in restaurantMenus"
+              :key="menu.id"
+              class="rounded-2xl border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-4 shadow-sm shadow-clay-950/5 transition hover:-translate-y-0.5 hover:shadow-lg"
+              @click="openMenuModal(menu)"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h3 class="text-lg font-semibold text-clay-950">
+                    {{ menu.name_uz }}
+                  </h3>
+                  <p class="text-xs text-clay-700">Restaurant ID: {{ menu.restaurant_id }}</p>
+                </div>
+                <button
+                  type="button"
+                  class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-red-50"
+                  :disabled="isDeletingMenu"
+                  @click.stop="deleteMenu(menu.id)"
+                >
+                  Delete
+                </button>
+              </div>
+              <div v-if="menu.image" class="mt-3">
+                <img
+                  :src="withBaseUrl(menu.image)"
+                  alt="Menu image"
+                  class="h-20 w-28 rounded-xl object-cover"
+                />
+              </div>
+            </article>
+            <p v-if="restaurantMenus.length === 0" class="text-sm text-clay-700">
+              Hozircha menyular yo'q.
             </p>
           </div>
         </div>
@@ -610,6 +1205,263 @@ onMounted(() => {
             isSaving
               ? 'Saqlanmoqda...'
               : modalMode === 'create'
+                ? 'Create'
+                : 'Update'
+          }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div
+    v-if="isRestaurantModalOpen"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-6"
+    @click="closeRestaurantModal"
+  >
+    <div
+      class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-xl"
+      @click.stop
+    >
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
+            {{ restaurantModalMode === 'create' ? 'Create Restaurant' : 'Update Restaurant' }}
+          </p>
+          <h3 class="mt-2 text-2xl font-semibold text-clay-950">
+            {{ restaurantModalMode === 'create' ? 'New Restaurant' : selectedRestaurant?.name_uz }}
+          </h3>
+        </div>
+        <button
+          type="button"
+          class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
+          @click="closeRestaurantModal"
+        >
+          Close
+        </button>
+      </div>
+
+      <form class="mt-6 grid gap-4" @submit.prevent="submitRestaurantModal">
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Name (UZ)</span>
+          <input
+            v-model="restaurantForm.name_uz"
+            type="text"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          />
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Name (RU)</span>
+          <input
+            v-model="restaurantForm.name_ru"
+            type="text"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          />
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Name (EN)</span>
+          <input
+            v-model="restaurantForm.name_en"
+            type="text"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          />
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Description (UZ)</span>
+          <textarea
+            v-model="restaurantForm.description_uz"
+            rows="3"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          ></textarea>
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Description (RU)</span>
+          <textarea
+            v-model="restaurantForm.description_ru"
+            rows="3"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          ></textarea>
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Description (EN)</span>
+          <textarea
+            v-model="restaurantForm.description_en"
+            rows="3"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          ></textarea>
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Images (optional)</span>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-700"
+            @change="handleRestaurantImageChange"
+          />
+        </label>
+        <div v-if="restaurantImagePreviews.length" class="grid gap-3 sm:grid-cols-2">
+          <div
+            v-for="(preview, index) in restaurantImagePreviews"
+            :key="preview.url"
+            class="flex items-center gap-3 rounded-2xl border border-clay-100/90 bg-sand-50 p-3"
+          >
+            <img
+              :src="preview.url"
+              :alt="preview.name"
+              class="h-16 w-24 rounded-xl object-cover"
+            />
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-clay-900">{{ preview.name }}</p>
+              <p class="text-xs text-clay-600">
+                {{ Math.ceil(preview.size / 1024) }} KB
+              </p>
+            </div>
+            <button
+              type="button"
+              class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-red-50"
+              @click="removeRestaurantImage(index)"
+            >
+              Otmena
+            </button>
+          </div>
+        </div>
+        <button
+          class="inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+          type="submit"
+          :disabled="isSavingRestaurant"
+        >
+          {{
+            isSavingRestaurant
+              ? 'Saqlanmoqda...'
+              : restaurantModalMode === 'create'
+                ? 'Create'
+                : 'Update'
+          }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div
+    v-if="isMenuModalOpen"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-6"
+    @click="closeMenuModal"
+  >
+    <div
+      class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-xl"
+      @click.stop
+    >
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
+            {{ menuModalMode === 'create' ? 'Create Menu' : 'Update Menu' }}
+          </p>
+          <h3 class="mt-2 text-2xl font-semibold text-clay-950">
+            {{ menuModalMode === 'create' ? 'New Menu' : selectedMenu?.name_uz }}
+          </h3>
+        </div>
+        <button
+          type="button"
+          class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
+          @click="closeMenuModal"
+        >
+          Close
+        </button>
+      </div>
+
+      <form class="mt-6 grid gap-4" @submit.prevent="submitMenuModal">
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Restaurant</span>
+          <select
+            v-model="menuForm.restaurant_id"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          >
+            <option value="" disabled>Select restaurant</option>
+            <option v-for="restaurant in restaurants" :key="restaurant.id" :value="restaurant.id">
+              {{ restaurant.name_uz }}
+            </option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Name (UZ)</span>
+          <input
+            v-model="menuForm.name_uz"
+            type="text"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          />
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Name (RU)</span>
+          <input
+            v-model="menuForm.name_ru"
+            type="text"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          />
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Name (EN)</span>
+          <input
+            v-model="menuForm.name_en"
+            type="text"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+            required
+          />
+        </label>
+        <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+          <span>Image ({{ menuModalMode === 'create' ? 'required' : 'optional' }})</span>
+          <input
+            type="file"
+            accept="image/*"
+            class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-700"
+            @change="handleMenuImageChange"
+          />
+        </label>
+        <div v-if="menuImagePreview" class="flex items-center gap-3 rounded-2xl border border-clay-100/90 bg-sand-50 p-3">
+          <img
+            :src="menuImagePreview.url"
+            :alt="menuImagePreview.name"
+            class="h-16 w-24 rounded-xl object-cover"
+          />
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-clay-900">{{ menuImagePreview.name }}</p>
+            <p class="text-xs text-clay-600">
+              {{ Math.ceil(menuImagePreview.size / 1024) }} KB
+            </p>
+          </div>
+          <button
+            type="button"
+            class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-red-50"
+            @click="clearMenuImage"
+          >
+            Otmena
+          </button>
+        </div>
+        <div v-else-if="menuModalMode === 'update' && selectedMenu?.image" class="rounded-2xl border border-clay-100/90 bg-sand-50 p-3">
+          <p class="text-xs text-clay-600">Current image</p>
+          <img
+            :src="withBaseUrl(selectedMenu.image)"
+            alt="Menu image"
+            class="mt-2 h-20 w-28 rounded-xl object-cover"
+          />
+        </div>
+        <button
+          class="inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+          type="submit"
+          :disabled="isSavingMenu"
+        >
+          {{
+            isSavingMenu
+              ? 'Saqlanmoqda...'
+              : menuModalMode === 'create'
                 ? 'Create'
                 : 'Update'
           }}
