@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import {
   API_BASE_URL,
   withBaseUrl,
@@ -7,6 +8,8 @@ import {
   setCookie,
   deleteCookie,
 } from '../api'
+
+const { t } = useI18n()
 
 const username = ref('')
 const password = ref('')
@@ -105,11 +108,11 @@ const fetchRooms = async () => {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
-      throw new Error('Xonalarni yuklashda xatolik yuz berdi.')
+      throw new Error(t('admin.errors.roomsLoad'))
     }
     rooms.value = await res.json()
   } catch (error) {
-    roomsError.value = error?.message || 'Xonalarni yuklashda xatolik yuz berdi.'
+    roomsError.value = error?.message || t('admin.errors.roomsLoad')
   } finally {
     isLoadingRooms.value = false
   }
@@ -123,11 +126,11 @@ const fetchRestaurants = async () => {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
-      throw new Error('Restoranlarni yuklashda xatolik yuz berdi.')
+      throw new Error(t('admin.errors.restaurantsLoad'))
     }
     restaurants.value = await res.json()
   } catch (error) {
-    restaurantsError.value = error?.message || 'Restoranlarni yuklashda xatolik yuz berdi.'
+    restaurantsError.value = error?.message || t('admin.errors.restaurantsLoad')
   } finally {
     isLoadingRestaurants.value = false
   }
@@ -141,11 +144,11 @@ const fetchMenus = async () => {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
-      throw new Error('Restoran menyularini yuklashda xatolik yuz berdi.')
+      throw new Error(t('admin.errors.menusLoad'))
     }
     restaurantMenus.value = await res.json()
   } catch (error) {
-    menusError.value = error?.message || 'Restoran menyularini yuklashda xatolik yuz berdi.'
+    menusError.value = error?.message || t('admin.errors.menusLoad')
   } finally {
     isLoadingMenus.value = false
   }
@@ -166,23 +169,23 @@ const login = async () => {
 
     if (!res.ok) {
       if (res.status === 401) {
-        throw new Error("Login yoki parol notog'ri.")
+        throw new Error(t('admin.errors.invalidCredentials'))
       }
       if (res.status === 500) {
-        throw new Error("Admin ma'lumotlari sozlanmagan.")
+        throw new Error(t('admin.errors.adminNotConfigured'))
       }
-      throw new Error('Login muvaffaqiyatsiz.')
+      throw new Error(t('admin.errors.loginFailed'))
     }
 
     const data = await res.json()
     token.value = data.access_token
     setCookie('zafaron_access', data.access_token, 60)
-    setStatus('success', 'Login muvaffaqiyatli bajarildi.')
+    setStatus('success', t('admin.messages.loginSuccess'))
     await fetchRooms()
     await fetchRestaurants()
     await fetchMenus()
   } catch (error) {
-    setStatus('error', error?.message || 'Login muvaffaqiyatsiz.')
+    setStatus('error', error?.message || t('admin.errors.loginFailed'))
   } finally {
     isLoggingIn.value = false
   }
@@ -196,7 +199,7 @@ const logout = () => {
   rooms.value = []
   restaurants.value = []
   restaurantMenus.value = []
-  setStatus('success', 'Siz tizimdan chiqdingiz.')
+  setStatus('success', t('admin.messages.logoutSuccess'))
 }
 
 const openModal = (room) => {
@@ -440,14 +443,14 @@ const updateRoom = async () => {
     )
 
     if (!res.ok) {
-      throw new Error("Xona yangilashda xatolik yuz berdi.")
+      throw new Error(t('admin.errors.roomUpdate'))
     }
 
-    setStatus('success', 'Xona muvaffaqiyatli yangilandi.')
+    setStatus('success', t('admin.messages.roomUpdated'))
     await fetchRooms()
     closeModal()
   } catch (error) {
-    setStatus('error', error?.message || 'Xona yangilashda xatolik yuz berdi.')
+    setStatus('error', error?.message || t('admin.errors.roomUpdate'))
   } finally {
     isSaving.value = false
   }
@@ -474,14 +477,14 @@ const createRoom = async () => {
     })
 
     if (!res.ok) {
-      throw new Error('Xona yaratishda xatolik yuz berdi.')
+      throw new Error(t('admin.errors.roomCreate'))
     }
 
-    setStatus('success', 'Xona muvaffaqiyatli yaratildi.')
+    setStatus('success', t('admin.messages.roomCreated'))
     await fetchRooms()
     closeModal()
   } catch (error) {
-    setStatus('error', error?.message || 'Xona yaratishda xatolik yuz berdi.')
+    setStatus('error', error?.message || t('admin.errors.roomCreate'))
   } finally {
     isSaving.value = false
   }
@@ -518,14 +521,14 @@ const updateRestaurant = async () => {
     )
 
     if (!res.ok) {
-      throw new Error('Restoranni yangilashda xatolik yuz berdi.')
+      throw new Error(t('admin.errors.restaurantUpdate'))
     }
 
-    setRestaurantStatus('success', 'Restoran muvaffaqiyatli yangilandi.')
+    setRestaurantStatus('success', t('admin.messages.restaurantUpdated'))
     await fetchRestaurants()
     closeRestaurantModal()
   } catch (error) {
-    setRestaurantStatus('error', error?.message || 'Restoranni yangilashda xatolik yuz berdi.')
+    setRestaurantStatus('error', error?.message || t('admin.errors.restaurantUpdate'))
   } finally {
     isSavingRestaurant.value = false
   }
@@ -551,14 +554,14 @@ const createRestaurant = async () => {
     })
 
     if (!res.ok) {
-      throw new Error('Restoran yaratishda xatolik yuz berdi.')
+      throw new Error(t('admin.errors.restaurantCreate'))
     }
 
-    setRestaurantStatus('success', 'Restoran muvaffaqiyatli yaratildi.')
+    setRestaurantStatus('success', t('admin.messages.restaurantCreated'))
     await fetchRestaurants()
     closeRestaurantModal()
   } catch (error) {
-    setRestaurantStatus('error', error?.message || 'Restoran yaratishda xatolik yuz berdi.')
+    setRestaurantStatus('error', error?.message || t('admin.errors.restaurantCreate'))
   } finally {
     isSavingRestaurant.value = false
   }
@@ -573,7 +576,7 @@ const submitRestaurantModal = () => {
 
 const deleteRestaurant = async (restaurantId) => {
   if (!restaurantId) return
-  if (!window.confirm('Restoranni o‘chirishni tasdiqlaysizmi?')) return
+  if (!window.confirm(t('admin.confirm.deleteRestaurant'))) return
   isDeletingRestaurant.value = true
   clearRestaurantStatus()
   try {
@@ -582,12 +585,12 @@ const deleteRestaurant = async (restaurantId) => {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
-      throw new Error("Restoranni o'chirishda xatolik yuz berdi.")
+      throw new Error(t('admin.errors.restaurantDelete'))
     }
-    setRestaurantStatus('success', "Restoran o'chirildi.")
+    setRestaurantStatus('success', t('admin.messages.restaurantDeleted'))
     restaurants.value = restaurants.value.filter((item) => item.id !== restaurantId)
   } catch (error) {
-    setRestaurantStatus('error', error?.message || "Restoranni o'chirishda xatolik yuz berdi.")
+    setRestaurantStatus('error', error?.message || t('admin.errors.restaurantDelete'))
   } finally {
     isDeletingRestaurant.value = false
   }
@@ -619,14 +622,14 @@ const updateMenu = async () => {
     )
 
     if (!res.ok) {
-      throw new Error('Menyu yangilashda xatolik yuz berdi.')
+      throw new Error(t('admin.errors.menuUpdate'))
     }
 
-    setMenuStatus('success', 'Menyu muvaffaqiyatli yangilandi.')
+    setMenuStatus('success', t('admin.messages.menuUpdated'))
     await fetchMenus()
     closeMenuModal()
   } catch (error) {
-    setMenuStatus('error', error?.message || 'Menyu yangilashda xatolik yuz berdi.')
+    setMenuStatus('error', error?.message || t('admin.errors.menuUpdate'))
   } finally {
     isSavingMenu.value = false
   }
@@ -637,7 +640,7 @@ const createMenu = async () => {
   clearMenuStatus()
   try {
     if (!menuImage.value) {
-      throw new Error('Menyu uchun rasm tanlang.')
+      throw new Error(t('admin.errors.menuImageRequired'))
     }
     const payload = new FormData()
     payload.append('restaurant_id', String(menuForm.value.restaurant_id))
@@ -653,14 +656,14 @@ const createMenu = async () => {
     })
 
     if (!res.ok) {
-      throw new Error('Menyu yaratishda xatolik yuz berdi.')
+      throw new Error(t('admin.errors.menuCreate'))
     }
 
-    setMenuStatus('success', 'Menyu muvaffaqiyatli yaratildi.')
+    setMenuStatus('success', t('admin.messages.menuCreated'))
     await fetchMenus()
     closeMenuModal()
   } catch (error) {
-    setMenuStatus('error', error?.message || 'Menyu yaratishda xatolik yuz berdi.')
+    setMenuStatus('error', error?.message || t('admin.errors.menuCreate'))
   } finally {
     isSavingMenu.value = false
   }
@@ -675,7 +678,7 @@ const submitMenuModal = () => {
 
 const deleteMenu = async (menuId) => {
   if (!menuId) return
-  if (!window.confirm('Menyuni o‘chirishni tasdiqlaysizmi?')) return
+  if (!window.confirm(t('admin.confirm.deleteMenu'))) return
   isDeletingMenu.value = true
   clearMenuStatus()
   try {
@@ -684,12 +687,12 @@ const deleteMenu = async (menuId) => {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
-      throw new Error("Menyuni o'chirishda xatolik yuz berdi.")
+      throw new Error(t('admin.errors.menuDelete'))
     }
-    setMenuStatus('success', "Menyu o'chirildi.")
+    setMenuStatus('success', t('admin.messages.menuDeleted'))
     restaurantMenus.value = restaurantMenus.value.filter((item) => item.id !== menuId)
   } catch (error) {
-    setMenuStatus('error', error?.message || "Menyuni o'chirishda xatolik yuz berdi.")
+    setMenuStatus('error', error?.message || t('admin.errors.menuDelete'))
   } finally {
     isDeletingMenu.value = false
   }
@@ -697,7 +700,7 @@ const deleteMenu = async (menuId) => {
 
 const deleteRoom = async (roomId) => {
   if (!roomId) return
-  if (!window.confirm('Xonani o‘chirishni tasdiqlaysizmi?')) return
+  if (!window.confirm(t('admin.confirm.deleteRoom'))) return
   isDeleting.value = true
   try {
     const res = await fetch(`${API_BASE_URL}/hotel-rooms/${roomId}`, {
@@ -705,12 +708,12 @@ const deleteRoom = async (roomId) => {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
-      throw new Error("Xonani o'chirishda xatolik yuz berdi.")
+      throw new Error(t('admin.errors.roomDelete'))
     }
-    setStatus('success', "Xona o'chirildi.")
+    setStatus('success', t('admin.messages.roomDeleted'))
     rooms.value = rooms.value.filter((room) => room.id !== roomId)
   } catch (error) {
-    setStatus('error', error?.message || "Xonani o'chirishda xatolik yuz berdi.")
+    setStatus('error', error?.message || t('admin.errors.roomDelete'))
   } finally {
     isDeleting.value = false
   }
@@ -732,17 +735,19 @@ onMounted(() => {
         v-if="!isAuthenticated"
         class="rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
       >
-        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">Admin</p>
+        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
+          {{ t('admin.label') }}
+        </p>
         <h1 class="mt-2 font-display text-3xl font-semibold text-clay-950 sm:text-4xl">
-          Admin Login
+          {{ t('admin.loginTitle') }}
         </h1>
         <p class="mt-2 text-sm text-clay-800">
-          Login qiling, token cookie ichida 60 minutga saqlanadi.
+          {{ t('admin.loginDescription') }}
         </p>
 
         <form class="mt-6 space-y-4" @submit.prevent="login">
           <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-            <span>Username</span>
+            <span>{{ t('admin.username') }}</span>
             <input
               v-model="username"
               type="text"
@@ -752,7 +757,7 @@ onMounted(() => {
             />
           </label>
           <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-            <span>Password</span>
+            <span>{{ t('admin.password') }}</span>
             <input
               v-model="password"
               type="password"
@@ -766,7 +771,7 @@ onMounted(() => {
             type="submit"
             :disabled="isLoggingIn"
           >
-            {{ isLoggingIn ? 'Kutilmoqda...' : 'Login' }}
+            {{ isLoggingIn ? t('admin.loggingIn') : t('admin.loginButton') }}
           </button>
         </form>
 
@@ -789,8 +794,12 @@ onMounted(() => {
       >
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">Hotel Rooms</p>
-            <h2 class="mt-2 text-2xl font-semibold text-clay-950">Xonalar ro'yxati</h2>
+            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
+              {{ t('admin.sections.roomsLabel') }}
+            </p>
+            <h2 class="mt-2 text-2xl font-semibold text-clay-950">
+              {{ t('admin.sections.roomsTitle') }}
+            </h2>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <button
@@ -798,21 +807,21 @@ onMounted(() => {
               class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-clay-950/15 transition hover:-translate-y-0.5 hover:shadow-lg"
               @click="openCreateModal"
             >
-              Create
+              {{ t('common.create') }}
             </button>
             <button
               type="button"
               class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-xs font-semibold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
               @click="fetchRooms"
             >
-              Yangilash
+              {{ t('common.refresh') }}
             </button>
             <button
               type="button"
               class="rounded-full border border-clay-200/80 px-4 py-2 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
               @click="logout"
             >
-              Logout
+              {{ t('common.logout') }}
             </button>
           </div>
         </div>
@@ -830,7 +839,7 @@ onMounted(() => {
         </p>
 
         <div class="mt-5">
-          <p v-if="isLoadingRooms" class="text-sm text-clay-700">Yuklanmoqda...</p>
+          <p v-if="isLoadingRooms" class="text-sm text-clay-700">{{ t('common.loading') }}</p>
           <p v-else-if="roomsError" class="text-sm text-red-600">
             {{ roomsError }}
           </p>
@@ -850,7 +859,7 @@ onMounted(() => {
                 </div>
                 <div class="flex items-center gap-2">
                   <span class="rounded-full bg-clay-500/12 px-3 py-1 text-xs font-semibold text-clay-700">
-                    ID: {{ room.id }}
+                    {{ t('admin.labels.id') }}: {{ room.id }}
                   </span>
                   <button
                     type="button"
@@ -858,7 +867,7 @@ onMounted(() => {
                     :disabled="isDeleting"
                     @click.stop="deleteRoom(room.id)"
                   >
-                    Delete
+                    {{ t('common.delete') }}
                   </button>
                 </div>
               </div>
@@ -868,13 +877,13 @@ onMounted(() => {
                   v-for="image in room.room_images"
                   :key="image"
                   :src="withBaseUrl(image)"
-                  alt="Room image"
+                  :alt="t('admin.alt.roomImage')"
                   class="h-16 w-24 rounded-xl object-cover shadow-sm"
                 />
               </div>
             </article>
             <p v-if="rooms.length === 0" class="text-sm text-clay-700">
-              Hozircha xonalar yo'q.
+              {{ t('admin.empty.rooms') }}
             </p>
           </div>
         </div>
@@ -886,8 +895,12 @@ onMounted(() => {
       >
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">Restaurants</p>
-            <h2 class="mt-2 text-2xl font-semibold text-clay-950">Restoranlar ro'yxati</h2>
+            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
+              {{ t('admin.sections.restaurantsLabel') }}
+            </p>
+            <h2 class="mt-2 text-2xl font-semibold text-clay-950">
+              {{ t('admin.sections.restaurantsTitle') }}
+            </h2>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <button
@@ -895,14 +908,14 @@ onMounted(() => {
               class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-clay-950/15 transition hover:-translate-y-0.5 hover:shadow-lg"
               @click="openCreateRestaurantModal"
             >
-              Create
+              {{ t('common.create') }}
             </button>
             <button
               type="button"
               class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-xs font-semibold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
               @click="fetchRestaurants"
             >
-              Yangilash
+              {{ t('common.refresh') }}
             </button>
           </div>
         </div>
@@ -920,7 +933,7 @@ onMounted(() => {
         </p>
 
         <div class="mt-5">
-          <p v-if="isLoadingRestaurants" class="text-sm text-clay-700">Yuklanmoqda...</p>
+          <p v-if="isLoadingRestaurants" class="text-sm text-clay-700">{{ t('common.loading') }}</p>
           <p v-else-if="restaurantsError" class="text-sm text-red-600">
             {{ restaurantsError }}
           </p>
@@ -936,7 +949,9 @@ onMounted(() => {
                   <h3 class="text-lg font-semibold text-clay-950">
                     {{ restaurant.name_uz }}
                   </h3>
-                  <p class="text-xs text-clay-700">ID: {{ restaurant.id }}</p>
+                  <p class="text-xs text-clay-700">
+                    {{ t('admin.labels.id') }}: {{ restaurant.id }}
+                  </p>
                 </div>
                 <button
                   type="button"
@@ -944,7 +959,7 @@ onMounted(() => {
                   :disabled="isDeletingRestaurant"
                   @click.stop="deleteRestaurant(restaurant.id)"
                 >
-                  Delete
+                  {{ t('common.delete') }}
                 </button>
               </div>
               <p class="mt-2 text-sm text-clay-800">{{ restaurant.description_uz }}</p>
@@ -953,13 +968,13 @@ onMounted(() => {
                   v-for="image in restaurant.images"
                   :key="image"
                   :src="withBaseUrl(image)"
-                  alt="Restaurant image"
+                  :alt="t('admin.alt.restaurantImage')"
                   class="h-16 w-24 rounded-xl object-cover"
                 />
               </div>
             </article>
             <p v-if="restaurants.length === 0" class="text-sm text-clay-700">
-              Hozircha restoranlar yo'q.
+              {{ t('admin.empty.restaurants') }}
             </p>
           </div>
         </div>
@@ -972,9 +987,11 @@ onMounted(() => {
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
-              Restaurant Menus
+              {{ t('admin.sections.menusLabel') }}
             </p>
-            <h2 class="mt-2 text-2xl font-semibold text-clay-950">Restoran menyulari</h2>
+            <h2 class="mt-2 text-2xl font-semibold text-clay-950">
+              {{ t('admin.sections.menusTitle') }}
+            </h2>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <button
@@ -982,14 +999,14 @@ onMounted(() => {
               class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-clay-950/15 transition hover:-translate-y-0.5 hover:shadow-lg"
               @click="openCreateMenuModal"
             >
-              Create
+              {{ t('common.create') }}
             </button>
             <button
               type="button"
               class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-xs font-semibold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
               @click="fetchMenus"
             >
-              Yangilash
+              {{ t('common.refresh') }}
             </button>
           </div>
         </div>
@@ -1007,7 +1024,7 @@ onMounted(() => {
         </p>
 
         <div class="mt-5">
-          <p v-if="isLoadingMenus" class="text-sm text-clay-700">Yuklanmoqda...</p>
+          <p v-if="isLoadingMenus" class="text-sm text-clay-700">{{ t('common.loading') }}</p>
           <p v-else-if="menusError" class="text-sm text-red-600">
             {{ menusError }}
           </p>
@@ -1023,7 +1040,9 @@ onMounted(() => {
                   <h3 class="text-lg font-semibold text-clay-950">
                     {{ menu.name_uz }}
                   </h3>
-                  <p class="text-xs text-clay-700">Restaurant ID: {{ menu.restaurant_id }}</p>
+                  <p class="text-xs text-clay-700">
+                    {{ t('admin.labels.restaurantId') }}: {{ menu.restaurant_id }}
+                  </p>
                 </div>
                 <button
                   type="button"
@@ -1031,19 +1050,19 @@ onMounted(() => {
                   :disabled="isDeletingMenu"
                   @click.stop="deleteMenu(menu.id)"
                 >
-                  Delete
+                  {{ t('common.delete') }}
                 </button>
               </div>
               <div v-if="menu.image" class="mt-3">
                 <img
                   :src="withBaseUrl(menu.image)"
-                  alt="Menu image"
+                  :alt="t('admin.alt.menuImage')"
                   class="h-20 w-28 rounded-xl object-cover"
                 />
               </div>
             </article>
             <p v-if="restaurantMenus.length === 0" class="text-sm text-clay-700">
-              Hozircha menyular yo'q.
+              {{ t('admin.empty.menus') }}
             </p>
           </div>
         </div>
@@ -1063,10 +1082,10 @@ onMounted(() => {
       <div class="flex items-start justify-between gap-3">
         <div>
           <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
-            {{ modalMode === 'create' ? 'Create Room' : 'Update Room' }}
+            {{ modalMode === 'create' ? t('admin.modals.createRoom') : t('admin.modals.updateRoom') }}
           </p>
           <h3 class="mt-2 text-2xl font-semibold text-clay-950">
-            {{ modalMode === 'create' ? 'New Room' : selectedRoom?.room_name_uz }}
+            {{ modalMode === 'create' ? t('admin.modals.newRoom') : selectedRoom?.room_name_uz }}
           </h3>
         </div>
         <button
@@ -1074,13 +1093,13 @@ onMounted(() => {
           class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
           @click="closeModal"
         >
-          Close
+          {{ t('common.close') }}
         </button>
       </div>
 
       <form class="mt-6 grid gap-4" @submit.prevent="submitModal">
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Room name (UZ)</span>
+          <span>{{ t('admin.form.roomNameUz') }}</span>
           <input
             v-model="form.room_name_uz"
             type="text"
@@ -1089,7 +1108,7 @@ onMounted(() => {
           />
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Room name (RU)</span>
+          <span>{{ t('admin.form.roomNameRu') }}</span>
           <input
             v-model="form.room_name_ru"
             type="text"
@@ -1098,7 +1117,7 @@ onMounted(() => {
           />
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Room name (EN)</span>
+          <span>{{ t('admin.form.roomNameEn') }}</span>
           <input
             v-model="form.room_name_en"
             type="text"
@@ -1107,7 +1126,7 @@ onMounted(() => {
           />
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Description (UZ)</span>
+          <span>{{ t('admin.form.descriptionUz') }}</span>
           <textarea
             v-model="form.room_description_uz"
             rows="3"
@@ -1116,7 +1135,7 @@ onMounted(() => {
           ></textarea>
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Description (RU)</span>
+          <span>{{ t('admin.form.descriptionRu') }}</span>
           <textarea
             v-model="form.room_description_ru"
             rows="3"
@@ -1125,7 +1144,7 @@ onMounted(() => {
           ></textarea>
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Description (EN)</span>
+          <span>{{ t('admin.form.descriptionEn') }}</span>
           <textarea
             v-model="form.room_description_en"
             rows="3"
@@ -1135,7 +1154,7 @@ onMounted(() => {
         </label>
         <div class="grid gap-4 sm:grid-cols-2">
           <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-            <span>Price</span>
+            <span>{{ t('admin.form.price') }}</span>
             <input
               v-model="form.price"
               type="number"
@@ -1146,22 +1165,22 @@ onMounted(() => {
             />
           </label>
           <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-            <span>Room type</span>
+            <span>{{ t('admin.form.roomType') }}</span>
             <select
               v-model="form.room_type"
               class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
               required
             >
-              <option value="" disabled>Select type</option>
-              <option value="standard">Standard</option>
-              <option value="lux">Lux</option>
-              <option value="deluxe">Deluxe</option>
-              <option value="suite">Suite</option>
+              <option value="" disabled>{{ t('admin.form.roomTypePlaceholder') }}</option>
+              <option value="standard">{{ t('admin.roomTypes.standard') }}</option>
+              <option value="lux">{{ t('admin.roomTypes.lux') }}</option>
+              <option value="deluxe">{{ t('admin.roomTypes.deluxe') }}</option>
+              <option value="suite">{{ t('admin.roomTypes.suite') }}</option>
             </select>
           </label>
         </div>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Room images (optional)</span>
+          <span>{{ t('admin.form.roomImagesOptional') }}</span>
           <input
             type="file"
             accept="image/*"
@@ -1192,7 +1211,7 @@ onMounted(() => {
               class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-red-50"
               @click="removeImage(index)"
             >
-              Otmena
+              {{ t('common.cancel') }}
             </button>
           </div>
         </div>
@@ -1203,10 +1222,10 @@ onMounted(() => {
         >
           {{
             isSaving
-              ? 'Saqlanmoqda...'
+              ? t('common.saving')
               : modalMode === 'create'
-                ? 'Create'
-                : 'Update'
+                ? t('common.create')
+                : t('common.update')
           }}
         </button>
       </form>
@@ -1225,10 +1244,18 @@ onMounted(() => {
       <div class="flex items-start justify-between gap-3">
         <div>
           <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
-            {{ restaurantModalMode === 'create' ? 'Create Restaurant' : 'Update Restaurant' }}
+            {{
+              restaurantModalMode === 'create'
+                ? t('admin.modals.createRestaurant')
+                : t('admin.modals.updateRestaurant')
+            }}
           </p>
           <h3 class="mt-2 text-2xl font-semibold text-clay-950">
-            {{ restaurantModalMode === 'create' ? 'New Restaurant' : selectedRestaurant?.name_uz }}
+            {{
+              restaurantModalMode === 'create'
+                ? t('admin.modals.newRestaurant')
+                : selectedRestaurant?.name_uz
+            }}
           </h3>
         </div>
         <button
@@ -1236,13 +1263,13 @@ onMounted(() => {
           class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
           @click="closeRestaurantModal"
         >
-          Close
+          {{ t('common.close') }}
         </button>
       </div>
 
       <form class="mt-6 grid gap-4" @submit.prevent="submitRestaurantModal">
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Name (UZ)</span>
+          <span>{{ t('admin.form.nameUz') }}</span>
           <input
             v-model="restaurantForm.name_uz"
             type="text"
@@ -1251,7 +1278,7 @@ onMounted(() => {
           />
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Name (RU)</span>
+          <span>{{ t('admin.form.nameRu') }}</span>
           <input
             v-model="restaurantForm.name_ru"
             type="text"
@@ -1260,7 +1287,7 @@ onMounted(() => {
           />
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Name (EN)</span>
+          <span>{{ t('admin.form.nameEn') }}</span>
           <input
             v-model="restaurantForm.name_en"
             type="text"
@@ -1269,7 +1296,7 @@ onMounted(() => {
           />
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Description (UZ)</span>
+          <span>{{ t('admin.form.descriptionUz') }}</span>
           <textarea
             v-model="restaurantForm.description_uz"
             rows="3"
@@ -1278,7 +1305,7 @@ onMounted(() => {
           ></textarea>
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Description (RU)</span>
+          <span>{{ t('admin.form.descriptionRu') }}</span>
           <textarea
             v-model="restaurantForm.description_ru"
             rows="3"
@@ -1287,7 +1314,7 @@ onMounted(() => {
           ></textarea>
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Description (EN)</span>
+          <span>{{ t('admin.form.descriptionEn') }}</span>
           <textarea
             v-model="restaurantForm.description_en"
             rows="3"
@@ -1296,7 +1323,7 @@ onMounted(() => {
           ></textarea>
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Images (optional)</span>
+          <span>{{ t('admin.form.imagesOptional') }}</span>
           <input
             type="file"
             accept="image/*"
@@ -1327,7 +1354,7 @@ onMounted(() => {
               class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-red-50"
               @click="removeRestaurantImage(index)"
             >
-              Otmena
+              {{ t('common.cancel') }}
             </button>
           </div>
         </div>
@@ -1338,10 +1365,10 @@ onMounted(() => {
         >
           {{
             isSavingRestaurant
-              ? 'Saqlanmoqda...'
+              ? t('common.saving')
               : restaurantModalMode === 'create'
-                ? 'Create'
-                : 'Update'
+                ? t('common.create')
+                : t('common.update')
           }}
         </button>
       </form>
@@ -1360,10 +1387,10 @@ onMounted(() => {
       <div class="flex items-start justify-between gap-3">
         <div>
           <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
-            {{ menuModalMode === 'create' ? 'Create Menu' : 'Update Menu' }}
+            {{ menuModalMode === 'create' ? t('admin.modals.createMenu') : t('admin.modals.updateMenu') }}
           </p>
           <h3 class="mt-2 text-2xl font-semibold text-clay-950">
-            {{ menuModalMode === 'create' ? 'New Menu' : selectedMenu?.name_uz }}
+            {{ menuModalMode === 'create' ? t('admin.modals.newMenu') : selectedMenu?.name_uz }}
           </h3>
         </div>
         <button
@@ -1371,26 +1398,26 @@ onMounted(() => {
           class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
           @click="closeMenuModal"
         >
-          Close
+          {{ t('common.close') }}
         </button>
       </div>
 
       <form class="mt-6 grid gap-4" @submit.prevent="submitMenuModal">
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Restaurant</span>
+          <span>{{ t('admin.form.restaurant') }}</span>
           <select
             v-model="menuForm.restaurant_id"
             class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
             required
           >
-            <option value="" disabled>Select restaurant</option>
+            <option value="" disabled>{{ t('admin.form.selectRestaurant') }}</option>
             <option v-for="restaurant in restaurants" :key="restaurant.id" :value="restaurant.id">
               {{ restaurant.name_uz }}
             </option>
           </select>
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Name (UZ)</span>
+          <span>{{ t('admin.form.nameUz') }}</span>
           <input
             v-model="menuForm.name_uz"
             type="text"
@@ -1399,7 +1426,7 @@ onMounted(() => {
           />
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Name (RU)</span>
+          <span>{{ t('admin.form.nameRu') }}</span>
           <input
             v-model="menuForm.name_ru"
             type="text"
@@ -1408,7 +1435,7 @@ onMounted(() => {
           />
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Name (EN)</span>
+          <span>{{ t('admin.form.nameEn') }}</span>
           <input
             v-model="menuForm.name_en"
             type="text"
@@ -1417,7 +1444,13 @@ onMounted(() => {
           />
         </label>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-          <span>Image ({{ menuModalMode === 'create' ? 'required' : 'optional' }})</span>
+          <span>
+            {{
+              t('admin.form.menuImage', {
+                requirement: menuModalMode === 'create' ? t('admin.required') : t('admin.optional'),
+              })
+            }}
+          </span>
           <input
             type="file"
             accept="image/*"
@@ -1442,14 +1475,14 @@ onMounted(() => {
             class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-red-50"
             @click="clearMenuImage"
           >
-            Otmena
+            {{ t('common.cancel') }}
           </button>
         </div>
         <div v-else-if="menuModalMode === 'update' && selectedMenu?.image" class="rounded-2xl border border-clay-100/90 bg-sand-50 p-3">
-          <p class="text-xs text-clay-600">Current image</p>
+          <p class="text-xs text-clay-600">{{ t('admin.labels.currentImage') }}</p>
           <img
             :src="withBaseUrl(selectedMenu.image)"
-            alt="Menu image"
+            :alt="t('admin.alt.menuImage')"
             class="mt-2 h-20 w-28 rounded-xl object-cover"
           />
         </div>
@@ -1460,10 +1493,10 @@ onMounted(() => {
         >
           {{
             isSavingMenu
-              ? 'Saqlanmoqda...'
+              ? t('common.saving')
               : menuModalMode === 'create'
-                ? 'Create'
-                : 'Update'
+                ? t('common.create')
+                : t('common.update')
           }}
         </button>
       </form>

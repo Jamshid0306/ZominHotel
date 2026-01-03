@@ -187,7 +187,7 @@ onBeforeUnmount(() => {
           />
         </div>
         <div
-          class="pointer-events-none absolute inset-y-0 left-0 w-44 bg-gradient-to-r from-sand-100 via-sand-100/70 to-transparent"
+          class="pointer-events-none absolute inset-y-0 left-0 w-44 bg-linear-to-r from-sand-100 via-sand-100/70 to-transparent"
         ></div>
       </div>
     </div>
@@ -217,7 +217,7 @@ onBeforeUnmount(() => {
             :key="menu.id"
             class="min-w-full p-6 sm:p-8"
           >
-            <div class="flex flex-col w-1/4 gap-2 border border-gray-200 rounded-[10px] p-2">
+            <div class="mx-auto flex w-full max-w-xs flex-col gap-2 rounded-[10px] border border-gray-200 p-2 sm:max-w-sm">
               <img
                 :src="withBaseUrl(menu.image)"
                 :alt="localizedField(menu, 'name')"
@@ -234,6 +234,15 @@ onBeforeUnmount(() => {
         <div v-if="menuSlides.length === 0" class="p-6 text-sm text-clay-700">
           {{ t('restaurantsPage.menuEmpty') }}
         </div>
+      </div>
+
+      <div class="flex flex-wrap justify-end">
+        <RouterLink
+          to="/restaurants"
+          class="inline-flex items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
+        >
+          {{ t('actions.viewRestaurants') }}
+        </RouterLink>
       </div>
     </div>
     <p v-else class="text-sm text-clay-700">{{ t('restaurantsPage.empty') }}</p>

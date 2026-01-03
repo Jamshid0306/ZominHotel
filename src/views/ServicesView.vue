@@ -1,9 +1,10 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 const { t, tm } = useI18n()
+const openBookingModal = inject('openBookingModal', () => {})
 
 const services = computed(() => {
   const items = tm('amenities')
@@ -25,12 +26,13 @@ const services = computed(() => {
           {{ t('servicesPage.description') }}
         </p>
         <div class="flex flex-wrap items-center gap-3">
-          <RouterLink
-            :to="{ path: '/', hash: '#booking' }"
+          <button
+            type="button"
             class="inline-flex items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
+            @click="openBookingModal"
           >
             {{ t('actions.book') }}
-          </RouterLink>
+          </button>
           <RouterLink
             to="/"
             class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-5 py-3 text-sm font-bold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"

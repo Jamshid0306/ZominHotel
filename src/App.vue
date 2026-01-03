@@ -1,13 +1,34 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, provide } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import LanguageDropdown from './components/LanguageDropdown.vue'
+import BookingModal from './components/BookingModal.vue'
 
 const { t } = useI18n()
 const route = useRoute()
 const year = new Date().getFullYear()
 const isAdminRoute = computed(() => route.path.startsWith('/admin'))
+const isMobileMenuOpen = ref(false)
+const isBookingModalOpen = ref(false)
+
+const openBookingModal = () => {
+  isBookingModalOpen.value = true
+}
+
+const closeBookingModal = () => {
+  isBookingModalOpen.value = false
+}
+
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+}
+
+provide('openBookingModal', openBookingModal)
 </script>
 
 <template>
@@ -26,67 +47,121 @@ const isAdminRoute = computed(() => route.path.startsWith('/admin'))
             to="/"
             class="text-lg font-display font-semibold tracking-widest text-clay-900 transition hover:text-clay-700"
           >
-            <img src="./assets/images/logo.png" :alt="t('common.logoAlt')" class="w-15" />
+            <img src="/logo.png" :alt="t('common.logoAlt')" class="w-20" />
           </RouterLink>
         </div>
         <div class="hidden items-center gap-2 md:flex">
+          <RouterLink
+            to="/"
+            class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+            >{{ t('nav.home') }}</RouterLink
+          >
           <RouterLink
             to="/rooms"
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
             >{{ t('nav.rooms') }}</RouterLink
           >
           <RouterLink
+            to="/restaurants"
+            class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+            >{{ t('nav.restaurants') }}</RouterLink
+          >
+          <RouterLink
             to="/services"
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
-            >{{ t('nav.amenities') }}</RouterLink
+            >{{ t('nav.services') }}</RouterLink
           >
           <RouterLink
             :to="{ path: '/', hash: '#contact' }"
             class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
-            >{{ t('nav.contact') }}</RouterLink
-          >
-          <RouterLink
-            to="/rooms"
-            class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
-            >{{ t('nav.all') }}</RouterLink
+            >{{ t('nav.contacts') }}</RouterLink
           >
           <LanguageDropdown />
         </div>
-        <RouterLink
-          :to="{ path: '/', hash: '#booking' }"
-          class="inline-flex items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
-        >
-          {{ t('actions.book') }}
-        </RouterLink>
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            class="hidden items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl sm:inline-flex"
+            @click="openBookingModal"
+          >
+            {{ t('actions.book') }}
+          </button>
+          <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-3 py-2 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10 md:hidden"
+            @click="toggleMobileMenu"
+            :aria-expanded="isMobileMenuOpen"
+            :aria-label="t('common.toggleMenu')"
+          >
+            <span class="relative h-4 w-5">
+              <span
+                class="absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current transition duration-300"
+                :class="isMobileMenuOpen ? 'translate-y-1.5 rotate-45' : ''"
+              ></span>
+              <span
+                class="absolute left-0 top-2 h-0.5 w-5 rounded-full bg-current transition duration-300"
+                :class="isMobileMenuOpen ? 'opacity-0' : ''"
+              ></span>
+              <span
+                class="absolute left-0 top-4 h-0.5 w-5 rounded-full bg-current transition duration-300"
+                :class="isMobileMenuOpen ? '-translate-y-2 rotate-[-45deg]' : ''"
+              ></span>
+            </span>
+          </button>
+        </div>
       </div>
-      <div class="flex flex-wrap items-center gap-2 px-4 pb-3 md:hidden">
+      <div
+        v-if="isMobileMenuOpen"
+        class="flex flex-col gap-2 px-4 pb-4 md:hidden"
+      >
         <RouterLink
-          class="rounded-full px-3 py-2 text-sm font-semibold text-clay-800"
-          :to="{ path: '/', hash: '#rooms' }"
+          class="rounded-xl px-3 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+          to="/"
+          @click="closeMobileMenu"
+          >{{ t('nav.home') }}</RouterLink
+        >
+        <RouterLink
+          class="rounded-xl px-3 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+          to="/rooms"
+          @click="closeMobileMenu"
           >{{ t('nav.rooms') }}</RouterLink
         >
         <RouterLink
-          class="rounded-full px-3 py-2 text-sm font-semibold text-clay-800"
-          :to="{ path: '/', hash: '#amenities' }"
-          >{{ t('nav.amenities') }}</RouterLink
+          class="rounded-xl px-3 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+          to="/restaurants"
+          @click="closeMobileMenu"
+          >{{ t('nav.restaurants') }}</RouterLink
         >
         <RouterLink
-          class="rounded-full px-3 py-2 text-sm font-semibold text-clay-800"
+          class="rounded-xl px-3 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+          to="/services"
+          @click="closeMobileMenu"
+          >{{ t('nav.services') }}</RouterLink
+        >
+        <RouterLink
+          class="rounded-xl px-3 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
           :to="{ path: '/', hash: '#contact' }"
-          >{{ t('nav.contact') }}</RouterLink
+          @click="closeMobileMenu"
+          >{{ t('nav.contacts') }}</RouterLink
         >
-        <RouterLink
-          class="rounded-full px-3 py-2 text-sm font-semibold text-clay-800"
-          to="/rooms"
-          >{{ t('nav.all') }}</RouterLink
+        <button
+          type="button"
+          class="rounded-xl px-3 py-2 text-left text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+          @click="
+            openBookingModal();
+            closeMobileMenu();
+          "
         >
-        <div class="ml-auto">
+          {{ t('actions.book') }}
+        </button>
+        <div class="pt-2">
           <LanguageDropdown compact />
         </div>
       </div>
     </header>
 
     <RouterView />
+    <BookingModal :open="isBookingModalOpen" @close="closeBookingModal" />
 
     <footer v-if="!isAdminRoute" class="mt-14 border-t border-clay-100/70 bg-sand-50/90">
       <div
@@ -105,6 +180,11 @@ const isAdminRoute = computed(() => route.path.startsWith('/admin'))
               class="rounded-full bg-clay-500/12 px-3 py-1 hover:bg-clay-500/18"
               href="tel:+998702289999"
               >+998 70 228 99 99</a
+            >
+            <a
+              class="rounded-full bg-clay-500/12 px-3 py-1 hover:bg-clay-500/18"
+              href="tel:+998715010606"
+              >+998 71 501 06 06</a
             >
             <span class="text-clay-700">•</span>
             <span>{{ t('common.emailLabel') }}</span>
@@ -150,12 +230,13 @@ const isAdminRoute = computed(() => route.path.startsWith('/admin'))
             >
               {{ t('footer.bookingTitle') }}
             </p>
-            <RouterLink
+            <button
+              type="button"
               class="inline-flex items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
-              :to="{ path: '/', hash: '#booking' }"
+              @click="openBookingModal"
             >
               {{ t('actions.book') }}
-            </RouterLink>
+            </button>
             <p class="text-xs text-clay-700">
               {{ t('footer.questionsLabel') }}
               <a

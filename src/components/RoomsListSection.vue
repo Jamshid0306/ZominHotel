@@ -1,10 +1,11 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, inject } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { API_BASE_URL, withBaseUrl } from '../api'
 
 const { t, locale } = useI18n()
+const openBookingModal = inject('openBookingModal', () => {})
 
 const rooms = ref([])
 const isLoading = ref(false)
@@ -28,11 +29,11 @@ const fetchRooms = async () => {
   try {
     const res = await fetch(`${API_BASE_URL}/hotel-rooms`)
     if (!res.ok) {
-      throw new Error('Xonalarni yuklashda xatolik yuz berdi.')
+      throw new Error(t('roomsPage.loadError'))
     }
     rooms.value = await res.json()
   } catch (error) {
-    errorMessage.value = error?.message || 'Xonalarni yuklashda xatolik yuz berdi.'
+    errorMessage.value = error?.message || t('roomsPage.loadError')
   } finally {
     isLoading.value = false
   }
@@ -45,7 +46,7 @@ onMounted(() => {
 
 <template>
   <section class="mt-10 grid gap-5 md:grid-cols-2">
-    <p v-if="isLoading" class="text-sm text-clay-700">Yuklanmoqda...</p>
+    <p v-if="isLoading" class="text-sm text-clay-700">{{ t('common.loading') }}</p>
     <p v-else-if="errorMessage" class="text-sm text-red-600">
       {{ errorMessage }}
     </p>
@@ -73,12 +74,13 @@ onMounted(() => {
       <h3 class="mt-4 text-xl font-semibold text-clay-950">{{ getRoomName(room) }}</h3>
       <p class="mt-1 text-sm text-clay-800">{{ getRoomDescription(room) }}</p>
       <div class="mt-4 flex flex-wrap items-center gap-2">
-        <RouterLink
-          :to="{ path: '/', hash: '#booking' }"
+        <button
+          type="button"
           class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-sm font-bold text-white shadow-md shadow-clay-950/15 transition hover:-translate-y-0.5 hover:shadow-lg"
+          @click="openBookingModal"
         >
           {{ t('actions.startBooking') }}
-        </RouterLink>
+        </button>
         <RouterLink
           to="/"
           class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-sm font-semibold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
