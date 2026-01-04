@@ -105,7 +105,7 @@ provide('openBookingModal', openBookingModal)
               ></span>
               <span
                 class="absolute left-0 top-4 h-0.5 w-5 rounded-full bg-current transition duration-300"
-                :class="isMobileMenuOpen ? '-translate-y-2 rotate-[-45deg]' : ''"
+                :class="isMobileMenuOpen ? '-translate-y-2 -rotate-45' : ''"
               ></span>
             </span>
           </button>
