@@ -1,10 +1,24 @@
 import { createI18n } from 'vue-i18n'
 
-import amenityQuiet from './assets/images/slide-images/4.jpg'
 import amenityService from './assets/images/slide-images/8.jpg'
-import amenityMountain from './assets/images/slide-images/12.jpg'
-import amenityPool from './assets/images/slide-images/16.jpg'
-import amenityRestaurant from './assets/images/slide-images/17.jpg'
+import spa1 from './assets/images/services/spa1.jpg'
+import spa2 from './assets/images/services/spa2.jpg'
+import spa3 from './assets/images/services/spa3.jpg'
+import spa4 from './assets/images/services/spa4.jpg'
+import spa5 from './assets/images/services/spa5.jpg'
+import servicePlayground from './assets/images/services/playground.jpg'
+import gymOne from './assets/images/services/zal1.jpg'
+import gymTwo from './assets/images/services/zal2.jpg'
+import serviceRestaurantOne from './assets/images/services/restaurant1.jpg'
+import serviceRestaurantTwo from './assets/images/services/restaurant2.jpg'
+import serviceRestaurantThree from './assets/images/services/restaurant3.jpg'
+import restaurantAlaCarteOne from './assets/images/services/alcarte.jpg'
+import restaurantAlaCarteTwo from './assets/images/services/alcarte2.jpg'
+import chay from './assets/images/product-images/chay.jpg'
+import med from './assets/images/product-images/med.jpeg'
+import navat from './assets/images/product-images/navat.jpg'
+import shafran from './assets/images/product-images/shafran.jpg'
+import sol from './assets/images/product-images/sol.webp'
 
 export const supportedLocales = [
   { code: 'uz', label: 'UZ' },
@@ -309,39 +323,59 @@ const messages = {
     },
     amenities: [
       {
-        title: 'Sokinlik va qulaylik',
+        title: 'A la carte restoran',
         detail:
-          'Minimalistik interyer, yumshoq yoruglik va tabiiy materiallar sizni tinchlantiradi. Keng krovatlar, sokin ranglar va nozik aromalar har kuni chuqur dam olishga yordam beradi.',
-        image: amenityQuiet,
-        imageAlt: "Sokin interyer va yumshoq yorug'lik",
+          'Shef tanlagan taomlar, mahalliy va yevropa oshxonasining nafis uyg‘unligi bilan taqdim etiladi. Har bir taom buyurtma asosida yangi tayyorlanib, taʼm va ko‘rinish muvozanatini saqlaydi. Yumshoq yorug‘lik, jimgina musiqa va samimiy servis kechani unutilmas qiladi. Sharob kartasi va desertlar esa taʼm yakunini mukammal qiladi.',
+        image: restaurantAlaCarteOne,
+        imageAlt: 'A la carte restoran muhit',
+        images: [
+          { src: restaurantAlaCarteOne, alt: 'A la carte taomlar' },
+          { src: restaurantAlaCarteTwo, alt: 'Nafis taqdimot' },
+        ],
       },
       {
-        title: 'Xizmatlar seleksiyasi',
+        title: 'Spa zonalari',
         detail:
-          '24/7 konsyerj, shaxsiy transfer, hushtakday toza xonalar va ertalabgi kofe xizmati. Har bir so‘rov tezkor va samimiy xizmat bilan hal qilinadi.',
+          'Basseynlarda tongdan kechgacha suzish va tog‘ manzarasida dam olish mumkin. Turk hammomi va sauna tanani yengillashtirib, hushyorlik beradi. Professional massajlar esa mushaklarni bo‘shashtirib, ichki sokinlikni tiklaydi. Har bir hududda tozalik, iliq harorat va eʼtiborli servis kutadi.',
         image: amenityService,
-        imageAlt: 'Konsyerj xizmati',
+        imageAlt: 'Spa zonalari',
+        images: [
+          { src: spa1, alt: 'Panoramali basseyn' },
+          { src: spa2, alt: 'Turk hammomi' },
+          { src: spa3, alt: 'Massaj xonasi' },
+          { src: spa4, alt: 'Massaj xonasi' },
+          { src: spa5, alt: 'Massaj xonasi' },
+        ],
       },
       {
-        title: "Chimgon tog'larida",
+        title: "Bolalar o'yingohi",
         detail:
-          "Mehmonxona Chimgon tog'lari bag'rida, sayr yo'llari va tabiatga yaqin. Atrofda toza havo, qarag'ay hidi va tonggi sokinlik sizni kutadi.",
-        image: amenityMountain,
-        imageAlt: "Tog' manzarasi",
+          "Bolalar uchun maxsus o'yingoh xavfsiz va qulay muhitda tashkil etilgan. Rang-barang o'yinchoqlar, yumshoq qoplamalar va qulay zonalar kichkintoylarga quvonch bag'ishlaydi. Ota-onalar esa yaqin hududda bemalol dam olishlari mumkin. Har kuni tozalash va nazorat orqali sokin, toza muhit ta'minlanadi.",
+        image: servicePlayground,
+        imageAlt: "Bolalar o'yingohi",
       },
       {
-        title: 'Panoramali basseyn',
+        title: 'Fitnes zona',
         detail:
-          "Isitiladigan basseyn, tog' manzarasi va yumshoq yoritish bilan tongdan kechgacha hordiq. Yengil musiqa, sochiqlar va dam olish zonasi bilan to‘liq relax.",
-        image: amenityPool,
-        imageAlt: 'Panoramali basseyn',
+          'Zamonaviy trenajorlar, erkin vaznlar va kardio uskunalari bilan jihozlangan sport zali. Tonggi energiya yoki kechki mashg‘ulot uchun qulay muhit yaratilgan. Mutanosib yoritish, shamollatish va toza havo mashg‘ulotni yanada yoqimli qiladi. Ixtiyoriy sport dasturlari bilan sog‘lom ritmni ushlab turing.',
+        image: gymOne,
+        imageAlt: 'Fitnes zona',
+        images: [
+          { src: gymOne, alt: 'Fitnes trenajorlari' },
+          { src: gymTwo, alt: 'Sport zali' },
+        ],
       },
       {
-        title: 'Gurme restoran',
+        title: "Za'faron Restaurant",
         detail:
-          "Shef menyusi, mahalliy mahsulotlar va sham yorug'ida iliq kechki ovqat. Har bir taom ta’mi muvozanatli, servis esa sokin va nafis.",
-        image: amenityRestaurant,
-        imageAlt: 'Restoran interyeri',
+          "Za'faron Restaurant — milliy va yevropa taomlari uyg‘unligini taklif etuvchi nafis maskan. Nonushta va kechki ovqat paytida keng menyu, yangi mahsulotlar va muvozanatli taʼm sizni kutadi. Yorug‘, keng interyer va sokin musiqa muhiti dam olishni yanada yoqimli qiladi. Har bir xizmatda eʼtiborli servis va nozik taqdimot ustuvor.",
+        image: serviceRestaurantOne,
+        imageAlt: "Za'faron Restaurant interyeri",
+        images: [
+          { src: serviceRestaurantOne, alt: "Za'faron Restaurant" },
+          { src: serviceRestaurantTwo, alt: 'Restaurant taomlari' },
+          { src: serviceRestaurantThree, alt: 'Restaurant muhit' },
+        ],
       },
     ],
     roomsSection: {
@@ -430,6 +464,50 @@ const messages = {
         'Kun davomida muloyim xizmatlar: tonggi kofe, wellness, shaxsiy ovqatlanish va ko‘proq.',
       summaryTitle: '{count} xizmat',
       summarySubtitle: 'Sokin ritmlar va eʼtiborli servis.',
+    },
+    productsSection: {
+      label: 'Bizning mahsulotlar',
+      title: "Za'faron mahsulotlari",
+      description:
+        'Mehmonxonamiz doʻkonida siz uchun tayyorlangan tabiiy va nafis mahsulotlar.',
+      nameLabel: 'Mahsulot nomi',
+      items: [
+        {
+          nameUz: "Zafaronli asal",
+          nameRu: 'Мёд с шафраном',
+          nameEn: 'Honey with saffron',
+          image: med,
+          imageAlt: "Zafaronli asal",
+        },
+        {
+          nameUz: "Za’faronli novvot",
+          nameRu: 'Навват с шафраном',
+          nameEn: 'Navvat with saffron',
+          image: navat,
+          imageAlt: "Za’faronli novvot",
+        },
+        {
+          nameUz: "Zafaronli tuz",
+          nameRu: 'Соль с шафраном',
+          nameEn: 'Salt with saffron',
+          image: sol,
+          imageAlt: "Zafaronli tuz",
+        },
+        {
+          nameUz: "Za’faron choyi (qora va ko’k)",
+          nameRu: 'Чай Зафарон (чёрный и зелёный)',
+          nameEn: 'Zafaron tea (black and green)',
+          image: chay,
+          imageAlt: "Za’faron choyi (qora va ko’k)",
+        },
+        {
+          nameUz: "Za’faron",
+          nameRu: 'Шафран',
+          nameEn: 'Saffron',
+          image: shafran,
+          imageAlt: "Za’faron",
+        }
+      ],
     },
     restaurantsPage: {
       label: 'Restoranlar',
@@ -863,39 +941,59 @@ const messages = {
     },
     amenities: [
       {
-        title: 'Тишина и уют',
+        title: 'A la carte ресторан',
         detail:
-          'Минималистичный интерьер, мягкий свет и натуральные материалы помогают расслабиться. Просторные кровати, спокойная палитра и деликатные ароматы создают идеальный отдых.',
-        image: amenityQuiet,
-        imageAlt: 'Тёплый интерьер и мягкий свет',
+          'Авторские блюда от шефа с тонким балансом локальной и европейской кухни. Каждое блюдо готовится под заказ и подаётся свежим, с аккуратной эстетикой вкуса. Мягкий свет, спокойная музыка и внимательный сервис создают камерное настроение. Винная карта и десерты дополняют вечер.',
+        image: restaurantAlaCarteOne,
+        imageAlt: 'Атмосфера a la carte ресторана',
+        images: [
+          { src: restaurantAlaCarteOne, alt: 'A la carte блюда' },
+          { src: restaurantAlaCarteTwo, alt: 'Нежная подача' }
+        ],
       },
       {
-        title: 'Подборка сервисов',
+        title: 'Spa-зоны',
         detail:
-          'Консьерж 24/7, личный трансфер, безупречно чистые номера и утренний кофе. Любой запрос решается быстро, вежливо и с вниманием к деталям.',
+          'Бассейны доступны весь день, чтобы расслабиться с видом на горы. Турецкий хаммам и сауна мягко прогревают и восстанавливают силы. Профессиональные массажи снимают напряжение и возвращают внутреннюю гармонию. В каждой зоне — чистота, комфортная температура и заботливый сервис.',
         image: amenityService,
-        imageAlt: 'Консьерж сервис',
+        imageAlt: 'Spa-зоны',
+        images: [
+          { src: spa1, alt: 'Панорамный бассейн' },
+          { src: spa2, alt: 'Панорамный бассейн' },
+          { src: spa3, alt: 'Панорамный бассейн' },
+          { src: spa4, alt: 'Панорамный бассейн' },
+          { src: spa5, alt: 'Панорамный бассейн' },
+        ],
       },
       {
-        title: 'В горах Чимгана',
+        title: 'Детская игровая',
         detail:
-          'Отель в горах Чимгана, рядом прогулочные тропы и природа. Свежий воздух, аромат хвои и утреннее спокойствие наполняют каждый день.',
-        image: amenityMountain,
-        imageAlt: 'Горный пейзаж',
+          'Для детей оборудована уютная игровая зона с безопасным пространством. Яркие игрушки, мягкие покрытия и комфортные уголки дарят радость и активность. Родители могут отдыхать рядом, оставаясь на связи с детьми. Ежедневная уборка и контроль обеспечивают чистоту и спокойствие.',
+        image: servicePlayground,
+        imageAlt: 'Детская игровая',
       },
       {
-        title: 'Панорамный бассейн',
+        title: 'Фитнес-зона',
         detail:
-          'Подогреваемый бассейн с видом на горы и мягкой подсветкой с утра до вечера. Лёгкая музыка, полотенца и зона отдыха включены.',
-        image: amenityPool,
-        imageAlt: 'Панорамный бассейн',
+          'Современный зал с тренажёрами, свободными весами и кардио‑оборудованием. Пространство подходит для утренней бодрости и вечерних тренировок. Мягкий свет, вентиляция и чистый воздух делают занятия комфортными. При желании можно выбрать подходящую программу для поддержания формы.',
+        image: gymOne,
+        imageAlt: 'Фитнес-зона',
+        images: [
+          { src: gymOne, alt: 'Фитнес тренажёры' },
+          { src: gymTwo, alt: 'Спортивный зал' },
+        ],
       },
       {
-        title: 'Ресторан с авторской кухней',
+        title: "Za'faron Restaurant",
         detail:
-          'Авторское меню, локальные продукты и уютные ужины при свечах. Каждое блюдо выверено, подача — аккуратная, сервис — ненавязчивый.',
-        image: amenityRestaurant,
-        imageAlt: 'Интерьер ресторана',
+          "Za'faron Restaurant — элегантное пространство с сочетанием национальной и европейской кухни. Завтраки и ужины подаются по расширенному меню из свежих ингредиентов с выверенным вкусом. Светлый интерьер и спокойная музыка создают уютную атмосферу. Внимательный сервис и изящная подача сопровождают каждый приём пищи.",
+        image: serviceRestaurantOne,
+        imageAlt: "Интерьер Za'faron Restaurant",
+        images: [
+          { src: serviceRestaurantOne, alt: "Za'faron Restaurant" },
+          { src: serviceRestaurantTwo, alt: 'Блюда ресторана' },
+          { src: serviceRestaurantThree, alt: 'Атмосфера ресторана' },
+        ],
       },
     ],
     roomsSection: {
@@ -983,6 +1081,50 @@ const messages = {
         'В течение дня мы предлагаем мягкие сервисы: утренний кофе, wellness, приватные ужины и другое.',
       summaryTitle: '{count} услуг',
       summarySubtitle: 'Спокойные ритуалы и заботливый сервис.',
+    },
+    productsSection: {
+      label: 'Наши продукты',
+      title: "Продукты Za'faron",
+      description:
+        'Натуральные и изысканные продукты, которые можно найти в нашем бутике.',
+      nameLabel: 'Название продукта',
+      items: [
+        {
+          nameUz: "Zafaronli asal",
+          nameRu: 'Мёд с шафраном',
+          nameEn: 'Honey with saffron',
+          image: med,
+          imageAlt: "Zafaronli asal",
+        },
+        {
+          nameUz: "Za’faronli novvot",
+          nameRu: 'Навват с шафраном',
+          nameEn: 'Navvat with saffron',
+          image: navat,
+          imageAlt: "Za’faronli novvot",
+        },
+        {
+          nameUz: "Zafaronli tuz",
+          nameRu: 'Соль с шафраном',
+          nameEn: 'Salt with saffron',
+          image: sol,
+          imageAlt: "Zafaronli tuz",
+        },
+        {
+          nameUz: "Za’faron choyi (qora va ko’k)",
+          nameRu: 'Чай Зафарон (чёрный и зелёный)',
+          nameEn: 'Zafaron tea (black and green)',
+          image: chay,
+          imageAlt: "Za’faron choyi (qora va ko’k)",
+        },
+        {
+          nameUz: "Za’faron",
+          nameRu: 'Шафран',
+          nameEn: 'Saffron',
+          image: shafran,
+          imageAlt: "Za’faron",
+        }
+      ],
     },
     restaurantsPage: {
       label: 'Рестораны',
@@ -1415,39 +1557,59 @@ const messages = {
     },
     amenities: [
       {
-        title: 'Quiet comfort',
+        title: 'A la carte restaurant',
         detail:
-          'Minimalist interiors, soft light, and natural materials help you unwind. Spacious beds, calm palettes, and delicate aromas support deeper rest.',
-        image: amenityQuiet,
-        imageAlt: 'Warm interior and soft light',
+          'Chef-curated dishes blending local flavors with refined European classics. Each plate is prepared to order, served fresh with a balanced taste and elegant presentation. Soft lighting, calm music, and attentive service create a relaxed, intimate evening. The wine list and desserts complete the experience.',
+        image: restaurantAlaCarteOne,
+        imageAlt: 'A la carte restaurant ambience',
+        images: [
+          { src: restaurantAlaCarteOne, alt: 'A la carte dishes' },
+          { src: restaurantAlaCarteTwo, alt: 'Refined plating' }
+        ],
       },
       {
-        title: 'Curated services',
+        title: 'Spa zones',
         detail:
-          '24/7 concierge, private transfer, spotless rooms, and morning coffee service. Every request is handled swiftly, warmly, and with care.',
+          'Swim in the pools from morning to evening with a calm mountain view. The Turkish hammam and sauna gently warm the body and restore energy. Professional massages release tension and bring a sense of balance. Each zone is kept pristine, with cozy temperatures and attentive service.',
         image: amenityService,
-        imageAlt: 'Concierge service',
+        imageAlt: 'Spa zones',
+        images: [
+          { src: spa1, alt: 'Panoramic pool' },
+          { src: spa2, alt: 'Panoramic pool' },
+          { src: spa3, alt: 'Panoramic pool' },
+          { src: spa4, alt: 'Panoramic pool' },
+          { src: spa5, alt: 'Panoramic pool' },
+        ],
       },
       {
-        title: 'In the Chimgan mountains',
+        title: "Children's playground",
         detail:
-          'The hotel sits in the Chimgan mountains, close to trails and nature. Fresh air, pine notes, and quiet mornings surround your stay.',
-        image: amenityMountain,
-        imageAlt: 'Mountain landscape',
+          'A dedicated kids play area is set up with a safe and cozy layout. Bright toys, soft flooring, and comfortable corners keep little guests happy and active. Parents can relax nearby while staying close. Daily cleaning and supervision ensure a calm, tidy space.',
+        image: servicePlayground,
+        imageAlt: "Children's playground",
       },
       {
-        title: 'Panoramic pool',
+        title: 'Fitness zone',
         detail:
-          'Heated pool with mountain views and soft lighting from morning to evening. Gentle music, towels, and a calm lounge zone are ready for you.',
-        image: amenityPool,
-        imageAlt: 'Panoramic pool',
+          'A modern gym with strength machines, free weights, and cardio equipment. The space works well for both morning energy and evening workouts. Soft lighting, good airflow, and clean surroundings keep sessions comfortable. Optional training routines help you maintain a healthy rhythm.',
+        image: gymOne,
+        imageAlt: 'Fitness zone',
+        images: [
+          { src: gymOne, alt: 'Fitness equipment' },
+          { src: gymTwo, alt: 'Gym area' },
+        ],
       },
       {
-        title: "Chef's restaurant",
+        title: "Za'faron Restaurant",
         detail:
-          'Chef-led menu, local ingredients, and candlelit dinners in a calm setting. Each dish is balanced, beautifully plated, and served with quiet elegance.',
-        image: amenityRestaurant,
-        imageAlt: 'Restaurant interior',
+          "Za'faron Restaurant blends national favorites with refined European cuisine. Breakfasts and dinners feature a wide menu with fresh ingredients and balanced flavors. A bright interior with calm music sets a welcoming mood. Thoughtful service and elegant plating complete the experience.",
+        image: serviceRestaurantOne,
+        imageAlt: "Za'faron Restaurant interior",
+        images: [
+          { src: serviceRestaurantOne, alt: "Za'faron Restaurant" },
+          { src: serviceRestaurantTwo, alt: 'Restaurant dishes' },
+          { src: serviceRestaurantThree, alt: 'Restaurant ambiance' },
+        ],
       },
     ],
     roomsSection: {
@@ -1535,6 +1697,50 @@ const messages = {
         'Throughout the day we offer gentle services: morning coffee, wellness, private dining, and more.',
       summaryTitle: '{count} services',
       summarySubtitle: 'Calm rituals with thoughtful care.',
+    },
+    productsSection: {
+      label: 'Our products',
+      title: "Za'faron products",
+      description:
+        'Natural, refined products prepared for guests in our boutique corner.',
+      nameLabel: 'Product name',
+      items: [
+        {
+          nameUz: "Zafaronli asal",
+          nameRu: 'Мёд с шафраном',
+          nameEn: 'Honey with saffron',
+          image: med,
+          imageAlt: "Zafaronli asal",
+        },
+        {
+          nameUz: "Za’faronli novvot",
+          nameRu: 'Навват с шафраном',
+          nameEn: 'Navvat with saffron',
+          image: navat,
+          imageAlt: "Za’faronli novvot",
+        },
+        {
+          nameUz: "Zafaronli tuz",
+          nameRu: 'Соль с шафраном',
+          nameEn: 'Salt with saffron',
+          image: sol,
+          imageAlt: "Zafaronli tuz",
+        },
+        {
+          nameUz: "Za’faron choyi (qora va ko’k)",
+          nameRu: 'Чай Зафарон (чёрный и зелёный)',
+          nameEn: 'Zafaron tea (black and green)',
+          image: chay,
+          imageAlt: "Za’faron choyi (qora va ko’k)",
+        },
+        {
+          nameUz: "Za’faron",
+          nameRu: 'Шафран',
+          nameEn: 'Saffron',
+          image: shafran,
+          imageAlt: "Za’faron",
+        }
+      ],
     },
     restaurantsPage: {
       label: 'Restaurants',

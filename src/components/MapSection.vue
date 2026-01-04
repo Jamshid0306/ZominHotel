@@ -73,7 +73,7 @@ const { t } = useI18n()
         </div>
       </div>
 
-      <div class="h-80 overflow-hidden rounded-3xl border border-clay-100/70 bg-white shadow-sm shadow-clay-950/5 sm:h-105 lg:h-112.5">
+      <div class="h-full overflow-hidden rounded-3xl border border-clay-100/70 bg-white shadow-sm shadow-clay-950/5">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4052.6831009533953!2d70.0089533!3d41.525802999999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38af0d0012eff57f%3A0x66e81186ad41090d!2sZA&#39;FARON%20PREMIUM%20HOTEL!5e1!3m2!1sru!2s!4v1767026142226!5m2!1sru!2s"
           class="h-full w-full"
