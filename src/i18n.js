@@ -3,8 +3,8 @@ import { createI18n } from 'vue-i18n'
 import amenityQuiet from './assets/images/slide-images/4.jpg'
 import amenityService from './assets/images/slide-images/8.jpg'
 import amenityMountain from './assets/images/slide-images/12.jpg'
-import amenityPool from './assets/images/slide-images/18.jpg'
-import amenityRestaurant from './assets/images/slide-images/21.jpg'
+import amenityPool from './assets/images/slide-images/16.jpg'
+import amenityRestaurant from './assets/images/slide-images/17.jpg'
 
 export const supportedLocales = [
   { code: 'uz', label: 'UZ' },
@@ -164,11 +164,67 @@ const messages = {
       title: 'Anʼanalar va mukammallik uchrashgan makon',
       description:
         'BMB Zaʼfaron restoran va mehmonxonalar tarmogʻi milliy, yevropa va turk anʼanalarini uygʻunlashtirgan nafis oshxona hamda benuqson servisni taklif etadi. Toshkent va Jizzaxdagi filiallarimiz mahalliy va xorijiy mehmonlar uchun xalqaro standartlarga mos sharoit yaratadi.',
+      hotelLabel: 'Zaʼfaron Premium Hotel',
+      hotelTitle: 'Premium darajadagi qulaylik va xavfsiz dam olish',
+      hotelDescription:
+        'Zaʼfaron Premium Hotel — yuqori sifatli xizmat, zamonaviy infratuzilma va qulay muhitni o‘zida mujassam etgan premium toifadagi mehmonxona. Mehmonlar uchun qulay, xavfsiz va unutilmas dam olish imkoniyatlarini taqdim etadi. Mehmonxona oilaviy hordiq, biznes safarlari, sog‘lomlashtirish va maroqli dam olish uchun ideal tanlov hisoblanadi.',
+      hotelCapacity: 'Mehmonxona bir vaqtning o‘zida 202 nafargacha mehmonni qabul qiladi.',
       gallery: [
         { alt: 'Keng lobbi hududi' },
         { alt: 'Nafis taomlar taqdimi' },
         { alt: 'Tadbirlar muhiti' },
         { alt: 'Qulay xonalar' },
+      ],
+      hotelBlocks: [
+        {
+          title: 'Xonalar fondi',
+          items: [
+            'Jami 106 ta zamonaviy va to‘liq jihozlangan xona.',
+            '1 ta maxsus nogironlar uchun moslashtirilgan xona.',
+            '55 ta Standart Twin — alohida yotoqlar bilan.',
+            '49 ta Standart Double — keng va qulay joylashuv.',
+            '9 ta Lyuks xona — yuqori darajadagi qulaylik va hashamat.',
+            'Qulay yotoqlar, shaxsiy hammom, iqlim nazorati, TV, seyf, Wi-Fi va kundalik tozalash xizmati.',
+          ],
+        },
+        {
+          title: 'Ovqatlanish va gastronomiya',
+          items: [
+            '2 ta zamonaviy restoran, umumiy sig‘imi 250 kishi.',
+            'Buffet restorani — nonushta va taomlar uchun boy tanlov.',
+            'A la carte — milliy va xalqaro oshxona buyurtma asosida.',
+            'Lobby bar 24/7 — ichimliklar, yengil gazaklar va dam olish muhiti.',
+          ],
+        },
+        {
+          title: 'SPA & Wellness',
+          items: [
+            'Yozgi va qishki mavsum basseynlari.',
+            'Turk hammomi (Hamam).',
+            'Sauna va bug‘ xonalari.',
+            'Professional massaj xonalari.',
+          ],
+        },
+        {
+          title: 'Dam olish va qulayliklar',
+          items: [
+            'Bolalar uchun maxsus o‘yingoh.',
+            'Zamonaviy sport zali (Fitness Center).',
+            'Reception xizmati 24/7 — doimiy yordam va maslahat.',
+            'Zaʼfaron brendi mahsulotlarini xarid qilish imkoniyati.',
+            'Yuqori darajadagi xizmat va mehmondo‘st muhit.',
+          ],
+        },
+        {
+          title: 'Bizning ustunliklarimiz',
+          items: [
+            'Premium xizmat sifati.',
+            'Zamonaviy va qulay infratuzilma.',
+            'Oilaviy va biznes mehmonlar uchun mos muhit.',
+            'Sog‘lomlashtirish va hordiq uchun SPA & Wellness zonasi.',
+            'Professional va e’tiborli xodimlar jamoasi.',
+          ],
+        },
       ],
       advantages: {
         label: 'Afzalliklar',
@@ -662,11 +718,67 @@ const messages = {
       title: 'Пространство, где традиции встречаются с совершенством',
       description:
         'Сеть ресторанов и отелей BMB Za’faron предлагает безупречный сервис и изысканную кухню, сочетающую национальные, европейские и турецкие традиции. Наши филиалы в Ташкенте и Джизаке создают уникальные условия для местных и иностранных гостей, отвечая высоким международным стандартам.',
+      hotelLabel: 'Za’faron Premium Hotel',
+      hotelTitle: 'Премиальный комфорт и безопасный отдых',
+      hotelDescription:
+        'Za’faron Premium Hotel — отель премиум‑класса с высоким уровнем сервиса, современной инфраструктурой и комфортной атмосферой. Мы создаем условия для удобного, безопасного и незабываемого отдыха. Идеальный выбор для семейных поездок, деловых визитов, оздоровления и отдыха.',
+      hotelCapacity: 'Отель способен одновременно принять до 202 гостей.',
       gallery: [
         { alt: 'Просторное лобби отеля' },
         { alt: 'Подача изысканных блюд' },
         { alt: 'Атмосфера мероприятий' },
         { alt: 'Комфортные номера' },
+      ],
+      hotelBlocks: [
+        {
+          title: 'Номерной фонд',
+          items: [
+            'Всего 106 современных и полностью оснащенных номеров.',
+            '1 номер, адаптированный для гостей с инвалидностью.',
+            '55 стандартных Twin — с раздельными кроватями.',
+            '49 стандартных Double — просторные и удобные.',
+            '9 номеров люкс — повышенный комфорт и роскошь.',
+            'Удобные кровати, личный санузел, климат‑контроль, ТВ, сейф, Wi‑Fi и ежедневная уборка.',
+          ],
+        },
+        {
+          title: 'Питание и гастрономия',
+          items: [
+            '2 современных ресторана общей вместимостью 250 человек.',
+            'Buffet ресторан — богатый выбор для завтраков и питания.',
+            'A la carte — национальная и международная кухня на заказ.',
+            'Lobby bar 24/7 — напитки, легкие закуски и зона отдыха.',
+          ],
+        },
+        {
+          title: 'SPA & Wellness',
+          items: [
+            'Бассейны для летнего и зимнего сезонов.',
+            'Турецкий хамам.',
+            'Сауна и парные.',
+            'Профессиональные массажные кабинеты.',
+          ],
+        },
+        {
+          title: 'Отдых и удобства',
+          items: [
+            'Детская игровая зона.',
+            'Современный фитнес‑центр.',
+            'Reception 24/7 — помощь и консультации.',
+            'Магазин фирменной продукции Za’faron.',
+            'Высокий уровень сервиса и гостеприимная атмосфера.',
+          ],
+        },
+        {
+          title: 'Наши преимущества',
+          items: [
+            'Премиальное качество сервиса.',
+            'Современная и удобная инфраструктура.',
+            'Комфорт для семейных и бизнес‑гостей.',
+            'SPA & Wellness зона для отдыха и оздоровления.',
+            'Профессиональная и внимательная команда.',
+          ],
+        },
       ],
       advantages: {
         label: 'Преимущества',
@@ -1158,11 +1270,67 @@ const messages = {
       title: 'A space where tradition meets excellence',
       description:
         "BMB Za’faron’s network of restaurants and hotels offers impeccable service and refined cuisine that blends national, European, and Turkish traditions. Our branches in Tashkent and Jizzakh create unique conditions for local and international guests, meeting high international standards.",
+      hotelLabel: "Za'faron Premium Hotel",
+      hotelTitle: 'Premium comfort with a safe, memorable stay',
+      hotelDescription:
+        "Za’faron Premium Hotel is a premium-class hotel with high-quality service, modern infrastructure, and a comfortable atmosphere. We provide convenient, safe, and unforgettable stays for guests. It is an ideal choice for family vacations, business trips, wellness, and leisure.",
+      hotelCapacity: 'The hotel can accommodate up to 202 guests at a time.',
       gallery: [
         { alt: 'Spacious hotel lobby' },
         { alt: 'Refined dish presentation' },
         { alt: 'Event atmosphere' },
         { alt: 'Comfortable rooms' },
+      ],
+      hotelBlocks: [
+        {
+          title: 'Room inventory',
+          items: [
+            '106 modern, fully equipped rooms in total.',
+            '1 accessible room for guests with disabilities.',
+            '55 Standard Twin rooms with separate beds.',
+            '49 Standard Double rooms with spacious layouts.',
+            '9 Luxury rooms with elevated comfort and amenities.',
+            'Comfortable beds, private bathroom, climate control, TV, safe, Wi-Fi, and daily housekeeping.',
+          ],
+        },
+        {
+          title: 'Dining and gastronomy',
+          items: [
+            'Two modern restaurants with a total capacity of 250 guests.',
+            'Buffet restaurant with a rich breakfast and dining selection.',
+            'A la carte restaurant featuring national and international cuisine.',
+            'Lobby bar open 24/7 with drinks, light snacks, and a lounge atmosphere.',
+          ],
+        },
+        {
+          title: 'SPA & Wellness',
+          items: [
+            'Indoor and outdoor seasonal pools.',
+            'Turkish hammam.',
+            'Sauna and steam rooms.',
+            'Professional massage rooms.',
+          ],
+        },
+        {
+          title: 'Leisure and amenities',
+          items: [
+            'Dedicated children’s play area.',
+            'Modern fitness center.',
+            'Reception service 24/7 for support and guidance.',
+            "Opportunity to purchase Za’faron branded products.",
+            'High service standards and a welcoming atmosphere.',
+          ],
+        },
+        {
+          title: 'Our advantages',
+          items: [
+            'Premium service quality.',
+            'Modern, comfortable infrastructure.',
+            'Ideal for family and business travelers.',
+            'SPA & Wellness area for rest and recovery.',
+            'Professional and attentive staff.',
+          ],
+        },
       ],
       advantages: {
         label: 'Advantages',

@@ -37,6 +37,11 @@ const partnership = computed(() => {
   const items = tm('aboutNetwork.partnership.items')
   return Array.isArray(items) ? items : []
 })
+
+const hotelBlocks = computed(() => {
+  const items = tm('aboutNetwork.hotelBlocks')
+  return Array.isArray(items) ? items : []
+})
 </script>
 
 <template>
@@ -165,6 +170,39 @@ const partnership = computed(() => {
             <p class="mt-2 text-sm text-clay-800">{{ item.text }}</p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="mt-12 rounded-3xl border border-clay-100/80 bg-white/90 p-6 shadow-sm shadow-clay-950/5 sm:p-8">
+      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-600">
+        {{ t('aboutNetwork.hotelLabel') }}
+      </p>
+      <h3 class="mt-2 font-display text-2xl font-semibold text-clay-950 sm:text-3xl">
+        {{ t('aboutNetwork.hotelTitle') }}
+      </h3>
+      <p class="mt-3 text-base text-clay-800">
+        {{ t('aboutNetwork.hotelDescription') }}
+      </p>
+      <p class="mt-3 text-sm font-semibold text-clay-800">
+        {{ t('aboutNetwork.hotelCapacity') }}
+      </p>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        <article
+          v-for="block in hotelBlocks"
+          :key="block.title"
+          class="rounded-2xl border border-clay-100/80 bg-sand-50/80 p-5 shadow-sm shadow-clay-950/5"
+        >
+          <h4 class="text-lg font-semibold text-clay-900">
+            {{ block.title }}
+          </h4>
+          <ul class="mt-3 space-y-2 text-sm text-clay-800">
+            <li v-for="item in block.items" :key="item" class="flex gap-2">
+              <span class="mt-1 h-1.5 w-1.5 rounded-full bg-clay-500"></span>
+              <span>{{ item }}</span>
+            </li>
+          </ul>
+        </article>
       </div>
     </div>
   </section>

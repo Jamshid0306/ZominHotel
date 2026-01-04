@@ -33,11 +33,11 @@ provide('openBookingModal', openBookingModal)
 
 <template>
   <div
-    class="min-h-screen bg-[radial-gradient(circle_at_20%_20%,rgba(200,156,111,0.18),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(140,93,59,0.18),transparent_32%),linear-gradient(180deg,rgba(255,252,248,0.9),rgba(245,235,223,0.95))] text-clay-900"
+    class="min-h-screen bg-white text-clay-900"
   >
     <header
       v-if="!isAdminRoute"
-      class="sticky top-0 z-30 border-b border-clay-100/80 bg-sand-50/80 backdrop-blur-lg"
+      class="sticky top-0 z-30 border-b border-clay-100/80 bg-white"
     >
       <div
         class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2"
