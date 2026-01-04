@@ -4,6 +4,7 @@ import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import LanguageDropdown from './components/LanguageDropdown.vue'
 import BookingModal from './components/BookingModal.vue'
+import SnowOverlay from './components/SnowOverlay.vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -37,7 +38,7 @@ provide('openBookingModal', openBookingModal)
   >
     <header
       v-if="!isAdminRoute"
-      class="sticky top-0 z-30 border-b border-clay-100/80 bg-white"
+      class="sticky top-0 z-30 border-b border-clay-100/80 bg-[#f7f7f7]"
     >
       <div
         class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2"
@@ -161,6 +162,7 @@ provide('openBookingModal', openBookingModal)
     </header>
 
     <RouterView />
+    <SnowOverlay />
     <BookingModal :open="isBookingModalOpen" @close="closeBookingModal" />
 
     <footer v-if="!isAdminRoute" class="mt-14 border-t border-clay-100/70 bg-sand-50/90">
