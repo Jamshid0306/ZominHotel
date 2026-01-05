@@ -2,7 +2,8 @@ export const rooms = [
   {
     id: 'courtyard-king',
     name: 'Courtyard King',
-    price: '$180 / tun',
+    price_weekday: 180,
+    price_weekend: 180,
     size: '34 m²',
     vibe: 'Yozuv stoli va jimjit hovliga qaragan keng xona.',
     perks: ['Rainfall dushi', 'Qalin pardalar', 'Ortapedik king-size krovat'],
@@ -10,7 +11,8 @@ export const rooms = [
   {
     id: 'zafaron-suite',
     name: "Za'faron Suite",
-    price: '$260 / tun',
+    price_weekday: 260,
+    price_weekend: 260,
     size: '52 m²',
     vibe: 'Keng yashash zonasi va katta panorama oynalar.',
     perks: ['Shaxsiy lounge', 'Kundalik tozalash', 'Shaxsiy minibar'],
@@ -18,7 +20,8 @@ export const rooms = [
   {
     id: 'garden-loft',
     name: 'Garden Loft',
-    price: '$320 / tun',
+    price_weekday: 320,
+    price_weekend: 320,
     size: '64 m²',
     vibe: 'Ikki darajali loft, balkon va yashil panorama.',
     perks: ['Balkon', 'Kutubxona burchagi', 'Kecha aromaterapiya'],
@@ -26,7 +29,8 @@ export const rooms = [
   {
     id: 'city-twin',
     name: 'City Twin',
-    price: '$210 / tun',
+    price_weekday: 210,
+    price_weekend: 210,
     size: '38 m²',
     vibe: 'Hamroh bilan sayohatga mos, shahar manzarali ikkita alohida krovat.',
     perks: ['Twin krovatlar', 'Shahar manzarasi', 'Ertalabgi kofe xizmati'],
@@ -34,7 +38,8 @@ export const rooms = [
   {
     id: 'executive-corner',
     name: 'Executive Corner',
-    price: '$280 / tun',
+    price_weekday: 280,
+    price_weekend: 280,
     size: '48 m²',
     vibe: 'Burchak xonasi, keng oynalar va jim ish maydoni.',
     perks: ['Burchak panorama', 'Ish stoli', 'Tezkor Wi-Fi'],
@@ -42,7 +47,8 @@ export const rooms = [
   {
     id: 'spa-residence',
     name: 'Spa Residence',
-    price: '$410 / tun',
+    price_weekday: 410,
+    price_weekend: 410,
     size: '72 m²',
     vibe: 'Shaxsiy sauna va keng yashash zonasi bilan premium tajriba.',
     perks: ['Shaxsiy sauna', 'Kecha spa set', 'VIP transfer'],

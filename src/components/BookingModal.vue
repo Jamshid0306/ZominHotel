@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { API_BASE_URL } from '../api'
 
 const props = defineProps({
   open: {
@@ -11,13 +12,13 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
-const { t, tm } = useI18n()
+const { t, tm, locale } = useI18n()
 
 const booking = ref({
   checkIn: '',
   checkOut: '',
-  guests: 2,
-  roomId: '',
+  rooms: [{ roomId: '', guests: 2 }],
+  viewOption: 'no',
   name: '',
   phone: '',
   email: '',
@@ -29,15 +30,117 @@ const status = ref({
   params: {},
 })
 
-const rooms = computed(() => {
-  const items = tm('rooms.list')
-  return Array.isArray(items) ? items : []
-})
+const rooms = ref([])
+const isLoadingRooms = ref(false)
+const roomsError = ref('')
 
 const guestOptions = computed(() => {
   const options = tm('booking.guestOptions')
-  return Array.isArray(options) ? options : []
+  if (!Array.isArray(options)) return []
+  return options.filter((option) => [1, 2].includes(Number(option?.value)))
 })
+
+const getRoomName = (room) => {
+  if (!room) return ''
+  if (locale.value === 'ru') return room.room_name_ru
+  if (locale.value === 'en') return room.room_name_en
+  return room.room_name_uz
+}
+
+const currencyLabel = computed(() => (locale.value === 'uz' ? "so'm" : 'sum'))
+
+const formatPrice = (value) => {
+  const amount = Number(value)
+  if (!Number.isFinite(amount)) return '-'
+  const formatted = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(amount)
+  return `${formatted} ${currencyLabel.value}`
+}
+
+const selectedRooms = computed(() =>
+  booking.value.rooms
+    .map((entry) =>
+      rooms.value.find((room) => String(room.id) === String(entry.roomId)) || null
+    )
+    .filter(Boolean)
+)
+
+const parseDate = (value) => {
+  if (!value) return null
+  const parsed = new Date(`${value}T00:00:00`)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
+}
+
+const pricingSummary = computed(() => {
+  const start = parseDate(booking.value.checkIn)
+  const end = parseDate(booking.value.checkOut)
+  const hasAllRoomSelections = booking.value.rooms.every((entry) => entry.roomId)
+  if (!hasAllRoomSelections || !selectedRooms.value.length || !start || !end || end <= start) {
+    return null
+  }
+
+  let weekdayNights = 0
+  let weekendNights = 0
+  const cursor = new Date(start)
+  while (cursor < end) {
+    const day = cursor.getDay()
+    if (day === 0 || day === 6) {
+      weekendNights += 1
+    } else {
+      weekdayNights += 1
+    }
+    cursor.setDate(cursor.getDate() + 1)
+  }
+
+  const roomCount = selectedRooms.value.length
+  const weekdayPrice = selectedRooms.value.reduce(
+    (sum, room) => sum + Number(room.price_weekday || 0),
+    0
+  )
+  const weekendPrice = selectedRooms.value.reduce(
+    (sum, room) => sum + Number(room.price_weekend || 0),
+    0
+  )
+  const viewFee = booking.value.viewOption === 'yes' ? 50000 : 0
+  const total = weekdayNights * weekdayPrice + weekendNights * weekendPrice + viewFee
+
+  return {
+    roomCount,
+    weekdayNights,
+    weekendNights,
+    weekdayPrice,
+    weekendPrice,
+    viewFee,
+    total,
+  }
+})
+
+const fetchRooms = async () => {
+  isLoadingRooms.value = true
+  roomsError.value = ''
+  try {
+    const res = await fetch(`${API_BASE_URL}/hotel-rooms`)
+    if (!res.ok) {
+      throw new Error(t('roomsPage.loadError'))
+    }
+    rooms.value = await res.json()
+  } catch (error) {
+    roomsError.value = error?.message || t('roomsPage.loadError')
+  } finally {
+    isLoadingRooms.value = false
+  }
+}
+
+const addRoomSelection = () => {
+  booking.value.rooms.push({ roomId: '', guests: 2 })
+}
+
+const removeRoomSelection = (index) => {
+  if (booking.value.rooms.length <= 1) return
+  booking.value.rooms.splice(index, 1)
+}
 
 const clearStatus = () => {
   status.value = { tone: '', key: '', params: {} }
@@ -49,8 +152,9 @@ const close = () => {
 
 const submitBooking = () => {
   clearStatus()
-  const { checkIn, checkOut, guests, name, email, phone, roomId } = booking.value
-  if (!checkIn || !checkOut || !name || !email || !phone || !roomId) {
+  const { checkIn, checkOut, name, phone } = booking.value
+  const hasRoomSelections = booking.value.rooms.every((entry) => entry.roomId)
+  if (!checkIn || !checkOut || !name || !phone || !hasRoomSelections) {
     status.value = {
       tone: 'error',
       key: 'booking.status.required',
@@ -83,7 +187,9 @@ const submitBooking = () => {
   status.value = {
     tone: 'success',
     key: 'booking.status.success',
-    params: { guests },
+    params: {
+      guests: booking.value.rooms.reduce((sum, entry) => sum + Number(entry.guests || 0), 0),
+    },
   }
 }
 
@@ -109,6 +215,10 @@ watch(
     }
   }
 )
+
+onMounted(() => {
+  fetchRooms()
+})
 
 onBeforeUnmount(() => {
   document.removeEventListener('keydown', onKeydown)
@@ -184,35 +294,148 @@ onBeforeUnmount(() => {
               />
             </label>
 
+            <div class="sm:col-span-2 space-y-3">
+              <div class="flex items-center justify-between">
+                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-clay-500">
+                  {{ t('booking.room') }}
+                </p>
+                <button
+                  type="button"
+                  class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-clay-200/80 bg-white text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:text-clay-950"
+                  @click="addRoomSelection"
+                  :aria-label="t('booking.rooms.add')"
+                >
+                  <span class="text-lg leading-none">+</span>
+                </button>
+              </div>
+              <div
+                v-for="(entry, index) in booking.rooms"
+                :key="index"
+                class="grid items-end gap-3 sm:grid-cols-2"
+              >
+                <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+                  <span>{{ t('booking.guests') }}</span>
+                  <select
+                    class="w-full rounded-xl border border-clay-200/80 bg-white/95 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+                    v-model.number="entry.guests"
+                    @change="clearStatus"
+                  >
+                    <option
+                      v-for="option in guestOptions"
+                      :key="option.value"
+                      :value="option.value"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </label>
+
+                <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+                  <span>{{ t('booking.room') }}</span>
+                  <select
+                    class="w-full rounded-xl border border-clay-200/80 bg-white/95 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+                    v-model="entry.roomId"
+                    @change="clearStatus"
+                    required
+                  >
+                    <option value="" disabled>
+                      {{ t('booking.roomPlaceholder') }}
+                    </option>
+                    <option v-if="isLoadingRooms" disabled>
+                      {{ t('common.loading') }}
+                    </option>
+                    <option v-else-if="roomsError" disabled>
+                      {{ roomsError }}
+                    </option>
+                    <option v-for="room in rooms" :key="room.id" :value="room.id">
+                      {{ getRoomName(room) }} — {{ t('booking.pricing.weekdayPrice') }}:
+                      {{ formatPrice(room.price_weekday) }} •
+                      {{ t('booking.pricing.weekendPrice') }}:
+                      {{ formatPrice(room.price_weekend) }}
+                    </option>
+                  </select>
+                </label>
+                <div
+                  v-if="booking.rooms.length > 1"
+                  class="sm:col-span-2 flex justify-end"
+                >
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-2 rounded-full border border-clay-200/80 px-4 py-2 text-xs font-semibold text-clay-700 transition hover:-translate-y-0.5 hover:border-clay-300 hover:text-clay-900"
+                    @click="removeRoomSelection(index)"
+                    :aria-label="t('booking.rooms.remove')"
+                  >
+                    <span class="text-base leading-none">–</span>
+                    {{ t('booking.rooms.remove') }}
+                  </button>
+                </div>
+              </div>
+            </div>
             <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-              <span>{{ t('booking.guests') }}</span>
+              <span>{{ t('booking.viewOption.label') }}</span>
               <select
                 class="w-full rounded-xl border border-clay-200/80 bg-white/95 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
-                v-model.number="booking.guests"
+                v-model="booking.viewOption"
                 @change="clearStatus"
               >
-                <option v-for="option in guestOptions" :key="option.value" :value="option.value">
-                  {{ option.label }}
-                </option>
+                <option value="no">{{ t('booking.viewOption.no') }}</option>
+                <option value="yes">{{ t('booking.viewOption.yes') }}</option>
               </select>
             </label>
 
-            <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-              <span>{{ t('booking.room') }}</span>
-              <select
-                class="w-full rounded-xl border border-clay-200/80 bg-white/95 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
-                v-model="booking.roomId"
-                @change="clearStatus"
-                required
-              >
-                <option value="" disabled>
-                  {{ t('booking.roomPlaceholder') }}
-                </option>
-                <option v-for="room in rooms" :key="room.id" :value="room.id">
-                  {{ room.name }} — {{ room.price }}
-                </option>
-              </select>
-            </label>
+
+
+            <div
+              v-if="pricingSummary"
+              class="sm:col-span-2 rounded-2xl border border-clay-200/70 bg-white/90 px-4 py-4 text-sm text-clay-800"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-clay-500">
+                  {{ t('booking.pricing.title') }}
+                </span>
+                <span class="text-xs font-semibold text-clay-600">
+                  {{ t('booking.pricing.nights', {
+                    count: pricingSummary.weekdayNights + pricingSummary.weekendNights,
+                  }) }}
+                </span>
+              </div>
+              <div class="mt-3 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span>{{ t('booking.pricing.weekdayPrice') }}</span>
+                  <span class="font-semibold text-clay-950">
+                    {{ formatPrice(pricingSummary.weekdayPrice) }}
+                  </span>
+                </div>
+                <div class="flex items-center justify-between text-xs text-clay-600">
+                  <span>{{ t('booking.pricing.weekdayNights') }}</span>
+                  <span>{{ pricingSummary.weekdayNights }}</span>
+                </div>
+                <div class="mt-2 flex items-center justify-between">
+                  <span>{{ t('booking.pricing.weekendPrice') }}</span>
+                  <span class="font-semibold text-clay-950">
+                    {{ formatPrice(pricingSummary.weekendPrice) }}
+                  </span>
+                </div>
+                <div class="flex items-center justify-between text-xs text-clay-600">
+                  <span>{{ t('booking.pricing.weekendNights') }}</span>
+                  <span>{{ pricingSummary.weekendNights }}</span>
+                </div>
+                <div class="mt-2 flex items-center justify-between">
+                  <span>{{ t('booking.viewOption.feeLabel') }}</span>
+                  <span class="font-semibold text-clay-950">
+                    {{ formatPrice(pricingSummary.viewFee) }}
+                  </span>
+                </div>
+                <div class="mt-3 flex items-center justify-between border-t border-clay-200/70 pt-3">
+                  <span class="text-sm font-semibold text-clay-900">
+                    {{ t('booking.pricing.total') }}
+                  </span>
+                  <span class="text-base font-bold text-clay-950">
+                    {{ formatPrice(pricingSummary.total) }}
+                  </span>
+                </div>
+              </div>
+            </div>
 
             <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
               <span>{{ t('booking.name') }}</span>
@@ -247,7 +470,6 @@ onBeforeUnmount(() => {
                 class="w-full rounded-xl border border-clay-200/80 bg-white/95 px-3 py-3 text-sm font-semibold text-clay-900 placeholder:text-clay-700/70 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
                 v-model="booking.email"
                 @input="clearStatus"
-                required
               />
             </label>
 

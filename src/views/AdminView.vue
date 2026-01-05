@@ -9,7 +9,7 @@ import {
   deleteCookie,
 } from '../api'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const username = ref('')
 const password = ref('')
@@ -68,8 +68,8 @@ const form = ref({
   room_description_uz: '',
   room_description_ru: '',
   room_description_en: '',
-  price: '',
-  room_type: '',
+  price_weekday: '',
+  price_weekend: '',
 })
 const formImages = ref([])
 const imagePreviews = ref([])
@@ -98,6 +98,47 @@ const setMenuStatus = (tone, message) => {
 
 const clearMenuStatus = () => {
   menuStatus.value = { tone: '', message: '' }
+}
+
+const parsePriceValue = (value) => {
+  if (value === '' || value === null || value === undefined) return null
+  const amount = Number(value)
+  if (!Number.isFinite(amount) || amount < 0) return null
+  return amount
+}
+
+const currencyLabel = computed(() => (locale.value === 'uz' ? "so'm" : 'sum'))
+
+const formatPrice = (value) => {
+  const amount = Number(value)
+  if (!Number.isFinite(amount)) return '-'
+  const formatted = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(amount)
+  return `${formatted} ${currencyLabel.value}`
+}
+
+const validatePricesForCreate = () => {
+  const weekday = parsePriceValue(form.value.price_weekday)
+  const weekend = parsePriceValue(form.value.price_weekend)
+  if (weekday === null || weekend === null) {
+    setStatus('error', t('admin.errors.invalidPrices'))
+    return null
+  }
+  return { weekday, weekend }
+}
+
+const validatePricesForUpdate = () => {
+  const weekdayProvided = form.value.price_weekday !== ''
+  const weekendProvided = form.value.price_weekend !== ''
+  const weekday = parsePriceValue(form.value.price_weekday)
+  const weekend = parsePriceValue(form.value.price_weekend)
+  if ((weekdayProvided && weekday === null) || (weekendProvided && weekend === null)) {
+    setStatus('error', t('admin.errors.invalidPrices'))
+    return null
+  }
+  return { weekday, weekend }
 }
 
 const fetchRooms = async () => {
@@ -212,8 +253,8 @@ const openModal = (room) => {
     room_description_uz: room.room_description_uz || '',
     room_description_ru: room.room_description_ru || '',
     room_description_en: room.room_description_en || '',
-    price: room.price ?? '',
-    room_type: room.room_type || '',
+    price_weekday: room.price_weekday ?? '',
+    price_weekend: room.price_weekend ?? '',
   }
   formImages.value = []
   isModalOpen.value = true
@@ -229,8 +270,8 @@ const openCreateModal = () => {
     room_description_uz: '',
     room_description_ru: '',
     room_description_en: '',
-    price: '',
-    room_type: '',
+    price_weekday: '',
+    price_weekend: '',
   }
   formImages.value = []
   isModalOpen.value = true
@@ -422,6 +463,11 @@ const updateRoom = async () => {
   if (!selectedRoom.value) return
   isSaving.value = true
   try {
+    const prices = validatePricesForUpdate()
+    if (!prices) {
+      isSaving.value = false
+      return
+    }
     const payload = new FormData()
     payload.append('room_name_uz', form.value.room_name_uz)
     payload.append('room_name_ru', form.value.room_name_ru)
@@ -429,8 +475,12 @@ const updateRoom = async () => {
     payload.append('room_description_uz', form.value.room_description_uz)
     payload.append('room_description_ru', form.value.room_description_ru)
     payload.append('room_description_en', form.value.room_description_en)
-    payload.append('price', String(form.value.price))
-    payload.append('room_type', form.value.room_type)
+    if (prices.weekday !== null) {
+      payload.append('price_weekday', String(prices.weekday))
+    }
+    if (prices.weekend !== null) {
+      payload.append('price_weekend', String(prices.weekend))
+    }
     formImages.value.forEach((file) => payload.append('room_images', file))
 
     const res = await fetch(
@@ -459,6 +509,11 @@ const updateRoom = async () => {
 const createRoom = async () => {
   isSaving.value = true
   try {
+    const prices = validatePricesForCreate()
+    if (!prices) {
+      isSaving.value = false
+      return
+    }
     const payload = new FormData()
     payload.append('room_name_uz', form.value.room_name_uz)
     payload.append('room_name_ru', form.value.room_name_ru)
@@ -466,8 +521,8 @@ const createRoom = async () => {
     payload.append('room_description_uz', form.value.room_description_uz)
     payload.append('room_description_ru', form.value.room_description_ru)
     payload.append('room_description_en', form.value.room_description_en)
-    payload.append('price', String(form.value.price))
-    payload.append('room_type', form.value.room_type)
+    payload.append('price_weekday', String(prices.weekday))
+    payload.append('price_weekend', String(prices.weekend))
     formImages.value.forEach((file) => payload.append('room_images', file))
 
     const res = await fetch(`${API_BASE_URL}/hotel-rooms`, {
@@ -855,7 +910,12 @@ onMounted(() => {
                   <h3 class="text-lg font-semibold text-clay-950">
                     {{ room.room_name_uz }}
                   </h3>
-                  <p class="text-xs text-clay-700">{{ room.room_type }} • ${{ room.price }}</p>
+                  <p class="text-xs text-clay-700">{{ room.room_type }}</p>
+                  <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-clay-600">
+                    <span>Weekday Price: {{ formatPrice(room.price_weekday) }}</span>
+                    <span class="text-clay-400">•</span>
+                    <span>Weekend Price: {{ formatPrice(room.price_weekend) }}</span>
+                  </div>
                 </div>
                 <div class="flex items-center gap-2">
                   <span class="rounded-full bg-clay-500/12 px-3 py-1 text-xs font-semibold text-clay-700">
@@ -1154,29 +1214,28 @@ onMounted(() => {
         </label>
         <div class="grid gap-4 sm:grid-cols-2">
           <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-            <span>{{ t('admin.form.price') }}</span>
+            <span>{{ t('admin.form.priceWeekday') }}</span>
             <input
-              v-model="form.price"
+              v-model="form.price_weekday"
               type="number"
               step="0.01"
               min="0"
+              inputmode="decimal"
               class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
-              required
+              :required="modalMode === 'create'"
             />
           </label>
           <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-            <span>{{ t('admin.form.roomType') }}</span>
-            <select
-              v-model="form.room_type"
+            <span>{{ t('admin.form.priceWeekend') }}</span>
+            <input
+              v-model="form.price_weekend"
+              type="number"
+              step="0.01"
+              min="0"
+              inputmode="decimal"
               class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
-              required
-            >
-              <option value="" disabled>{{ t('admin.form.roomTypePlaceholder') }}</option>
-              <option value="standard">{{ t('admin.roomTypes.standard') }}</option>
-              <option value="lux">{{ t('admin.roomTypes.lux') }}</option>
-              <option value="deluxe">{{ t('admin.roomTypes.deluxe') }}</option>
-              <option value="suite">{{ t('admin.roomTypes.suite') }}</option>
-            </select>
+              :required="modalMode === 'create'"
+            />
           </label>
         </div>
         <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">

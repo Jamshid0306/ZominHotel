@@ -1,10 +1,32 @@
 <script setup>
-import { inject } from 'vue'
+import { inject, ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { API_BASE_URL } from '../api'
 
 const { t } = useI18n()
 const openBookingModal = inject('openBookingModal', () => {})
+
+const roomsCount = ref(0)
+
+const summaryTitle = computed(() =>
+  t('roomsPage.summaryTitle', { count: roomsCount.value })
+)
+
+const fetchRoomsCount = async () => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/hotel-rooms`)
+    if (!res.ok) return
+    const data = await res.json()
+    roomsCount.value = Array.isArray(data) ? data.length : 0
+  } catch (error) {
+    roomsCount.value = 0
+  }
+}
+
+onMounted(() => {
+  fetchRoomsCount()
+})
 </script>
 
 <template>
@@ -36,7 +58,7 @@ const openBookingModal = inject('openBookingModal', () => {})
       </div>
     </div>
     <div class="rounded-2xl border border-clay-100/80 bg-white/80 px-4 py-3 shadow-sm shadow-clay-950/5">
-      <p class="text-sm font-semibold text-clay-800">{{ t('roomsPage.summaryTitle') }}</p>
+      <p class="text-sm font-semibold text-clay-800">{{ summaryTitle }}</p>
       <p class="text-xs text-clay-700">{{ t('roomsPage.summarySubtitle') }}</p>
     </div>
   </section>

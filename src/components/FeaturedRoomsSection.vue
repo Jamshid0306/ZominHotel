@@ -26,6 +26,18 @@ const getRoomDescription = (room) => {
   return room.room_description_uz
 }
 
+const currencyLabel = computed(() => (locale.value === 'uz' ? "so'm" : 'sum'))
+
+const formatPrice = (value) => {
+  const amount = Number(value)
+  if (!Number.isFinite(amount)) return '-'
+  const formatted = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(amount)
+  return `${formatted} ${currencyLabel.value}`
+}
+
 const setActiveSlide = (roomId, index) => {
   activeSlides.value = { ...activeSlides.value, [roomId]: index }
 }
@@ -170,7 +182,17 @@ onMounted(() => {
           <span class="rounded-full bg-clay-500/12 px-3 py-1 text-xs font-semibold text-clay-700">
             {{ room.room_type }}
           </span>
-          <span class="text-base font-bold text-clay-950">${{ room.price }}</span>
+          <span class="text-xs font-semibold text-clay-600">Pricing</span>
+        </div>
+        <div class="mt-2 space-y-1 text-sm text-clay-800">
+          <div class="flex items-center justify-between">
+            <span>Weekday Price</span>
+            <span class="font-semibold text-clay-950">{{ formatPrice(room.price_weekday) }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>Weekend Price</span>
+            <span class="font-semibold text-clay-950">{{ formatPrice(room.price_weekend) }}</span>
+          </div>
         </div>
         <h3 class="mt-4 text-lg font-semibold text-clay-950">
           {{ getRoomName(room) }}
