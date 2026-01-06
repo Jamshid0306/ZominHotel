@@ -81,12 +81,13 @@ const pricingSummary = computed(() => {
     return null
   }
 
+  const weekendDays = new Set([0, 6])
   let weekdayNights = 0
   let weekendNights = 0
   const cursor = new Date(start)
   while (cursor < end) {
     const day = cursor.getDay()
-    if (day === 0 || day === 6) {
+    if (weekendDays.has(day)) {
       weekendNights += 1
     } else {
       weekdayNights += 1
