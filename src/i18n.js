@@ -178,6 +178,15 @@ const messages = {
       menuLabel: 'Menyu',
       menuCount: 'taom',
     },
+    tourSection: {
+      label: '360 tur',
+      title: "Mehmonxonani 360 formatda ko'ring",
+      description:
+        'Virtual sayr orqali lobby, xonalar va manzarani oldindan his qiling.',
+      action: '360 turni ochish',
+      note: 'Katta ekranda yanada qulay.',
+      iframeTitle: "Za'faron Premium Hotel 360 tour",
+    },
     mapSection: {
       contactsLabel: 'Kontaktlar',
       title: "Biz bilan bog'laning",
@@ -822,6 +831,14 @@ const messages = {
       menuLabel: 'Меню',
       menuCount: 'блюд',
     },
+    tourSection: {
+      label: '360 тур',
+      title: 'Посмотрите отель в формате 360',
+      description: 'Виртуальная прогулка по лобби, номерам и видам.',
+      action: 'Открыть 360 тур',
+      note: 'Лучше смотреть на большом экране.',
+      iframeTitle: "Za'faron Premium Hotel 360 тур",
+    },
     mapSection: {
       contactsLabel: 'Контакты',
       title: 'Свяжитесь с нами',
@@ -1463,6 +1480,14 @@ const messages = {
         'Local ingredients, chef craft, and a calm setting. Each dish is a balance of taste and mood.',
       menuLabel: 'Menu',
       menuCount: 'dishes',
+    },
+    tourSection: {
+      label: '360 tour',
+      title: 'Explore the hotel in 360',
+      description: 'Take a virtual walk through the lobby, rooms, and views.',
+      action: 'Open 360 tour',
+      note: 'Best viewed on a larger screen.',
+      iframeTitle: "Za'faron Premium Hotel 360 tour",
     },
     mapSection: {
       contactsLabel: 'Contacts',
