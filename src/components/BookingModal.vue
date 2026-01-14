@@ -14,6 +14,9 @@ const emit = defineEmits(['close'])
 
 const { t, tm, locale } = useI18n()
 
+const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_BOT_TOKEN
+const TELEGRAM_CHAT_ID = import.meta.env.VITE_API_CHAT_ID
+
 const booking = ref({
   checkIn: '',
   checkOut: '',
@@ -147,11 +150,55 @@ const clearStatus = () => {
   status.value = { tone: '', key: '', params: {} }
 }
 
+const buildBookingMessage = () => {
+  const lines = ['New booking request']
+  lines.push(`Name: ${booking.value.name || '-'}`)
+  lines.push(`Phone: ${booking.value.phone || '-'}`)
+  lines.push(`Email: ${booking.value.email || '-'}`)
+  lines.push(`Check-in: ${booking.value.checkIn || '-'}`)
+  lines.push(`Check-out: ${booking.value.checkOut || '-'}`)
+
+  const roomLines = booking.value.rooms.map((entry) => {
+    const room = rooms.value.find((item) => String(item.id) === String(entry.roomId))
+    const roomName = room ? getRoomName(room) : 'Unknown room'
+    return `- ${roomName} (${Number(entry.guests || 0)} guests)`
+  })
+  lines.push('Rooms:')
+  lines.push(...roomLines)
+
+  lines.push(`View option: ${booking.value.viewOption === 'yes' ? 'Yes' : 'No'}`)
+
+  if (pricingSummary.value) {
+    lines.push(`Total: ${formatPrice(pricingSummary.value.total)}`)
+  }
+
+  return lines.join('\n')
+}
+
+const sendBookingToTelegram = async (message) => {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    throw new Error('Telegram configuration missing')
+  }
+
+  const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: message,
+    }),
+  })
+
+  if (!res.ok) {
+    throw new Error('Telegram send failed')
+  }
+}
+
 const close = () => {
   emit('close')
 }
 
-const submitBooking = () => {
+const submitBooking = async () => {
   clearStatus()
   const { checkIn, checkOut, name, phone } = booking.value
   const hasRoomSelections = booking.value.rooms.every((entry) => entry.roomId)
@@ -185,12 +232,22 @@ const submitBooking = () => {
     return
   }
 
-  status.value = {
-    tone: 'success',
-    key: 'booking.status.success',
-    params: {
-      guests: booking.value.rooms.reduce((sum, entry) => sum + Number(entry.guests || 0), 0),
-    },
+  try {
+    const message = buildBookingMessage()
+    await sendBookingToTelegram(message)
+    status.value = {
+      tone: 'success',
+      key: 'booking.status.success',
+      params: {
+        guests: booking.value.rooms.reduce((sum, entry) => sum + Number(entry.guests || 0), 0),
+      },
+    }
+  } catch (error) {
+    status.value = {
+      tone: 'error',
+      key: 'booking.status.sendFailed',
+      params: {},
+    }
   }
 }
 
@@ -466,7 +523,7 @@ onBeforeUnmount(() => {
             <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800 sm:col-span-2">
               <span>{{ t('booking.email') }}</span>
               <input
-                type="email"
+                type="text"
                 :placeholder="t('booking.emailPlaceholder')"
                 class="w-full rounded-xl border border-clay-200/80 bg-white/95 px-3 py-3 text-sm font-semibold text-clay-900 placeholder:text-clay-700/70 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
                 v-model="booking.email"

@@ -142,6 +142,7 @@ const messages = {
         required: 'Barcha maydonlarni toʻldiring.',
         invalidDate: 'Sana formatini tekshiring.',
         dateOrder: 'Ketish sanasi kirish sanasidan keyin boʻlishi kerak.',
+        sendFailed: 'Bronni yuborib boʻlmadi. Iltimos, qayta urinib koʻring.',
         success:
           'Bron qabul qilindi. {guests} mehmon uchun tasdiq xabarini tezda yuboramiz.',
       },
@@ -796,6 +797,7 @@ const messages = {
         required: 'Заполните все поля.',
         invalidDate: 'Проверьте формат даты.',
         dateOrder: 'Дата выезда должна быть позже даты заезда.',
+        sendFailed: 'Не удалось отправить бронь. Пожалуйста, попробуйте снова.',
         success: 'Бронь принята. Скоро отправим подтверждение для {guests} гостей.',
       },
     },
@@ -1446,6 +1448,7 @@ const messages = {
         required: 'Please fill out all fields.',
         invalidDate: 'Check the date format.',
         dateOrder: 'Check-out must be after check-in.',
+        sendFailed: 'Unable to send the booking. Please try again.',
         success: "Booking received. We'll send confirmation for {guests} guests shortly.",
       },
     },
