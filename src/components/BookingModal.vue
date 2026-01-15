@@ -20,8 +20,7 @@ const TELEGRAM_CHAT_ID = import.meta.env.VITE_API_CHAT_ID
 const booking = ref({
   checkIn: '',
   checkOut: '',
-  rooms: [{ roomId: '', guests: 2 }],
-  viewOption: 'no',
+  rooms: [{ roomId: '', guests: 2, viewOption: 'no' }],
   name: '',
   phone: '',
   email: '',
@@ -76,6 +75,14 @@ const parseDate = (value) => {
   return Number.isNaN(parsed.getTime()) ? null : parsed
 }
 
+const getStayNights = () => {
+  const start = parseDate(booking.value.checkIn)
+  const end = parseDate(booking.value.checkOut)
+  if (!start || !end || end <= start) return 0
+  const diffMs = end.getTime() - start.getTime()
+  return Math.round(diffMs / (1000 * 60 * 60 * 24))
+}
+
 const pricingSummary = computed(() => {
   const start = parseDate(booking.value.checkIn)
   const end = parseDate(booking.value.checkOut)
@@ -107,7 +114,27 @@ const pricingSummary = computed(() => {
     (sum, room) => sum + Number(room.price_weekend || 0),
     0
   )
-  const viewFee = booking.value.viewOption === 'yes' ? 50000 : 0
+  const roomBreakdown = booking.value.rooms.map((entry) => {
+    const room = rooms.value.find((item) => String(item.id) === String(entry.roomId))
+    if (!room) return null
+    const weekdayRoomPrice = Number(room.price_weekday || 0)
+    const weekendRoomPrice = Number(room.price_weekend || 0)
+    const roomViewFee = entry.viewOption === 'yes' ? 50000 : 0
+    const roomTotal =
+      weekdayNights * weekdayRoomPrice + weekendNights * weekendRoomPrice + roomViewFee
+    return {
+      id: room.id,
+      name: getRoomName(room),
+      weekdayRoomPrice,
+      weekendRoomPrice,
+      roomViewFee,
+      roomTotal,
+    }
+  }).filter(Boolean)
+  const viewFee = booking.value.rooms.reduce(
+    (sum, entry) => sum + (entry.viewOption === 'yes' ? 50000 : 0),
+    0
+  )
   const total = weekdayNights * weekdayPrice + weekendNights * weekendPrice + viewFee
 
   return {
@@ -116,6 +143,7 @@ const pricingSummary = computed(() => {
     weekendNights,
     weekdayPrice,
     weekendPrice,
+    roomBreakdown,
     viewFee,
     total,
   }
@@ -138,7 +166,7 @@ const fetchRooms = async () => {
 }
 
 const addRoomSelection = () => {
-  booking.value.rooms.push({ roomId: '', guests: 2 })
+  booking.value.rooms.push({ roomId: '', guests: 2, viewOption: 'no' })
 }
 
 const removeRoomSelection = (index) => {
@@ -151,22 +179,25 @@ const clearStatus = () => {
 }
 
 const buildBookingMessage = () => {
+  const nights = getStayNights()
   const lines = ['New booking request']
   lines.push(`Name: ${booking.value.name || '-'}`)
   lines.push(`Phone: ${booking.value.phone || '-'}`)
   lines.push(`Email: ${booking.value.email || '-'}`)
   lines.push(`Check-in: ${booking.value.checkIn || '-'}`)
   lines.push(`Check-out: ${booking.value.checkOut || '-'}`)
+  lines.push(`Nights: ${nights || '-'}`)
 
   const roomLines = booking.value.rooms.map((entry) => {
     const room = rooms.value.find((item) => String(item.id) === String(entry.roomId))
     const roomName = room ? getRoomName(room) : 'Unknown room'
-    return `- ${roomName} (${Number(entry.guests || 0)} guests)`
+    const guests = Number(entry.guests || 0)
+    const stayLabel = nights ? `${nights} nights` : 'nights unknown'
+    const viewLabel = entry.viewOption === 'yes' ? 'Yes' : 'No'
+    return `- ${roomName} • ${guests} guests • ${stayLabel} • View: ${viewLabel}`
   })
   lines.push('Rooms:')
   lines.push(...roomLines)
-
-  lines.push(`View option: ${booking.value.viewOption === 'yes' ? 'Yes' : 'No'}`)
 
   if (pricingSummary.value) {
     lines.push(`Total: ${formatPrice(pricingSummary.value.total)}`)
@@ -306,7 +337,7 @@ onBeforeUnmount(() => {
           @click="close"
         ></div>
         <div
-          class="relative z-10 w-full max-w-3xl rounded-3xl border border-white/30 bg-white/95 p-6 shadow-[0_28px_80px_rgba(8,6,4,0.35)] sm:p-8"
+          class="relative z-10 w-full max-w-3xl overflow-y-auto rounded-3xl border border-white/30 bg-white/95 p-6 shadow-[0_28px_80px_rgba(8,6,4,0.35)] sm:max-h-[calc(100vh-4rem)] sm:p-8 max-h-[calc(100vh-2rem)]"
         >
           <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
@@ -413,6 +444,17 @@ onBeforeUnmount(() => {
                     </option>
                   </select>
                 </label>
+                <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800 sm:col-span-2">
+                  <span>{{ t('booking.viewOption.label') }}</span>
+                  <select
+                    class="w-full rounded-xl border border-clay-200/80 bg-white/95 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+                    v-model="entry.viewOption"
+                    @change="clearStatus"
+                  >
+                    <option value="no">{{ t('booking.viewOption.no') }}</option>
+                    <option value="yes">{{ t('booking.viewOption.yes') }}</option>
+                  </select>
+                </label>
                 <div
                   v-if="booking.rooms.length > 1"
                   class="sm:col-span-2 flex justify-end"
@@ -429,20 +471,6 @@ onBeforeUnmount(() => {
                 </div>
               </div>
             </div>
-            <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
-              <span>{{ t('booking.viewOption.label') }}</span>
-              <select
-                class="w-full rounded-xl border border-clay-200/80 bg-white/95 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
-                v-model="booking.viewOption"
-                @change="clearStatus"
-              >
-                <option value="no">{{ t('booking.viewOption.no') }}</option>
-                <option value="yes">{{ t('booking.viewOption.yes') }}</option>
-              </select>
-            </label>
-
-
-
             <div
               v-if="pricingSummary"
               class="sm:col-span-2 rounded-2xl border border-clay-200/70 bg-white/90 px-4 py-4 text-sm text-clay-800"
@@ -477,6 +505,46 @@ onBeforeUnmount(() => {
                 <div class="flex items-center justify-between text-xs text-clay-600">
                   <span>{{ t('booking.pricing.weekendNights') }}</span>
                   <span>{{ pricingSummary.weekendNights }}</span>
+                </div>
+                <div
+                  v-if="pricingSummary.roomBreakdown.length"
+                  class="mt-3 rounded-xl border border-clay-200/70 bg-white/80 px-3 py-3"
+                >
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-clay-500">
+                    {{ t('booking.room') }}
+                  </p>
+                  <div class="mt-2 space-y-2 text-sm text-clay-800">
+                    <div
+                      v-for="(room, index) in pricingSummary.roomBreakdown"
+                      :key="`${room.id}-${index}`"
+                      class="flex flex-wrap items-center justify-between gap-2"
+                    >
+                      <div class="min-w-[160px]">
+                        <p class="font-semibold text-clay-900">{{ room.name }}</p>
+                        <p class="text-xs text-clay-600">
+                          {{ t('booking.pricing.weekdayNights') }}: {{ pricingSummary.weekdayNights }}
+                          • {{ t('booking.pricing.weekendNights') }}: {{ pricingSummary.weekendNights }}
+                        </p>
+                      </div>
+                      <div class="text-right">
+                        <p class="text-xs text-clay-600">
+                          {{ t('booking.pricing.weekdayPrice') }}:
+                          {{ formatPrice(room.weekdayRoomPrice) }}
+                        </p>
+                        <p class="text-xs text-clay-600">
+                          {{ t('booking.pricing.weekendPrice') }}:
+                          {{ formatPrice(room.weekendRoomPrice) }}
+                        </p>
+                        <p class="text-xs text-clay-600">
+                          {{ t('booking.viewOption.feeLabel') }}:
+                          {{ formatPrice(room.roomViewFee) }}
+                        </p>
+                        <p class="mt-1 font-semibold text-clay-950">
+                          {{ formatPrice(room.roomTotal) }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="mt-2 flex items-center justify-between">
                   <span>{{ t('booking.viewOption.feeLabel') }}</span>
