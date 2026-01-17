@@ -173,6 +173,33 @@ provide('openBookingModal', openBookingModal)
             <p class="text-sm text-clay-800">
               {{ t('footer.description') }}
             </p>
+            <div class="flex items-center gap-3">
+              <a
+                class="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-clay-200/80 bg-white/70 text-clay-700 shadow-sm transition hover:-translate-y-0.5 hover:border-clay-300 hover:text-clay-950 hover:shadow-md"
+                href="https://www.instagram.com/zafaron_premium_hotel?igsh=czc2dmZlYTZja3p2"
+                aria-label="Instagram"
+                target="_blank"
+              >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M7.5 3h9A4.5 4.5 0 0 1 21 7.5v9A4.5 4.5 0 0 1 16.5 21h-9A4.5 4.5 0 0 1 3 16.5v-9A4.5 4.5 0 0 1 7.5 3Zm0 1.5A3 3 0 0 0 4.5 7.5v9a3 3 0 0 0 3 3h9a3 3 0 0 0 3-3v-9a3 3 0 0 0-3-3h-9Zm4.5 3a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 1.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.1-.9a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8Z"
+                  />
+                </svg>
+              </a>
+              <a
+                class="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-clay-200/80 bg-white/70 text-clay-700 shadow-sm transition hover:-translate-y-0.5 hover:border-clay-300 hover:text-clay-950 hover:shadow-md"
+                href="https://www.facebook.com/share/1DU7NEBpbn/?mibextid=wwXIfr"
+                aria-label="Facebook"
+                target="_blank"
+
+              >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M13.5 8.25V6.6c0-.8.5-1.1 1.2-1.1h1.8V3h-2.4C11.9 3 10.5 4.5 10.5 6.6v1.65H9V11h1.5v7.5h3V11h2.1l.4-2.75h-2.5Z"
+                  />
+                </svg>
+              </a>
+            </div>
             <div class="space-y-2 text-sm text-clay-800">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="text-xs font-semibold uppercase tracking-[0.2em] text-clay-500">
