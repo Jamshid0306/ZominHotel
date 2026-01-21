@@ -298,7 +298,7 @@ const fetchRoomAvailability = async (roomId) => {
     })
     const res = await fetch(`${API_BASE_URL}/room-blocks?${query}`)
     if (!res.ok) {
-      throw new Error('Availability load failed')
+      throw new Error(t('booking.errors.availabilityLoadFailed'))
     }
     const blocks = await res.json()
     setRoomAvailabilityState(roomId, {
@@ -310,7 +310,7 @@ const fetchRoomAvailability = async (roomId) => {
   } catch (error) {
     setRoomAvailabilityState(roomId, {
       isLoading: false,
-      error: error?.message || 'Availability load failed',
+      error: error?.message || t('booking.errors.availabilityLoadFailed'),
       blockedLookup: {},
       rangeKey,
     })
@@ -408,27 +408,37 @@ const selectCalendarDate = (roomId, dateKey) => {
 
 const buildBookingMessage = () => {
   const nights = getStayNights()
-  const lines = ['New booking request']
-  lines.push(`Name: ${booking.value.name || '-'}`)
-  lines.push(`Phone: ${booking.value.phone || '-'}`)
-  lines.push(`Email: ${booking.value.email || '-'}`)
-  lines.push(`Check-in: ${booking.value.checkIn || '-'}`)
-  lines.push(`Check-out: ${booking.value.checkOut || '-'}`)
-  lines.push(`Nights: ${nights || '-'}`)
+  const lines = [t('booking.message.title')]
+  lines.push(t('booking.message.name', { value: booking.value.name || '-' }))
+  lines.push(t('booking.message.phone', { value: booking.value.phone || '-' }))
+  lines.push(t('booking.message.email', { value: booking.value.email || '-' }))
+  lines.push(t('booking.message.checkIn', { value: booking.value.checkIn || '-' }))
+  lines.push(t('booking.message.checkOut', { value: booking.value.checkOut || '-' }))
+  lines.push(t('booking.message.nights', { value: nights || '-' }))
 
   const roomLines = booking.value.rooms.map((entry) => {
     const room = rooms.value.find((item) => String(item.id) === String(entry.roomId))
-    const roomName = room ? getRoomName(room) : 'Unknown room'
+    const roomName = room ? getRoomName(room) : t('booking.message.roomUnknown')
     const guests = Number(entry.guests || 0)
-    const stayLabel = nights ? `${nights} nights` : 'nights unknown'
-    const viewLabel = entry.viewOption === 'yes' ? 'Yes' : 'No'
-    return `- ${roomName} • ${guests} guests • ${stayLabel} • View: ${viewLabel}`
+    const stayLabel = nights
+      ? t('booking.message.stayLabel', { nights })
+      : t('booking.message.stayUnknown')
+    const viewLabel =
+      entry.viewOption === 'yes'
+        ? t('booking.message.viewYes')
+        : t('booking.message.viewNo')
+    return t('booking.message.roomLine', {
+      roomName,
+      guests,
+      stay: stayLabel,
+      view: viewLabel,
+    })
   })
-  lines.push('Rooms:')
+  lines.push(t('booking.message.roomsTitle'))
   lines.push(...roomLines)
 
   if (pricingSummary.value) {
-    lines.push(`Total: ${formatPrice(pricingSummary.value.total)}`)
+    lines.push(t('booking.message.total', { total: formatPrice(pricingSummary.value.total) }))
   }
 
   return lines.join('\n')
@@ -436,7 +446,7 @@ const buildBookingMessage = () => {
 
 const sendBookingToTelegram = async (message) => {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-    throw new Error('Telegram configuration missing')
+    throw new Error(t('booking.errors.telegramConfigMissing'))
   }
 
   const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -449,7 +459,7 @@ const sendBookingToTelegram = async (message) => {
   })
 
   if (!res.ok) {
-    throw new Error('Telegram send failed')
+    throw new Error(t('booking.errors.telegramSendFailed'))
   }
 }
 
@@ -472,7 +482,7 @@ const fetchBlockedRooms = async () => {
     })
     const res = await fetch(`${API_BASE_URL}/room-blocks/availability?${query}`)
     if (!res.ok) {
-      throw new Error('Availability load failed')
+      throw new Error(t('booking.errors.availabilityLoadFailed'))
     }
     const data = await res.json()
     blockedRoomIds.value = Array.isArray(data.blocked_room_ids) ? data.blocked_room_ids : []
