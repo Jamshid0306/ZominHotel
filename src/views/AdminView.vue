@@ -19,6 +19,17 @@ const isLoggingIn = ref(false)
 const isLoadingRooms = ref(false)
 const rooms = ref([])
 const roomsError = ref('')
+const isLoadingBlocks = ref(false)
+const roomBlocks = ref([])
+const blocksError = ref('')
+const isSavingBlock = ref(false)
+const isDeletingBlock = ref(false)
+const blockStatus = ref({ tone: '', message: '' })
+const blockForm = ref({
+  room_id: '',
+  start_date: '',
+  end_date: '',
+})
 const isSaving = ref(false)
 const isDeleting = ref(false)
 const isLoadingRestaurants = ref(false)
@@ -119,6 +130,24 @@ const formatPrice = (value) => {
   return `${formatted} ${currencyLabel.value}`
 }
 
+const getRoomName = (room) => {
+  if (!room) return ''
+  if (locale.value === 'ru') return room.room_name_ru
+  if (locale.value === 'en') return room.room_name_en
+  return room.room_name_uz
+}
+
+const formatShortDate = (value) => {
+  if (!value) return '-'
+  const parsed = new Date(`${value}T00:00:00`)
+  if (Number.isNaN(parsed.getTime())) return value
+  return parsed.toLocaleDateString(locale.value === 'uz' ? 'uz-UZ' : locale.value)
+}
+
+const clearBlockStatus = () => {
+  blockStatus.value = { tone: '', message: '' }
+}
+
 const validatePricesForCreate = () => {
   const weekday = parsePriceValue(form.value.price_weekday)
   const weekend = parsePriceValue(form.value.price_weekend)
@@ -156,6 +185,24 @@ const fetchRooms = async () => {
     roomsError.value = error?.message || t('admin.errors.roomsLoad')
   } finally {
     isLoadingRooms.value = false
+  }
+}
+
+const fetchBlocks = async () => {
+  isLoadingBlocks.value = true
+  blocksError.value = ''
+  try {
+    const res = await fetch(`${API_BASE_URL}/room-blocks`, {
+      headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+    })
+    if (!res.ok) {
+      throw new Error(t('admin.errors.blocksLoad'))
+    }
+    roomBlocks.value = await res.json()
+  } catch (error) {
+    blocksError.value = error?.message || t('admin.errors.blocksLoad')
+  } finally {
+    isLoadingBlocks.value = false
   }
 }
 
@@ -223,6 +270,7 @@ const login = async () => {
     setCookie('zafaron_access', data.access_token, 60)
     setStatus('success', t('admin.messages.loginSuccess'))
     await fetchRooms()
+    await fetchBlocks()
     await fetchRestaurants()
     await fetchMenus()
   } catch (error) {
@@ -238,6 +286,7 @@ const logout = () => {
   username.value = ''
   password.value = ''
   rooms.value = []
+  roomBlocks.value = []
   restaurants.value = []
   restaurantMenus.value = []
   setStatus('success', t('admin.messages.logoutSuccess'))
@@ -774,9 +823,69 @@ const deleteRoom = async (roomId) => {
   }
 }
 
+const createBlock = async () => {
+  clearBlockStatus()
+  if (!blockForm.value.room_id || !blockForm.value.start_date || !blockForm.value.end_date) {
+    blockStatus.value = { tone: 'error', message: t('admin.errors.blockRequired') }
+    return
+  }
+  if (blockForm.value.end_date < blockForm.value.start_date) {
+    blockStatus.value = { tone: 'error', message: t('admin.errors.blockDateOrder') }
+    return
+  }
+  isSavingBlock.value = true
+  try {
+    const res = await fetch(`${API_BASE_URL}/room-blocks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token.value ? { Authorization: `Bearer ${token.value}` } : {}),
+      },
+      body: JSON.stringify({
+        room_id: Number(blockForm.value.room_id),
+        start_date: blockForm.value.start_date,
+        end_date: blockForm.value.end_date,
+      }),
+    })
+    if (!res.ok) {
+      throw new Error(t('admin.errors.blockCreate'))
+    }
+    blockStatus.value = { tone: 'success', message: t('admin.messages.blockCreated') }
+    blockForm.value = { room_id: '', start_date: '', end_date: '' }
+    await fetchBlocks()
+  } catch (error) {
+    blockStatus.value = { tone: 'error', message: error?.message || t('admin.errors.blockCreate') }
+  } finally {
+    isSavingBlock.value = false
+  }
+}
+
+const deleteBlock = async (blockId) => {
+  if (!blockId) return
+  if (!window.confirm(t('admin.confirm.deleteBlock'))) return
+  isDeletingBlock.value = true
+  clearBlockStatus()
+  try {
+    const res = await fetch(`${API_BASE_URL}/room-blocks/${blockId}`, {
+      method: 'DELETE',
+      headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
+    })
+    if (!res.ok) {
+      throw new Error(t('admin.errors.blockDelete'))
+    }
+    blockStatus.value = { tone: 'success', message: t('admin.messages.blockDeleted') }
+    roomBlocks.value = roomBlocks.value.filter((block) => block.id !== blockId)
+  } catch (error) {
+    blockStatus.value = { tone: 'error', message: error?.message || t('admin.errors.blockDelete') }
+  } finally {
+    isDeletingBlock.value = false
+  }
+}
+
 onMounted(() => {
   if (token.value) {
     fetchRooms()
+    fetchBlocks()
     fetchRestaurants()
     fetchMenus()
   }
@@ -944,6 +1053,122 @@ onMounted(() => {
             </article>
             <p v-if="rooms.length === 0" class="text-sm text-clay-700">
               {{ t('admin.empty.rooms') }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-if="isAuthenticated"
+        class="rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
+      >
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
+              {{ t('admin.sections.blocksLabel') }}
+            </p>
+            <h2 class="mt-2 text-2xl font-semibold text-clay-950">
+              {{ t('admin.sections.blocksTitle') }}
+            </h2>
+          </div>
+          <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-xs font-semibold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
+            @click="fetchBlocks"
+          >
+            {{ t('common.refresh') }}
+          </button>
+        </div>
+
+        <form class="mt-5 grid gap-3 sm:grid-cols-[2fr_1fr_1fr_auto]" @submit.prevent="createBlock">
+          <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+            <span>{{ t('admin.form.blockRoom') }}</span>
+            <select
+              v-model="blockForm.room_id"
+              class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+              required
+            >
+              <option value="" disabled>{{ t('admin.form.blockRoomPlaceholder') }}</option>
+              <option v-for="room in rooms" :key="room.id" :value="room.id">
+                {{ getRoomName(room) }}
+              </option>
+            </select>
+          </label>
+          <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+            <span>{{ t('admin.form.blockStart') }}</span>
+            <input
+              v-model="blockForm.start_date"
+              type="date"
+              class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+              required
+            />
+          </label>
+          <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
+            <span>{{ t('admin.form.blockEnd') }}</span>
+            <input
+              v-model="blockForm.end_date"
+              type="date"
+              class="w-full rounded-xl border border-clay-200/80 bg-white/90 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+              required
+            />
+          </label>
+          <button
+            type="submit"
+            class="mt-6 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-clay-500 to-clay-300 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-clay-950/15 transition hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
+            :disabled="isSavingBlock"
+          >
+            {{ isSavingBlock ? t('common.saving') : t('admin.actions.blockRoom') }}
+          </button>
+        </form>
+
+        <p
+          v-if="blockStatus.message"
+          class="mt-4 rounded-2xl border px-4 py-3 text-sm font-semibold"
+          :class="
+            blockStatus.tone === 'success'
+              ? 'border-green-200 bg-green-50 text-green-700'
+              : 'border-red-200 bg-red-50 text-red-700'
+          "
+        >
+          {{ blockStatus.message }}
+        </p>
+
+        <div class="mt-5">
+          <p v-if="isLoadingBlocks" class="text-sm text-clay-700">{{ t('common.loading') }}</p>
+          <p v-else-if="blocksError" class="text-sm text-red-600">
+            {{ blocksError }}
+          </p>
+          <div v-else class="grid gap-3">
+            <article
+              v-for="block in roomBlocks"
+              :key="block.id"
+              class="rounded-2xl border border-clay-100/90 bg-white/90 p-4 text-sm text-clay-800 shadow-sm shadow-clay-950/5"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <p class="font-semibold text-clay-900">
+                    {{
+                      getRoomName(
+                        rooms.find((room) => String(room.id) === String(block.room_id))
+                      ) || t('admin.form.blockRoomFallback', { id: block.room_id })
+                    }}
+                  </p>
+                  <p class="text-xs text-clay-600">
+                    {{ formatShortDate(block.start_date) }} → {{ formatShortDate(block.end_date) }}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:bg-red-50"
+                  :disabled="isDeletingBlock"
+                  @click="deleteBlock(block.id)"
+                >
+                  {{ t('common.delete') }}
+                </button>
+              </div>
+            </article>
+            <p v-if="roomBlocks.length === 0" class="text-sm text-clay-700">
+              {{ t('admin.empty.blocks') }}
             </p>
           </div>
         </div>

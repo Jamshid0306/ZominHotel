@@ -32,9 +32,17 @@ const status = ref({
   params: {},
 })
 
+const availabilityNotice = ref({
+  tone: '',
+  key: '',
+  params: {},
+})
+
 const rooms = ref([])
 const isLoadingRooms = ref(false)
 const roomsError = ref('')
+const blockedRoomIds = ref([])
+const roomAvailabilityById = ref({})
 
 const guestOptions = computed(() => {
   const options = tm('booking.guestOptions')
@@ -69,11 +77,76 @@ const selectedRooms = computed(() =>
     .filter(Boolean)
 )
 
+const toDateKey = (date) => {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 const parseDate = (value) => {
   if (!value) return null
   const parsed = new Date(`${value}T00:00:00`)
   return Number.isNaN(parsed.getTime()) ? null : parsed
 }
+
+const todayKey = toDateKey(new Date())
+const calendarMonthsCount = 2
+
+const weekDayLabels = computed(() => {
+  const formatter = new Intl.DateTimeFormat(locale.value || 'en', { weekday: 'short' })
+  const monday = new Date(2023, 0, 2)
+  return Array.from({ length: 7 }, (_, index) =>
+    formatter.format(new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + index))
+  )
+})
+
+const calendarRange = computed(() => {
+  const today = new Date()
+  const start = new Date(today.getFullYear(), today.getMonth(), 1)
+  const end = new Date(today.getFullYear(), today.getMonth() + calendarMonthsCount, 0)
+  return {
+    start: toDateKey(start),
+    end: toDateKey(end),
+  }
+})
+
+const buildCalendarMonths = (startDate, monthsCount) => {
+  const monthFormatter = new Intl.DateTimeFormat(locale.value || 'en', {
+    month: 'long',
+    year: 'numeric',
+  })
+  const months = []
+  for (let index = 0; index < monthsCount; index += 1) {
+    const monthStart = new Date(startDate.getFullYear(), startDate.getMonth() + index, 1)
+    const monthEnd = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0)
+    const days = []
+    const firstWeekday = (monthStart.getDay() + 6) % 7
+    for (let filler = 0; filler < firstWeekday; filler += 1) {
+      days.push({ key: `empty-${monthStart.getMonth()}-${filler}`, dateKey: '', label: '' })
+    }
+    for (let day = 1; day <= monthEnd.getDate(); day += 1) {
+      const date = new Date(monthStart.getFullYear(), monthStart.getMonth(), day)
+      const dateKey = toDateKey(date)
+      days.push({
+        key: dateKey,
+        dateKey,
+        label: day,
+        isToday: dateKey === todayKey,
+      })
+    }
+    months.push({
+      key: `${monthStart.getFullYear()}-${monthStart.getMonth()}`,
+      label: monthFormatter.format(monthStart),
+      days,
+    })
+  }
+  return months
+}
+
+const calendarMonths = computed(() =>
+  buildCalendarMonths(parseDate(calendarRange.value.start), calendarMonthsCount)
+)
 
 const getStayNights = () => {
   const start = parseDate(booking.value.checkIn)
@@ -178,6 +251,161 @@ const clearStatus = () => {
   status.value = { tone: '', key: '', params: {} }
 }
 
+const clearAvailabilityNotice = () => {
+  availabilityNotice.value = { tone: '', key: '', params: {} }
+}
+
+const isRoomBlocked = (roomId) =>
+  blockedRoomIds.value.some((blockedId) => String(blockedId) === String(roomId))
+
+const isPastDate = (dateKey) => dateKey < todayKey
+
+const setRoomAvailabilityState = (roomId, updates) => {
+  const current = roomAvailabilityById.value[roomId] || {}
+  roomAvailabilityById.value = {
+    ...roomAvailabilityById.value,
+    [roomId]: { ...current, ...updates },
+  }
+}
+
+const buildBlockedLookup = (blocks) => {
+  const lookup = {}
+  blocks.forEach((block) => {
+    const start = parseDate(block.start_date)
+    const end = parseDate(block.end_date)
+    if (!start || !end) return
+    const cursor = new Date(start)
+    while (cursor <= end) {
+      lookup[toDateKey(cursor)] = true
+      cursor.setDate(cursor.getDate() + 1)
+    }
+  })
+  return lookup
+}
+
+const fetchRoomAvailability = async (roomId) => {
+  if (!roomId) return
+  const rangeKey = `${calendarRange.value.start}_${calendarRange.value.end}`
+  const cached = roomAvailabilityById.value[roomId]
+  if (cached?.rangeKey === rangeKey && cached?.blockedLookup) return
+
+  setRoomAvailabilityState(roomId, { isLoading: true, error: '', rangeKey })
+  try {
+    const query = new URLSearchParams({
+      room_id: String(roomId),
+      start_date: calendarRange.value.start,
+      end_date: calendarRange.value.end,
+    })
+    const res = await fetch(`${API_BASE_URL}/room-blocks?${query}`)
+    if (!res.ok) {
+      throw new Error('Availability load failed')
+    }
+    const blocks = await res.json()
+    setRoomAvailabilityState(roomId, {
+      isLoading: false,
+      error: '',
+      blockedLookup: buildBlockedLookup(Array.isArray(blocks) ? blocks : []),
+      rangeKey,
+    })
+  } catch (error) {
+    setRoomAvailabilityState(roomId, {
+      isLoading: false,
+      error: error?.message || 'Availability load failed',
+      blockedLookup: {},
+      rangeKey,
+    })
+  }
+}
+
+const isRoomCalendarLoading = (roomId) =>
+  Boolean(roomAvailabilityById.value[roomId]?.isLoading)
+
+const roomCalendarError = (roomId) => roomAvailabilityById.value[roomId]?.error
+
+const isRoomDateBlocked = (roomId, dateKey) =>
+  Boolean(roomAvailabilityById.value[roomId]?.blockedLookup?.[dateKey])
+
+const rangeHasBlockedDates = (roomId, startKey, endKey) => {
+  if (!roomAvailabilityById.value[roomId]?.blockedLookup) return false
+  const start = parseDate(startKey)
+  const end = parseDate(endKey)
+  if (!start || !end) return false
+  const cursor = new Date(start)
+  while (cursor <= end) {
+    const key = toDateKey(cursor)
+    if (isRoomDateBlocked(roomId, key)) return true
+    cursor.setDate(cursor.getDate() + 1)
+  }
+  return false
+}
+
+const isDateInSelectedRange = (dateKey) => {
+  const start = parseDate(booking.value.checkIn)
+  const end = parseDate(booking.value.checkOut)
+  const current = parseDate(dateKey)
+  if (!start || !end || !current) return false
+  return current >= start && current <= end
+}
+
+const isSelectedDate = (dateKey) =>
+  dateKey === booking.value.checkIn || dateKey === booking.value.checkOut
+
+const getCalendarDayClasses = (roomId, day) => {
+  if (!day.dateKey) {
+    return 'invisible'
+  }
+  if (isPastDate(day.dateKey)) {
+    return 'bg-slate-100 text-slate-400 cursor-not-allowed'
+  }
+  if (isRoomDateBlocked(roomId, day.dateKey)) {
+    return 'bg-rose-100 text-rose-700 cursor-not-allowed'
+  }
+  if (isSelectedDate(day.dateKey)) {
+    return 'bg-clay-900 text-white'
+  }
+  if (isDateInSelectedRange(day.dateKey)) {
+    return 'bg-clay-900 text-white'
+  }
+  return 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 cursor-pointer'
+}
+
+const selectCalendarDate = (roomId, dateKey) => {
+  clearAvailabilityNotice()
+  clearStatus()
+  if (!dateKey || !roomId) return
+  if (isPastDate(dateKey) || isRoomDateBlocked(roomId, dateKey)) return
+
+  const currentStart = booking.value.checkIn
+  const currentEnd = booking.value.checkOut
+
+  if (!currentStart || currentEnd) {
+    booking.value.checkIn = dateKey
+    booking.value.checkOut = ''
+    return
+  }
+
+  if (dateKey === currentStart) {
+    booking.value.checkOut = ''
+    return
+  }
+
+  const [startKey, endKey] = dateKey < currentStart
+    ? [dateKey, currentStart]
+    : [currentStart, dateKey]
+
+  if (rangeHasBlockedDates(roomId, startKey, endKey)) {
+    availabilityNotice.value = {
+      tone: 'error',
+      key: 'booking.status.roomUnavailable',
+      params: {},
+    }
+    return
+  }
+
+  booking.value.checkIn = startKey
+  booking.value.checkOut = endKey
+}
+
 const buildBookingMessage = () => {
   const nights = getStayNights()
   const lines = ['New booking request']
@@ -229,8 +457,64 @@ const close = () => {
   emit('close')
 }
 
+const fetchBlockedRooms = async () => {
+  const start = parseDate(booking.value.checkIn)
+  const end = parseDate(booking.value.checkOut)
+  if (!start || !end || end <= start) {
+    blockedRoomIds.value = []
+    return
+  }
+
+  try {
+    const query = new URLSearchParams({
+      start_date: booking.value.checkIn,
+      end_date: booking.value.checkOut,
+    })
+    const res = await fetch(`${API_BASE_URL}/room-blocks/availability?${query}`)
+    if (!res.ok) {
+      throw new Error('Availability load failed')
+    }
+    const data = await res.json()
+    blockedRoomIds.value = Array.isArray(data.blocked_room_ids) ? data.blocked_room_ids : []
+    const hasBlockedSelection = booking.value.rooms.some(
+      (entry) => entry.roomId && isRoomBlocked(entry.roomId)
+    )
+    if (hasBlockedSelection) {
+      availabilityNotice.value = {
+        tone: 'error',
+        key: 'booking.status.roomUnavailable',
+        params: {},
+      }
+      booking.value.rooms.forEach((entry) => {
+        if (entry.roomId && isRoomBlocked(entry.roomId)) {
+          entry.roomId = ''
+        }
+      })
+    }
+  } catch (error) {
+    blockedRoomIds.value = []
+  }
+}
+
+const handleRoomChange = (entry) => {
+  clearStatus()
+  clearAvailabilityNotice()
+  if (entry.roomId && isRoomBlocked(entry.roomId)) {
+    availabilityNotice.value = {
+      tone: 'error',
+      key: 'booking.status.roomUnavailable',
+      params: {},
+    }
+    entry.roomId = ''
+  }
+  if (entry.roomId) {
+    fetchRoomAvailability(entry.roomId)
+  }
+}
+
 const submitBooking = async () => {
   clearStatus()
+  clearAvailabilityNotice()
   const { checkIn, checkOut, name, phone } = booking.value
   const hasRoomSelections = booking.value.rooms.every((entry) => entry.roomId)
   if (!checkIn || !checkOut || !name || !phone || !hasRoomSelections) {
@@ -261,6 +545,20 @@ const submitBooking = async () => {
       params: {},
     }
     return
+  }
+
+  if (blockedRoomIds.value.length) {
+    const hasBlockedRoom = booking.value.rooms.some(
+      (entry) => entry.roomId && isRoomBlocked(entry.roomId)
+    )
+    if (hasBlockedRoom) {
+      availabilityNotice.value = {
+        tone: 'error',
+        key: 'booking.status.roomUnavailable',
+        params: {},
+      }
+      return
+    }
   }
 
   try {
@@ -298,6 +596,12 @@ watch(
     if (open) {
       document.addEventListener('keydown', onKeydown)
       setBodyLock(true)
+      fetchBlockedRooms()
+      booking.value.rooms.forEach((entry) => {
+        if (entry.roomId) {
+          fetchRoomAvailability(entry.roomId)
+        }
+      })
     } else {
       document.removeEventListener('keydown', onKeydown)
       setBodyLock(false)
@@ -305,8 +609,29 @@ watch(
   }
 )
 
+watch(
+  () => [booking.value.checkIn, booking.value.checkOut],
+  () => {
+    clearAvailabilityNotice()
+    fetchBlockedRooms()
+  }
+)
+
+watch(
+  () => [calendarRange.value.start, calendarRange.value.end, booking.value.rooms.map((entry) => entry.roomId)],
+  () => {
+    if (!props.open) return
+    booking.value.rooms.forEach((entry) => {
+      if (entry.roomId) {
+        fetchRoomAvailability(entry.roomId)
+      }
+    })
+  }
+)
+
 onMounted(() => {
   fetchRooms()
+  fetchBlockedRooms()
 })
 
 onBeforeUnmount(() => {
@@ -424,7 +749,7 @@ onBeforeUnmount(() => {
                   <select
                     class="w-full rounded-xl border border-clay-200/80 bg-white/95 px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
                     v-model="entry.roomId"
-                    @change="clearStatus"
+                    @change="handleRoomChange(entry)"
                     required
                   >
                     <option value="" disabled>
@@ -441,9 +766,73 @@ onBeforeUnmount(() => {
                       {{ formatPrice(room.price_weekday) }} •
                       {{ t('booking.pricing.weekendPrice') }}:
                       {{ formatPrice(room.price_weekend) }}
+                      {{ isRoomBlocked(room.id) ? ` • ${t('booking.roomUnavailable')}` : '' }}
                     </option>
                   </select>
                 </label>
+                <div class="sm:col-span-2 rounded-2xl border border-clay-200/70 bg-white/90 px-4 py-4 text-sm text-clay-800">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-clay-500">
+                      {{ t('booking.calendar.title') }}
+                    </span>
+                    <div class="flex items-center gap-3 text-[11px] font-semibold text-clay-600">
+                      <span class="inline-flex items-center gap-1">
+                        <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                        {{ t('booking.calendar.open') }}
+                      </span>
+                      <span class="inline-flex items-center gap-1">
+                        <span class="h-2 w-2 rounded-full bg-rose-500"></span>
+                        {{ t('booking.calendar.closed') }}
+                      </span>
+                    </div>
+                  </div>
+                  <p v-if="!entry.roomId" class="mt-2 text-xs text-clay-600">
+                    {{ t('booking.calendar.hint') }}
+                  </p>
+                  <p v-else-if="isRoomCalendarLoading(entry.roomId)" class="mt-2 text-xs text-clay-600">
+                    {{ t('booking.calendar.loading') }}
+                  </p>
+                  <p v-else-if="roomCalendarError(entry.roomId)" class="mt-2 text-xs text-rose-600">
+                    {{ t('booking.calendar.error') }}
+                  </p>
+                  <div v-else class="mt-3 grid gap-4 sm:grid-cols-2">
+                    <div
+                      v-for="month in calendarMonths"
+                      :key="month.key"
+                      class="rounded-xl border border-clay-200/70 bg-white/80 px-3 py-3"
+                    >
+                      <div class="flex items-center justify-between text-xs font-semibold text-clay-700">
+                        <span>{{ month.label }}</span>
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-clay-500">
+                          {{ t('booking.calendar.availability') }}
+                        </span>
+                      </div>
+                      <div class="mt-2 grid grid-cols-7 gap-1 text-[10px] font-semibold uppercase text-clay-500">
+                        <span v-for="(label, labelIndex) in weekDayLabels" :key="labelIndex" class="text-center">
+                          {{ label }}
+                        </span>
+                      </div>
+                      <div class="mt-2 grid grid-cols-7 gap-1">
+                        <div
+                          v-for="day in month.days"
+                          :key="day.key"
+                          class="flex items-center justify-center"
+                        >
+                          <span
+                            class="flex h-7 w-7 items-center justify-center rounded-lg text-[11px] font-semibold transition"
+                            :class="[
+                              getCalendarDayClasses(entry.roomId, day),
+                              day.isToday ? 'ring-1 ring-clay-300' : '',
+                            ]"
+                            @click="selectCalendarDate(entry.roomId, day.dateKey)"
+                          >
+                            {{ day.label }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800 sm:col-span-2">
                   <span>{{ t('booking.viewOption.label') }}</span>
                   <select
@@ -616,6 +1005,17 @@ onBeforeUnmount(() => {
               ]"
             >
               {{ t(status.key, status.params) }}
+            </p>
+            <p
+              v-if="availabilityNotice.key"
+              :class="[
+                'sm:col-span-2 rounded-2xl border px-4 py-3 text-sm font-semibold',
+                availabilityNotice.tone === 'success'
+                  ? 'border-green-200 bg-green-50 text-green-700'
+                  : 'border-red-200 bg-red-50 text-red-700',
+              ]"
+            >
+              {{ t(availabilityNotice.key, availabilityNotice.params) }}
             </p>
           </form>
         </div>
