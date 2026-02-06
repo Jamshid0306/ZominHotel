@@ -28,6 +28,7 @@ export const supportedLocales = [
 
 const messages = {
   uz: {
+    creat: 'EDev tomonidan yaratilgan',
     brand: "Za'faron Premium Hotel",
     nav: {
       home: 'Bosh sahifa',
@@ -225,6 +226,8 @@ const messages = {
       contactsLabel: 'Kontaktlar',
       title: "Biz bilan bog'laning",
       formLabel: 'Izoh qoldirish',
+      formNote:
+        'Mehmonxonadan ketayotgan mehmonlar uchun individual taklif: portal yoki saytda fikr-mulohaza bildirish.',
       form: {
         nameLabel: 'Ism',
         namePlaceholder: 'Ismingiz',
@@ -240,7 +243,7 @@ const messages = {
       title: 'Anʼanalar va mukammallik uchrashgan makon',
       description:
         'BMB Zaʼfaron restoran va mehmonxonalar tarmogʻi milliy, yevropa va turk anʼanalarini uygʻunlashtirgan nafis oshxona hamda benuqson servisni taklif etadi. Toshkent va Jizzaxdagi filiallarimiz mahalliy va xorijiy mehmonlar uchun xalqaro standartlarga mos sharoit yaratadi.',
-      hotelLabel: 'Zaʼfaron Premium Hotel',
+      hotelLabel: 'Mehmonxona haqida',
       hotelTitle: 'Premium darajadagi qulaylik va xavfsiz dam olish',
       hotelDescription:
         'Zaʼfaron Premium Hotel — yuqori sifatli xizmat, zamonaviy infratuzilma va qulay muhitni o‘zida mujassam etgan premium toifadagi mehmonxona. Mehmonlar uchun qulay, xavfsiz va unutilmas dam olish imkoniyatlarini taqdim etadi. Mehmonxona oilaviy hordiq, biznes safarlari, sog‘lomlashtirish va maroqli dam olish uchun ideal tanlov hisoblanadi.',
@@ -735,6 +738,7 @@ const messages = {
     },
   },
   ru: {
+    creat: 'Создано EDev',
     brand: "Za'faron Premium Hotel",
     nav: {
       home: 'Главная',
@@ -930,6 +934,8 @@ const messages = {
       contactsLabel: 'Контакты',
       title: 'Свяжитесь с нами',
       formLabel: 'Оставить комментарий',
+      formNote:
+        'Индивидуальное приглашение для гостей при выезде, чтобы оставить отзыв на портале или сайте.',
       form: {
         nameLabel: 'Имя',
         namePlaceholder: 'Ваше имя',
@@ -945,7 +951,7 @@ const messages = {
       title: 'Пространство, где традиции встречаются с совершенством',
       description:
         'Сеть ресторанов и отелей BMB Za’faron предлагает безупречный сервис и изысканную кухню, сочетающую национальные, европейские и турецкие традиции. Наши филиалы в Ташкенте и Джизаке создают уникальные условия для местных и иностранных гостей, отвечая высоким международным стандартам.',
-      hotelLabel: 'Za’faron Premium Hotel',
+      hotelLabel: 'О гостинице',
       hotelTitle: 'Премиальный комфорт и безопасный отдых',
       hotelDescription:
         'Za’faron Premium Hotel — отель премиум‑класса с высоким уровнем сервиса, современной инфраструктурой и комфортной атмосферой. Мы создаем условия для удобного, безопасного и незабываемого отдыха. Идеальный выбор для семейных поездок, деловых визитов, оздоровления и отдыха.',
@@ -1439,6 +1445,7 @@ const messages = {
     },
   },
   en: {
+    creat: 'Created by EDev',
     brand: "Za'faron Premium Hotel",
     nav: {
       home: 'Home',
@@ -1633,6 +1640,8 @@ const messages = {
       contactsLabel: 'Contacts',
       title: 'Get in touch',
       formLabel: 'Leave a note',
+      formNote:
+        'A personalized invitation for departing guests to share feedback on the portal or website.',
       form: {
         nameLabel: 'Name',
         namePlaceholder: 'Your name',
@@ -1648,7 +1657,7 @@ const messages = {
       title: 'A space where tradition meets excellence',
       description:
         "BMB Za’faron’s network of restaurants and hotels offers impeccable service and refined cuisine that blends national, European, and Turkish traditions. Our branches in Tashkent and Jizzakh create unique conditions for local and international guests, meeting high international standards.",
-      hotelLabel: "Za'faron Premium Hotel",
+      hotelLabel: 'About the hotel',
       hotelTitle: 'Premium comfort with a safe, memorable stay',
       hotelDescription:
         "Za’faron Premium Hotel is a premium-class hotel with high-quality service, modern infrastructure, and a comfortable atmosphere. We provide convenient, safe, and unforgettable stays for guests. It is an ideal choice for family vacations, business trips, wellness, and leisure.",

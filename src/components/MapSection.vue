@@ -36,6 +36,9 @@ const { t } = useI18n()
           <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-600">
             {{ t('mapSection.formLabel') }}
           </p>
+          <p class="mt-2 text-sm text-clay-700">
+            {{ t('mapSection.formNote') }}
+          </p>
           <form class="mt-4 grid gap-3">
             <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
               <span>{{ t('mapSection.form.nameLabel') }}</span>
