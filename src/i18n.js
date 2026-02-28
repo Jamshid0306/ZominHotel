@@ -158,6 +158,11 @@ const messages = {
         success:
           'Bron qabul qilindi. {guests} mehmon uchun tasdiq xabarini tezda yuboramiz.',
       },
+      successModal: {
+        title: 'Sizning broningiz yuborildi',
+        description: "Tez orada siz bilan bog'lanamiz.",
+        back: 'Ortga',
+      },
       errors: {
         availabilityLoadFailed: 'Bandlikni yuklab bo‘lmadi.',
         telegramConfigMissing: 'Telegram sozlamalari topilmadi.',
@@ -867,6 +872,11 @@ const messages = {
         sendFailed: 'Не удалось отправить бронь. Пожалуйста, попробуйте снова.',
         success: 'Бронь принята. Скоро отправим подтверждение для {guests} гостей.',
       },
+      successModal: {
+        title: 'Ваша бронь отправлена',
+        description: 'Мы скоро свяжемся с вами.',
+        back: 'Назад',
+      },
       errors: {
         availabilityLoadFailed: 'Не удалось загрузить занятость.',
         telegramConfigMissing: 'Настройки Telegram отсутствуют.',
@@ -1572,6 +1582,11 @@ const messages = {
         roomUnavailable: 'These dates are unavailable for this room.',
         sendFailed: 'Unable to send the booking. Please try again.',
         success: "Booking received. We'll send confirmation for {guests} guests shortly.",
+      },
+      successModal: {
+        title: 'Your booking has been sent',
+        description: "We'll contact you shortly.",
+        back: 'Back',
       },
       errors: {
         availabilityLoadFailed: 'Unable to load availability.',

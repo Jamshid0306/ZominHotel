@@ -10,14 +10,14 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'submitted'])
 
 const { t, tm, locale } = useI18n()
 
 const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_BOT_TOKEN
 const TELEGRAM_CHAT_ID = import.meta.env.VITE_API_CHAT_ID
 
-const booking = ref({
+const createInitialBooking = () => ({
   checkIn: '',
   checkOut: '',
   rooms: [{ roomId: '', guests: 2, viewOption: 'no' }],
@@ -25,6 +25,7 @@ const booking = ref({
   phone: '',
   email: '',
 })
+const booking = ref(createInitialBooking())
 
 const status = ref({
   tone: '',
@@ -253,6 +254,14 @@ const clearStatus = () => {
 
 const clearAvailabilityNotice = () => {
   availabilityNotice.value = { tone: '', key: '', params: {} }
+}
+
+const resetBookingState = () => {
+  booking.value = createInitialBooking()
+  blockedRoomIds.value = []
+  roomAvailabilityById.value = {}
+  clearStatus()
+  clearAvailabilityNotice()
 }
 
 const isRoomBlocked = (roomId) =>
@@ -574,13 +583,8 @@ const submitBooking = async () => {
   try {
     const message = buildBookingMessage()
     await sendBookingToTelegram(message)
-    status.value = {
-      tone: 'success',
-      key: 'booking.status.success',
-      params: {
-        guests: booking.value.rooms.reduce((sum, entry) => sum + Number(entry.guests || 0), 0),
-      },
-    }
+    resetBookingState()
+    emit('submitted')
   } catch (error) {
     status.value = {
       tone: 'error',

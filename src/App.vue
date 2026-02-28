@@ -4,6 +4,7 @@ import { RouterLink, RouterView, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import LanguageDropdown from "./components/LanguageDropdown.vue";
 import BookingModal from "./components/BookingModal.vue";
+import BookingSuccessModal from "./components/BookingSuccessModal.vue";
 import SnowOverlay from "./components/SnowOverlay.vue";
 
 const { t } = useI18n();
@@ -12,13 +13,24 @@ const year = new Date().getFullYear();
 const isAdminRoute = computed(() => route.path.startsWith("/admin"));
 const isMobileMenuOpen = ref(false);
 const isBookingModalOpen = ref(false);
+const isBookingSuccessModalOpen = ref(false);
 
 const openBookingModal = () => {
+  isBookingSuccessModalOpen.value = false;
   isBookingModalOpen.value = true;
 };
 
 const closeBookingModal = () => {
   isBookingModalOpen.value = false;
+};
+
+const closeBookingSuccessModal = () => {
+  isBookingSuccessModalOpen.value = false;
+};
+
+const handleBookingSubmitted = () => {
+  closeBookingModal();
+  isBookingSuccessModalOpen.value = true;
 };
 
 const toggleMobileMenu = () => {
@@ -161,7 +173,15 @@ provide("openBookingModal", openBookingModal);
 
     <RouterView />
     <SnowOverlay />
-    <BookingModal :open="isBookingModalOpen" @close="closeBookingModal" />
+    <BookingModal
+      :open="isBookingModalOpen"
+      @close="closeBookingModal"
+      @submitted="handleBookingSubmitted"
+    />
+    <BookingSuccessModal
+      :open="isBookingSuccessModalOpen"
+      @close="closeBookingSuccessModal"
+    />
 
     <footer
       v-if="!isAdminRoute"
