@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Manrope", "Helvetica Neue", sans-serif;
-  --font-display: "Playfair Display", "Times New Roman", serif;
+  --font-sans: "Plus Jakarta Sans", "Helvetica Neue", sans-serif;
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
   --color-clay-950: #1f120c;
   --color-clay-900: #2d1a12;
   --color-clay-800: #3f2418;
@@ -12,6 +12,10 @@
   --color-clay-300: #c99565;
   --color-clay-200: #dec5a7;
   --color-clay-100: #f2e6db;
+  --color-pine-900: #10251d;
+  --color-pine-700: #234538;
+  --color-pine-500: #3e6b58;
+  --color-gold-500: #b88434;
   --color-sand-200: #f0e6d8;
   --color-sand-100: #f6eee3;
   --color-sand-50: #fdfbf8;
@@ -35,8 +39,7 @@
     font-weight: 400;
     margin: 0;
     background:
-      radial-gradient(circle at 15% 20%, rgba(200, 156, 111, 0.18), transparent 28%),
-      radial-gradient(circle at 80% 10%, rgba(140, 93, 59, 0.12), transparent 32%),
+      linear-gradient(180deg, rgba(253, 251, 248, 0.96), rgba(246, 238, 227, 0.62)),
       var(--color-sand-50);
     color: var(--color-clay-900);
     text-rendering: optimizeLegibility;
@@ -46,5 +49,23 @@
 
   a {
     @apply transition-colors;
+  }
+
+  ::selection {
+    background: rgba(184, 132, 52, 0.28);
+  }
+}
+
+@layer utilities {
+  .zomin-cut {
+    clip-path: polygon(0 0, 100% 0, 100% 88%, 72% 100%, 0 92%);
+  }
+
+  .zomin-image-cut {
+    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 92%);
+  }
+
+  .zomin-map-cut {
+    clip-path: polygon(0 7%, 100% 0, 100% 100%, 0 93%);
   }
 }

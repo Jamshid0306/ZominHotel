@@ -1,6 +1,26 @@
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 
+export const SITE_KEY = import.meta.env.VITE_SITE_KEY || 'zomin'
+
+export const buildHotelRoomsUrl = (siteKey = SITE_KEY) => {
+  const query = new URLSearchParams({ site_key: siteKey })
+  return `${API_BASE_URL}/hotel-rooms?${query}`
+}
+
+export const buildRestaurantsUrl = (siteKey = SITE_KEY) => {
+  const query = new URLSearchParams({ site_key: siteKey })
+  return `${API_BASE_URL}/restaurants?${query}`
+}
+
+export const buildRestaurantMenusUrl = (siteKey = SITE_KEY, restaurantId = '') => {
+  const query = new URLSearchParams({ site_key: siteKey })
+  if (restaurantId) {
+    query.set('restaurant_id', restaurantId)
+  }
+  return `${API_BASE_URL}/restaurant-menus?${query}`
+}
+
 export const withBaseUrl = (path) => {
   if (!path) return ''
   if (path.startsWith('http')) return path

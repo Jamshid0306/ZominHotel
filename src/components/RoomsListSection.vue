@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, inject, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { API_BASE_URL, withBaseUrl } from '../api'
+import { buildHotelRoomsUrl, withBaseUrl } from '../api'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import 'swiper/css'
@@ -49,7 +49,7 @@ const fetchRooms = async () => {
   isLoading.value = true
   errorMessage.value = ''
   try {
-    const res = await fetch(`${API_BASE_URL}/hotel-rooms`)
+    const res = await fetch(buildHotelRoomsUrl())
     if (!res.ok) {
       throw new Error(t('roomsPage.loadError'))
     }
@@ -102,11 +102,11 @@ onMounted(() => {
     <article
       v-for="room in rooms"
       :key="room.id"
-      class="group rounded-2xl border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-6 shadow-sm shadow-clay-950/5 transition hover:-translate-y-1 hover:shadow-xl"
+      class="group rounded-lg border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-6 shadow-sm shadow-clay-950/5 transition hover:-translate-y-1 hover:shadow-xl"
     >
       <div
         v-if="room.room_images?.length"
-        class="mb-4 overflow-hidden rounded-2xl border border-clay-100/80 bg-white/80"
+        class="mb-4 overflow-hidden rounded-lg border border-clay-100/80 bg-white/80"
       >
         <div class="relative">
           <Swiper
@@ -238,7 +238,7 @@ onMounted(() => {
           @click="closeLightbox"
         ></div>
         <div
-          class="relative z-10 w-full max-w-5xl overflow-hidden rounded-3xl border border-white/20 bg-black/90 shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+          class="relative z-10 w-full max-w-5xl overflow-hidden rounded-xl border border-white/20 bg-black/90 shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
         >
           <div class="flex items-center justify-between px-5 py-4 text-white">
             <p class="text-sm font-semibold">{{ lightboxTitle }}</p>

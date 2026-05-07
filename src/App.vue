@@ -5,7 +5,6 @@ import { useI18n } from "vue-i18n";
 import LanguageDropdown from "./components/LanguageDropdown.vue";
 import BookingModal from "./components/BookingModal.vue";
 import BookingSuccessModal from "./components/BookingSuccessModal.vue";
-import SnowOverlay from "./components/SnowOverlay.vue";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -45,7 +44,7 @@ provide("openBookingModal", openBookingModal);
 </script>
 
 <template>
-  <div class="min-h-screen bg-white text-clay-900">
+  <div class="min-h-screen bg-sand-50 text-clay-900">
     <header
       v-if="!isAdminRoute"
       class="sticky top-0 z-30 border-b border-clay-100/80 bg-[#f7f7f7]"
@@ -172,7 +171,6 @@ provide("openBookingModal", openBookingModal);
     </header>
 
     <RouterView />
-    <SnowOverlay />
     <BookingModal
       :open="isBookingModalOpen"
       @close="closeBookingModal"
@@ -185,7 +183,7 @@ provide("openBookingModal", openBookingModal);
 
     <footer
       v-if="!isAdminRoute"
-      class="mt-14 border-t border-clay-100/70 bg-[#f7f7f7]"
+      class="mt-14 border-t border-clay-100/70 bg-[#f7f7f7] text-clay-900"
     >
       <div class="mx-auto max-w-6xl px-4 py-10">
         <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
@@ -196,8 +194,8 @@ provide("openBookingModal", openBookingModal);
             </p>
             <div class="flex items-center gap-3">
               <a
-                class="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-clay-200/80 bg-white/70 text-clay-700 shadow-sm transition hover:-translate-y-0.5 hover:border-clay-300 hover:text-clay-950 hover:shadow-md"
-                href="https://www.instagram.com/zafaron_premium_hotel?igsh=czc2dmZlYTZja3p2"
+                class="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-clay-200/80 bg-white/80 text-clay-700 shadow-sm transition hover:-translate-y-0.5 hover:border-clay-300 hover:text-clay-950 hover:shadow-md"
+                href="https://www.zamindor.com"
                 aria-label="Instagram"
                 target="_blank"
               >
@@ -213,8 +211,8 @@ provide("openBookingModal", openBookingModal);
                 </svg>
               </a>
               <a
-                class="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-clay-200/80 bg-white/70 text-clay-700 shadow-sm transition hover:-translate-y-0.5 hover:border-clay-300 hover:text-clay-950 hover:shadow-md"
-                href="https://www.facebook.com/share/1DU7NEBpbn/?mibextid=wwXIfr"
+                class="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-clay-200/80 bg-white/80 text-clay-700 shadow-sm transition hover:-translate-y-0.5 hover:border-clay-300 hover:text-clay-950 hover:shadow-md"
+                href="https://www.zamindor.com"
                 aria-label="Facebook"
                 target="_blank"
               >
@@ -247,15 +245,9 @@ provide("openBookingModal", openBookingModal);
                 </span>
                 <a
                   class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:border-clay-300 hover:text-clay-950"
-                  href="tel:+998702289999"
+                  href="tel:+998722215454"
                 >
-                  +998 70 228 99 99
-                </a>
-                <a
-                  class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:border-clay-300 hover:text-clay-950"
-                  href="tel:+998715010606"
-                >
-                  +998 71 501 06 06
+                  +998 72 221 54 54
                 </a>
               </div>
               <div class="flex flex-wrap items-center gap-2">
@@ -266,9 +258,9 @@ provide("openBookingModal", openBookingModal);
                 </span>
                 <a
                   class="rounded-full border border-clay-200/80 px-3 py-1 text-xs font-semibold text-clay-800 transition hover:border-clay-300 hover:text-clay-950"
-                  href="mailto:zafaronpremiumhotel@gmail.com"
+                  href="mailto:sales@zamindor.com"
                 >
-                  zafaronpremiumhotel@gmail.com
+                  sales@zamindor.com
                 </a>
               </div>
             </div>
@@ -317,7 +309,7 @@ provide("openBookingModal", openBookingModal);
             </p>
             <button
               type="button"
-              class="inline-flex items-center bg-clay-500 cursor-pointer justify-center rounded-full bg-linear-to-r from-clay-600 to-clay-400 px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
+              class="inline-flex cursor-pointer items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
               @click="openBookingModal"
             >
               {{ t("actions.book") }}
@@ -326,9 +318,9 @@ provide("openBookingModal", openBookingModal);
               {{ t("footer.questionsLabel") }}
               <a
                 class="font-semibold text-clay-800"
-                href="mailto:zafaronpremiumhotel@gmail.com"
+                href="mailto:sales@zamindor.com"
               >
-                zafaronpremiumhotel@gmail.com
+                sales@zamindor.com
               </a>
             </p>
             <RouterLink

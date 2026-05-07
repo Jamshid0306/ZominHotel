@@ -10,7 +10,7 @@ export const rooms = [
   },
   {
     id: 'zafaron-suite',
-    name: "Za'faron Suite",
+    name: "Zomin Suite",
     price_weekday: 260,
     price_weekend: 260,
     size: '52 m²',

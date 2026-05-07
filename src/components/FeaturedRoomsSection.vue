@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, inject } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { API_BASE_URL, withBaseUrl } from '../api'
+import { buildHotelRoomsUrl, withBaseUrl } from '../api'
 
 const { t, locale } = useI18n()
 const openBookingModal = inject('openBookingModal', () => {})
@@ -56,7 +56,7 @@ const fetchRooms = async () => {
   isLoading.value = true
   errorMessage.value = ''
   try {
-    const res = await fetch(`${API_BASE_URL}/hotel-rooms`)
+    const res = await fetch(buildHotelRoomsUrl())
     if (!res.ok) {
       throw new Error(t('roomsPage.loadError'))
     }
@@ -74,13 +74,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="mt-14 space-y-6" id="rooms">
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <div class="space-y-2">
+  <section class="mt-20 space-y-7" id="rooms">
+    <div class="flex flex-wrap items-end justify-between gap-5 border-b border-clay-100 pb-6">
+      <div class="max-w-2xl space-y-2">
         <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
           {{ t('roomsSection.label') }}
         </p>
-        <h2 class="font-display text-3xl font-semibold text-clay-950 sm:text-4xl">
+        <h2 class="font-display text-4xl font-semibold text-clay-950 sm:text-5xl">
           {{ t('roomsSection.title') }}
         </h2>
         <p class="text-base text-clay-800">
@@ -89,7 +89,7 @@ onMounted(() => {
       </div>
       <RouterLink
         to="/rooms"
-        class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-sm font-bold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
+        class="inline-flex items-center justify-center rounded-full border border-clay-200 bg-white/80 px-4 py-2 text-sm font-bold text-clay-800 shadow-lg shadow-clay-950/5 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white"
       >
         {{ t('actions.viewAll') }}
       </RouterLink>
@@ -100,13 +100,17 @@ onMounted(() => {
         {{ errorMessage }}
       </p>
       <article
-        v-for="room in featuredRooms"
+        v-for="(room, index) in featuredRooms"
         :key="room.id"
-        class="group rounded-2xl border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-6 shadow-sm shadow-clay-950/5 transition hover:-translate-y-1 hover:shadow-xl"
+        class="group relative overflow-hidden rounded-[1.5rem] border border-clay-100/90 bg-white p-4 shadow-xl shadow-clay-950/10 transition hover:-translate-y-2 hover:shadow-2xl"
+        :class="index === 1 ? 'xl:translate-y-10' : ''"
       >
+        <div class="absolute left-6 top-6 z-10 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-clay-700 shadow-lg shadow-clay-950/10 backdrop-blur">
+          {{ room.room_type }}
+        </div>
         <div
           v-if="room.room_images?.length"
-          class="relative mb-4 overflow-hidden rounded-2xl border border-clay-100/80 bg-white/80"
+          class="relative mb-5 overflow-hidden rounded-[1.25rem] bg-sand-50"
         >
           <div
             class="flex transition-transform duration-500"
@@ -126,13 +130,13 @@ onMounted(() => {
               <img
                 :src="withBaseUrl(image)"
                 :alt="getRoomName(room)"
-                class="h-44 w-full object-cover"
+                class="h-64 w-full object-cover transition duration-500 group-hover:scale-105"
               />
             </div>
           </div>
           <button
             type="button"
-            class="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-clay-900 shadow-md shadow-clay-950/10 transition hover:-translate-y-1/2 hover:bg-white"
+            class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 p-2 text-clay-900 shadow-md shadow-clay-950/10 transition hover:-translate-y-1/2 hover:bg-white"
             :aria-label="t('hero.slider.prev')"
             @click="prevSlide(room.id, room.room_images.length)"
           >
@@ -153,7 +157,7 @@ onMounted(() => {
           </button>
           <button
             type="button"
-            class="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 text-clay-900 shadow-md shadow-clay-950/10 transition hover:-translate-y-1/2 hover:bg-white"
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 p-2 text-clay-900 shadow-md shadow-clay-950/10 transition hover:-translate-y-1/2 hover:bg-white"
             :aria-label="t('hero.slider.next')"
             @click="nextSlide(room.id, room.room_images.length)"
           >
@@ -173,16 +177,15 @@ onMounted(() => {
             </svg>
           </button>
           <div
-            class="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-[10px] font-semibold text-clay-700"
+            class="absolute bottom-2 right-2 flex items-center gap-1 bg-white/90 px-2 py-1 text-[10px] font-semibold text-clay-700"
           >
             {{ (activeSlides[room.id] || 0) + 1 }} / {{ room.room_images.length }}
           </div>
         </div>
-        <div class="flex items-center justify-between">
-          <span class="rounded-full bg-clay-500/12 px-3 py-1 text-xs font-semibold text-clay-700">
-            {{ room.room_type }}
-          </span>
-          <span class="text-xs font-semibold text-clay-600">Pricing</span>
+        <div class="flex items-center justify-between border-b border-clay-100 pb-3">
+          <span class="text-xs font-semibold uppercase tracking-[0.2em] text-clay-700">Pricing</span>
+          <span class="h-px flex-1 bg-clay-100 mx-3"></span>
+          <span class="text-xs font-semibold text-clay-500">Zamindor stay</span>
         </div>
         <div class="mt-2 space-y-1 text-sm text-clay-800">
           <div class="flex items-center justify-between">
@@ -201,7 +204,7 @@ onMounted(() => {
         <div class="mt-4">
           <button
             type="button"
-            class="inline-flex items-center justify-center rounded-full border border-clay-200/80 px-4 py-2 text-sm font-semibold text-clay-800 transition hover:-translate-y-0.5 hover:border-clay-300 hover:bg-white/70"
+            class="inline-flex items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-clay-950/15 transition hover:-translate-y-0.5 hover:shadow-xl"
             @click="openBookingModal"
           >
             {{ t('actions.startBooking') }}

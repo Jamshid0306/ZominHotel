@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { API_BASE_URL, withBaseUrl } from '../api'
+import { API_BASE_URL, buildRestaurantsUrl, withBaseUrl } from '../api'
 
 const { t, locale } = useI18n()
 
@@ -22,7 +22,7 @@ const fetchRestaurants = async () => {
   isLoading.value = true
   error.value = ''
   try {
-    const res = await fetch(`${API_BASE_URL}/restaurants`)
+    const res = await fetch(buildRestaurantsUrl())
     if (!res.ok) {
       throw new Error(t('restaurantsPage.loadError'))
     }
@@ -89,7 +89,7 @@ onMounted(async () => {
         <article
           v-for="(restaurant, index) in restaurantList"
           :key="restaurant.id"
-          class="grid items-center gap-8 rounded-3xl border border-clay-100/70 p-6 md:grid-cols-2 md:p-8"
+          class="grid items-center gap-8 rounded-xl border border-clay-100/70 p-6 md:grid-cols-2 md:p-8"
         >
           <div :class="index % 2 === 0 ? 'md:order-1' : 'md:order-2'">
             <h2 class="text-3xl font-semibold text-clay-950">
@@ -108,7 +108,7 @@ onMounted(async () => {
               :key="image"
               :src="withBaseUrl(image)"
               :alt="localizedField(restaurant, 'name')"
-              class="h-40 w-full rounded-2xl object-cover sm:h-48"
+              class="h-40 w-full rounded-lg object-cover sm:h-48"
             />
           </div>
           <div class="md:col-span-2">
@@ -130,7 +130,7 @@ onMounted(async () => {
               <article
                 v-for="menu in menusById[restaurant.id] || []"
                 :key="menu.id"
-                class="rounded-2xl border border-clay-100/70 bg-white/80 p-4"
+                class="rounded-lg border border-clay-100/70 bg-white/80 p-4"
               >
                 <img
                   :src="withBaseUrl(menu.image)"

@@ -10,7 +10,7 @@ const hasTour = computed(() => tourLink.length > 0)
 <template>
   <section v-if="hasTour" class="mt-16">
     <div
-      class="grid gap-6 rounded-3xl border border-clay-100/70 bg-white/90 p-6 shadow-sm shadow-clay-950/5 lg:grid-cols-[0.9fr_1.1fr]"
+      class="grid gap-6 rounded-xl border border-clay-100/70 bg-white/90 p-6 shadow-sm shadow-clay-950/5 lg:grid-cols-[0.9fr_1.1fr]"
     >
       <div class="flex flex-col justify-between gap-6">
         <div>
@@ -38,7 +38,7 @@ const hasTour = computed(() => tourLink.length > 0)
           </span>
         </div>
       </div>
-      <div class="overflow-hidden rounded-2xl border border-clay-100/80 bg-sand-50/70 shadow-sm shadow-clay-950/5">
+      <div class="overflow-hidden rounded-lg border border-clay-100/80 bg-sand-50/70 shadow-sm shadow-clay-950/5">
         <div class="aspect-[16/10] w-full">
           <iframe
             :src="tourLink"

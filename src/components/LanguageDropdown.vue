@@ -54,8 +54,8 @@ const buttonClasses = computed(() =>
 
 const menuClasses = computed(() =>
   props.compact
-    ? 'absolute right-0 z-30 mt-2 w-32 rounded-2xl border border-clay-200/80 bg-white/95 p-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-clay-700 shadow-lg shadow-clay-950/15 backdrop-blur'
-    : 'absolute right-0 z-30 mt-2 w-36 rounded-2xl border border-clay-200/80 bg-white/95 p-1 text-xs font-semibold uppercase tracking-[0.16em] text-clay-700 shadow-lg shadow-clay-950/15 backdrop-blur'
+    ? 'absolute right-0 z-30 mt-2 w-32 rounded-lg border border-clay-200/80 bg-white/95 p-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-clay-700 shadow-lg shadow-clay-950/15 backdrop-blur'
+    : 'absolute right-0 z-30 mt-2 w-36 rounded-lg border border-clay-200/80 bg-white/95 p-1 text-xs font-semibold uppercase tracking-[0.16em] text-clay-700 shadow-lg shadow-clay-950/15 backdrop-blur'
 )
 
 onMounted(() => {

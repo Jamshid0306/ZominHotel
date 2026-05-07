@@ -5,30 +5,29 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <section id="contact" class="bg-white w-full px-4 py-10">
-    <div class="mx-auto max-w-6xl grid gap-6 lg:grid-cols-[1fr_1.5fr]">
-      <div class="rounded-3xl border border-clay-100/70 bg-sand-50/80 p-6 shadow-sm shadow-clay-950/5">
+  <section id="contact" class="mt-16 bg-linear-to-b from-white to-sand-100 px-4 py-16 text-clay-900">
+    <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.9fr_1.45fr]">
+      <div class="rounded-[1.75rem] border border-clay-100/80 bg-white/90 p-6 shadow-2xl shadow-clay-950/10 backdrop-blur">
         <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-600">
           {{ t('mapSection.contactsLabel') }}
         </p>
-        <h3 class="mt-2 font-display text-2xl font-semibold text-clay-950">
+        <h3 class="mt-3 font-display text-4xl font-semibold leading-tight text-clay-950">
           {{ t('mapSection.title') }}
         </h3>
-        <div class="mt-4 space-y-2 text-sm text-clay-800">
-          <p>
-            <span class="font-semibold text-clay-900">{{ t('common.phoneLabel') }}</span>
-            <a class="ml-2 hover:text-clay-950" href="tel:+998702289999">+998 70 228 99 99</a>
-            <a class="ml-2 hover:text-clay-950" href="tel:+998715010606">+998 71 501 06 06</a>
+        <div class="mt-5 space-y-3 border-l border-clay-300 pl-4 text-sm text-clay-800">
+          <p class="grid gap-1">
+            <span class="font-semibold text-clay-950">{{ t('common.phoneLabel') }}</span>
+            <a class="hover:text-clay-950" href="tel:+998722215454">+998 72 221 54 54</a>
           </p>
-          <p>
-            <span class="font-semibold text-clay-900">{{ t('common.emailLabel') }}</span>
-            <a class="ml-2 hover:text-clay-950" href="mailto:zafaronpremiumhotel@gmail.com">
-              zafaronpremiumhotel@gmail.com
+          <p class="grid gap-1">
+            <span class="font-semibold text-clay-950">{{ t('common.emailLabel') }}</span>
+            <a class="break-all hover:text-clay-950" href="mailto:sales@zamindor.com">
+              sales@zamindor.com
             </a>
           </p>
-          <p>
-            <span class="font-semibold text-clay-900">{{ t('location.label') }}</span>
-            <span class="ml-2">{{ t('location.address') }}</span>
+          <p class="grid gap-1">
+            <span class="font-semibold text-clay-950">{{ t('location.label') }}</span>
+            <span>{{ t('location.address') }}</span>
           </p>
         </div>
 
@@ -45,7 +44,7 @@ const { t } = useI18n()
               <input
                 type="text"
                 :placeholder="t('mapSection.form.namePlaceholder')"
-                class="w-full rounded-xl border border-clay-200/80 bg-white px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+                class="w-full rounded-2xl border border-clay-200/80 bg-white px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
               />
             </label>
             <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
@@ -55,7 +54,7 @@ const { t } = useI18n()
                 inputmode="tel"
                 autocomplete="tel"
                 :placeholder="t('mapSection.form.phonePlaceholder')"
-                class="w-full rounded-xl border border-clay-200/80 bg-white px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+                class="w-full rounded-2xl border border-clay-200/80 bg-white px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
               />
             </label>
             <label class="flex flex-col gap-2 text-sm font-semibold text-clay-800">
@@ -63,7 +62,7 @@ const { t } = useI18n()
               <textarea
                 rows="4"
                 :placeholder="t('mapSection.form.notePlaceholder')"
-                class="w-full rounded-xl border border-clay-200/80 bg-white px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
+                class="w-full rounded-2xl border border-clay-200/80 bg-white px-3 py-3 text-sm font-semibold text-clay-900 outline-none transition focus:border-clay-500 focus:ring-4 focus:ring-clay-200/60"
               ></textarea>
             </label>
             <button
@@ -76,9 +75,9 @@ const { t } = useI18n()
         </div>
       </div>
 
-      <div class="h-full overflow-hidden rounded-3xl border border-clay-100/70 bg-white shadow-sm shadow-clay-950/5">
+      <div class="min-h-[520px] overflow-hidden rounded-[1.75rem] border border-clay-100/70 bg-white shadow-2xl shadow-clay-950/15">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4052.6831009533953!2d70.0089533!3d41.525802999999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38af0d0012eff57f%3A0x66e81186ad41090d!2sZA&#39;FARON%20PREMIUM%20HOTEL!5e1!3m2!1sru!2s!4v1767026142226!5m2!1sru!2s"
+          src="https://maps.google.com/maps?q=Zamindor%20Resort%20Zaamin&t=&z=13&ie=UTF8&iwloc=&output=embed"
           class="h-full w-full"
           style="border: 0"
           allowfullscreen="true"

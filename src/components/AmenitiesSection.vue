@@ -30,11 +30,11 @@ const featuredAmenity = computed(() => amenities.value.slice(0, 1))
       <article
         v-for="(item, index) in featuredAmenity"
         :key="item.title"
-        class="grid items-center gap-6 rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5 ring-1 ring-transparent transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-clay-100 md:grid-cols-2 md:gap-10 md:p-8"
+        class="grid items-center gap-6 rounded-xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5 ring-1 ring-transparent transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-clay-100 md:grid-cols-2 md:gap-10 md:p-8"
       >
         <div
           v-if="item.image"
-          class="overflow-hidden rounded-2xl shadow-lg shadow-clay-950/10"
+          class="overflow-hidden rounded-lg shadow-lg shadow-clay-950/10"
           :class="index % 2 === 0 ? 'md:order-2' : 'md:order-1'"
         >
           <img

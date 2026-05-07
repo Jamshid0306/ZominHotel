@@ -1,19 +1,19 @@
 import { createI18n } from 'vue-i18n'
 
-import amenityService from './assets/images/slide-images/8.jpg'
-import spa1 from './assets/images/services/spa1.jpg'
-import spa2 from './assets/images/services/spa2.jpg'
-import spa3 from './assets/images/services/spa3.jpg'
-import spa4 from './assets/images/services/spa4.jpg'
-import spa5 from './assets/images/services/spa5.jpg'
-import servicePlayground from './assets/images/services/playground.jpg'
-import gymOne from './assets/images/services/zal1.jpg'
-import gymTwo from './assets/images/services/zal2.jpg'
-import serviceRestaurantOne from './assets/images/services/restaurant1.jpg'
-import serviceRestaurantTwo from './assets/images/services/restaurant2.jpg'
-import serviceRestaurantThree from './assets/images/services/restaurant3.jpg'
+import amenityService from './assets/images/about-images/1.jpg'
+import spa1 from './assets/images/services/alcarte.jpg'
+import spa2 from './assets/images/about-images/1.jpg'
+import spa3 from './assets/images/product-images/chay.jpg'
+import spa4 from './assets/images/product-images/med.jpeg'
+import spa5 from './assets/images/product-images/navat.jpg'
+import servicePlayground from './assets/images/product-images/shafran.jpg'
+import gymOne from './assets/images/about-images/1.jpg'
+import gymTwo from './assets/images/services/alcarte.jpg'
+import serviceRestaurantOne from './assets/images/services/alcarte.jpg'
+import serviceRestaurantTwo from './assets/images/product-images/sol.webp'
+import serviceRestaurantThree from './assets/images/product-images/chay.jpg'
 import restaurantAlaCarteOne from './assets/images/services/alcarte.jpg'
-import restaurantAlaCarteTwo from './assets/images/services/alcarte2.jpg'
+import restaurantAlaCarteTwo from './assets/images/product-images/shafran.jpg'
 import chay from './assets/images/product-images/chay.jpg'
 import med from './assets/images/product-images/med.jpeg'
 import navat from './assets/images/product-images/navat.jpg'
@@ -29,7 +29,7 @@ export const supportedLocales = [
 const messages = {
   uz: {
     creat: 'EDev tomonidan yaratilgan',
-    brand: "Za'faron Premium Hotel",
+    brand: "Zamindor Resort",
     nav: {
       home: 'Bosh sahifa',
       rooms: 'Xonalar',
@@ -69,26 +69,26 @@ const messages = {
     },
     location: {
       label: 'Manzil:',
-      address: "Chimgon, Bo'stonliq tumani",
+      address: "Zaamin milliy bog'i, Jizzax viloyati",
     },
     footer: {
       description:
-        "Minimalistik dizayn, jigarrang ohanglar va sokin tunash uchun qulay manzil. Chimgon tog'lari bag'rida, shovqindan yiroq.",
+        "Zamindor Resort — Zaamin milliy bog'i qalbida joylashgan premium kurort majmuasi. Tog' havosi, zamonaviy xonalar, restoran, SPA va oilaviy dam olish uchun qulay muhit.",
       navTitle: 'Navigatsiya',
       bookingTitle: 'Bron',
       questionsLabel: 'Savollar uchun:',
-      rights: "© {year} Za'faron Premium Hotel. Barcha huquqlar himoyalangan.",
-      tagline: 'Boutique stay & crafted comfort',
+      rights: "© {year} Zamindor Resort. Barcha huquqlar himoyalangan.",
+      tagline: 'Premium mountain resort',
     },
     hero: {
-      tagline: 'Boutique stay — zamonaviy, sokin va iliq',
+      tagline: "Zaamin milliy bog'i markazida",
       title:
-        "Za'faron Premium Hotel — minimalistik dizayn va jigarrang ohanglar uygʻunligi.",
+        "Zamindor Resort — Zaamin milliy bog'i qalbidagi yangi premium kurort majmuasi.",
       description:
-        "Chimgon tog'laridagi hushyor, sokin makonda qulay tunash. Za'faron Premium Hotel — barchasi tabiat ranglari, yumshoq yoruglik va eʼtibor bilan.",
+        "Sof tog' havosi, 270 darajali tog' manzarasi, zamonaviy xonalar, shved stoli, SPA zona, fitnes va Zamindor Restaurant bilan to'liq dam olish tajribasi.",
       stats: {
         concierge: 'Konsyerj',
-        roomTypes: 'Turdagi xona',
+        roomTypes: 'Xona kategoriyasi',
         rating: 'Mehmonlar bahosi',
       },
       badge: 'Photo tour',
@@ -133,7 +133,7 @@ const messages = {
       name: 'Ism va familiya',
       namePlaceholder: 'Ali Karimov',
       phone: 'Telefon raqami',
-      phonePlaceholder: '+998 70 228 99 99',
+      phonePlaceholder: '+998 72 221 54 54',
       room: 'Xona',
       roomPlaceholder: 'Xonani tanlang',
       roomUnavailable: 'Band',
@@ -189,7 +189,7 @@ const messages = {
     heroImages: [
       {
         title: 'Lobby lounge',
-        caption: 'Yorqin lobby, tabiiy yoruglik va iliq jigarrang detallar.',
+        caption: 'Yorqin lobby, tabiiy yoruglik va iliq tabiiy detallar.',
       },
       {
         title: 'Design suite',
@@ -206,15 +206,15 @@ const messages = {
     ],
     amenitiesSection: {
       label: 'Xizmatlar',
-      title: 'Tabiiy ohanglarda sokin tajriba',
+      title: 'Kurort ichida hammasi yaqin',
       description:
-        'Har bir detalda issiq jigarrang ranglar, hidi, yoruglik va ovozga eʼtibor. Siz dam oling, qolganini biz qilamiz.',
+        "Yashash, uch mahal shved stoli, SPA xizmatlari, trenajor zali, Wi-Fi, choy-kofe to'plami va tabiat qo'ynidagi restoran bir majmuada jamlangan.",
     },
     restaurantSection: {
       label: 'Restoran',
-      title: 'Zafaron oshxonasi — nafis taʼm va iliq muhit',
+      title: 'Zamindor Restaurant — togʻlar orasidagi taʼm',
       description:
-        'Mahalliy mahsulotlar, shef taʼlimi va sokin muhitda tayyorlangan taomlar. Har bir taomda ohang va did uygʻunligi.',
+        'Shved stoli formatidagi nonushta, tushlik va kechki ovqat, shuningdek Zamindor Restaurantda milliy va yevropa taomlari.',
       menuLabel: 'Menyu',
       menuCount: 'taom',
     },
@@ -225,7 +225,7 @@ const messages = {
         'Virtual sayr orqali lobby, xonalar va manzarani oldindan his qiling.',
       action: '360 turni ochish',
       note: 'Katta ekranda yanada qulay.',
-      iframeTitle: "Za'faron Premium Hotel 360 tour",
+      iframeTitle: "Zamindor Resort 360 tour",
     },
     mapSection: {
       contactsLabel: 'Kontaktlar',
@@ -244,15 +244,15 @@ const messages = {
       },
     },
     aboutNetwork: {
-      label: 'Kompaniya haqida',
-      title: 'Anʼanalar va mukammallik uchrashgan makon',
+      label: 'Kurort haqida',
+      title: "Tabiat, tog' havosi va zamonaviy servis uyg'unligi",
       description:
-        'BMB Zaʼfaron restoran va mehmonxonalar tarmogʻi milliy, yevropa va turk anʼanalarini uygʻunlashtirgan nafis oshxona hamda benuqson servisni taklif etadi. Toshkent va Jizzaxdagi filiallarimiz mahalliy va xorijiy mehmonlar uchun xalqaro standartlarga mos sharoit yaratadi.',
-      hotelLabel: 'Mehmonxona haqida',
-      hotelTitle: 'Premium darajadagi qulaylik va xavfsiz dam olish',
+        "Zamindor Resort Zaamin milliy bog'i hududida, archazor va tog' manzaralari orasida joylashgan premium kurort majmuasi. Majmua oilaviy dam olish, ishbilarmon safarlar, sog'lomlashtirish va tabiat qo'ynida sokin hordiq uchun yaratilgan.",
+      hotelLabel: 'Zamindor Resort',
+      hotelTitle: "Zaamin milliy bog'i qalbidagi premium dam olish",
       hotelDescription:
-        'Zaʼfaron Premium Hotel — yuqori sifatli xizmat, zamonaviy infratuzilma va qulay muhitni o‘zida mujassam etgan premium toifadagi mehmonxona. Mehmonlar uchun qulay, xavfsiz va unutilmas dam olish imkoniyatlarini taqdim etadi. Mehmonxona oilaviy hordiq, biznes safarlari, sog‘lomlashtirish va maroqli dam olish uchun ideal tanlov hisoblanadi.',
-      hotelCapacity: 'Mehmonxona bir vaqtning o‘zida 202 nafargacha mehmonni qabul qiladi.',
+        "Mehmonlarni standart, polulyuks, lyuks va Korolevskiy lyuks xonalari, Zamindor Restaurant, SPA zona, konferens-zal, fitnes va yaqin turistik manzillar kutadi.",
+      hotelCapacity: "Kurort Toshkentdan 250 km, Samarqanddan 208 km va Jizzaxdan 113 km masofada joylashgan.",
       gallery: [
         { alt: 'Keng lobbi hududi' },
         { alt: 'Nafis taomlar taqdimi' },
@@ -263,72 +263,71 @@ const messages = {
         {
           title: 'Xonalar fondi',
           items: [
-            'Jami 106 ta zamonaviy va to‘liq jihozlangan xona.',
-            '1 ta maxsus nogironlar uchun moslashtirilgan xona.',
-            '55 ta Standart Twin — alohida yotoqlar bilan.',
-            '49 ta Standart Double — keng va qulay joylashuv.',
-            '9 ta Lyuks xona — yuqori darajadagi qulaylik va hashamat.',
-            'Qulay yotoqlar, shaxsiy hammom, iqlim nazorati, TV, seyf, Wi-Fi va kundalik tozalash xizmati.',
+            "Standart xonalar — zamonaviy dizayn va sokin tog' muhitida qulay joylashuv.",
+            "Polulyuks — kengroq zona, yumshoq mebel va dam olish uchun qo'shimcha qulayliklar.",
+            "Lyuks — yuksak komfort, nafis interyer va keng yashash maydoni.",
+            "Korolevskiy lyuks — 270 darajali tog' manzarasi, balkon va premium jihozlar.",
+            "Har bir xonada Gigienik brend mahsulotlari, choy-kofe to'plami, internet va kundalik servis.",
           ],
         },
         {
           title: 'Ovqatlanish va gastronomiya',
           items: [
-            '2 ta zamonaviy restoran, umumiy sig‘imi 250 kishi.',
-            'Buffet restorani — nonushta va taomlar uchun boy tanlov.',
-            'A la carte — milliy va xalqaro oshxona buyurtma asosida.',
-            'Lobby bar 24/7 — ichimliklar, yengil gazaklar va dam olish muhiti.',
+            "Uch mahal shved stoli: nonushta 07:00-10:00, tushlik 12:00-15:00, kechki ovqat 18:00-21:00.",
+            "Zamindor Restaurant — tog' manzarasi bilan milliy va yevropa oshxonasi.",
+            "Choy va kofe to'plami elektr choynak bilan xonada mavjud.",
+            "Qo'shimcha ovqatlanish tariflari: har bir ovqatlanish uchun 250 000 UZS/person.",
           ],
         },
         {
           title: 'SPA & Wellness',
           items: [
-            'Yozgi va qishki mavsum basseynlari.',
-            'Turk hammomi (Hamam).',
-            'Sauna va bug‘ xonalari.',
-            'Professional massaj xonalari.',
+            'SPA zona 09:00-23:00 ishlaydi.',
+            'Ayollar vaqti: 09:00-15:00.',
+            'Xamam, basseyn, sauna, massaj xonalari va solyanaya komnata.',
+            "Solyanaya komnata, fito-bar ichimliklari va massaj alohida to'lanadi.",
           ],
         },
         {
           title: 'Dam olish va qulayliklar',
           items: [
-            'Bolalar uchun maxsus o‘yingoh.',
-            'Zamonaviy sport zali (Fitness Center).',
-            'Reception xizmati 24/7 — doimiy yordam va maslahat.',
-            'Zaʼfaron brendi mahsulotlarini xarid qilish imkoniyati.',
-            'Yuqori darajadagi xizmat va mehmondo‘st muhit.',
+            "Trenajor zali mehmonlar uchun mavjud.",
+            'Konferens-zal 60-70 kishiga mo‘ljallangan.',
+            'Bolalar 6 yoshgacha ota-onasi bilan qo‘shimcha to‘lovsiz, alohida krovat berilmagan holda joylashadi.',
+            "Yaqinda kanat yo'li, zipline, djamping va Zamindor Restaurant joylashgan.",
+            "Zaamin faunasi, Sherbuloq manbai, Baxt shisha ko'prigi, Bobo-yong'oq va Suffa radioteleskopi tashrif uchun tavsiya etiladi.",
           ],
         },
         {
           title: 'Bizning ustunliklarimiz',
           items: [
-            'Premium xizmat sifati.',
-            'Zamonaviy va qulay infratuzilma.',
-            'Oilaviy va biznes mehmonlar uchun mos muhit.',
-            'Sog‘lomlashtirish va hordiq uchun SPA & Wellness zonasi.',
-            'Professional va e’tiborli xodimlar jamoasi.',
+            "Zaamin milliy bog'i ichida noyob lokatsiya.",
+            "Tog' va archazorlar bilan o'ralgan sokin muhit.",
+            "Xonalar, restoran, SPA, fitnes va konferens-zal bir majmuada.",
+            "Toshkent, Samarqand, Jizzax va Zaamin aeroportidan transfer imkoniyati.",
+            "Premium servis va tabiiy manzara uyg'unligi.",
           ],
         },
       ],
       advantages: {
         label: 'Afzalliklar',
-        title: 'Xalqaro standartlarga mos sifat',
-        badge: 'Yiliga 30 000+ mehmon',
+        title: "Zaamin tog'larida premium dam olish",
+        badge: "Toshkentdan 250 km",
         items: [
           {
-            title: 'Yuqori servis darajasi',
+            title: "Milliy bog' ichida",
             text:
-              'BMB Zaʼfaron tarmogʻi mehmonlarga qulaylik va komfort beruvchi xalqaro standartlarga mos xizmatni taʼminlaydi.',
+              "Kurort Zaamin milliy bog'i qalbida, sof havo va tog' manzaralari orasida joylashgan.",
           },
           {
-            title: 'Taʼmlar xilma-xilligi',
+            title: 'To‘liq servis',
             text:
-              'Milliy, yevropa, turk taomlari va noyob zaʼfaron retseptlari eng talabchan mehmonlar didini ham qondiradi.',
+              "Yashash, uch mahal shved stoli, SPA, fitnes, internet va dam olish zonalari bir majmuada.",
           },
           {
-            title: 'Mehmonlar eʼtirofi',
+            title: 'Turistik manzillar',
             text:
-              'Har yili 30 000 dan ortiq mamnun mijozlar mukammallikka bo‘lgan intilishimizni tasdiqlaydi.',
+              "Kanat yo'li, zipline, Sherbuloq, Baxt ko'prigi, Bobo-yong'oq va Suffa kabi joylar yaqin.",
           },
         ],
       },
@@ -336,20 +335,20 @@ const messages = {
         label: 'Mehmondoʼstlik va nafis oshxona uygʼunligi',
         items: [
           {
-            title: 'Mehmonxona xizmatlari',
-            text: 'Mahalliy va xorijiy mehmonlarni qulay sharoitda joylashtirish.',
+            title: 'Xona kategoriyalari',
+            text: 'Standart, Polulyuks, Lyuks va Korolevskiy lyuks xonalari.',
           },
           {
-            title: 'Restoran servisi',
-            text: 'Tajribali shef-oshpazlar tayyorlagan nafis taomlar taqdimi.',
+            title: 'Shved stoli',
+            text: 'Nonushta, tushlik va kechki ovqat kun davomida aniq vaqtlar bo‘yicha.',
           },
           {
-            title: 'Tadbirlar tashkiloti',
-            text: 'Banketlar, konferensiyalar va bayramlarni har qanday darajada o‘tkazish.',
+            title: 'Konferens-zal',
+            text: '60-70 kishilik zal, audio-video uskunalar, Wi-Fi va mineral suv bilan.',
           },
           {
-            title: 'Turistik xizmatlar',
-            text: 'Sayohatchilar uchun betakror sharoitlar yaratish.',
+            title: 'Transfer',
+            text: 'Toshkent, Dashtobod stansiyasi va Zaamin aeroporti yo‘nalishlari.',
           },
         ],
       },
@@ -358,44 +357,44 @@ const messages = {
         title: 'Qulayligingiz uchun kompleks yechimlar',
         items: [
           {
-            title: 'Mehmonxona joylashuvi',
-            text: 'Keng xonalar, 24/7 xizmat va yuqori darajadagi servis.',
+            title: 'Yashash va ovqatlanish',
+            text: 'Tarifga xona, uch mahal shved stoli va 12% QQS kiritilgan.',
           },
           {
-            title: 'Restoran menyusi',
-            text: 'Anʼanaviy va zamonaviy oshxonaning noyob uygʻunligi.',
+            title: 'SPA va fitnes',
+            text: 'SPA, trenajor zali, xamam, basseyn, sauna va massaj xonalari.',
           },
           {
-            title: 'Tadbirlar tashkiloti',
-            text: 'Ishbilarmon va shaxsiy uchrashuvlar uchun professional yordam.',
+            title: 'Dam olish manzillari',
+            text: "Kanat yo'li, zipline, djamping, Sherbuloq va Baxt shisha ko'prigiga yaqin.",
           },
         ],
       },
       partnership: {
-        label: 'Hamkorlik',
-        title: 'Oʼzaro muvaffaqiyat uchun ishonchli hamkorlik',
+        label: 'Hamkorlar uchun',
+        title: '2026 yil uchun tarif va guruh takliflari',
         items: [
           {
-            title: 'Sohadagi tajriba',
+            title: '2026 mavsumlari',
             text:
-              'Mehmonxona va restoran biznesidagi ko‘p yillik tajriba professionalizmimizni tasdiqlaydi.',
+              'Past mavsum: 01.01-30.04.2026 va 01.10-31.12.2026. Yuqori mavsum: 01.05-31.09.2026.',
           },
           {
-            title: 'Sifat kafolati',
-            text: 'Har bir xizmatda jahon standartlari.',
+            title: 'Guruh chegirmasi',
+            text: '1-9 va 10+ xona so‘rovlari uchun alohida tariflar mavjud.',
           },
           {
-            title: 'Qo‘llab-quvvatlash va rivojlanish',
-            text: 'Hamkorlikdagi o‘sish va aloqalarni mustahkamlashga intilamiz.',
+            title: 'Aloqa',
+            text: 'sales@zamindor.com va +998 72 221 54 54 orqali so‘rov yuborish mumkin.',
           },
         ],
       },
     },
     amenities: [
       {
-        title: 'A la carte restoran',
+        title: 'Zamindor Restaurant',
         detail:
-          'Shef tanlagan taomlar, mahalliy va yevropa oshxonasining nafis uyg‘unligi bilan taqdim etiladi. Har bir taom buyurtma asosida yangi tayyorlanib, taʼm va ko‘rinish muvozanatini saqlaydi. Yumshoq yorug‘lik, jimgina musiqa va samimiy servis kechani unutilmas qiladi. Sharob kartasi va desertlar esa taʼm yakunini mukammal qiladi.',
+          "Zamindor Restaurant tog' manzarasi, sokin interyer va milliy hamda yevropa oshxonasi uyg'unligini taklif etadi. Mehmonlar uchun shved stoli nonushta 07:00-10:00, tushlik 12:00-15:00 va kechki ovqat 18:00-21:00 vaqtlarida tashkil qilinadi.",
         image: restaurantAlaCarteOne,
         imageAlt: 'A la carte restoran muhit',
         images: [
@@ -404,9 +403,9 @@ const messages = {
         ],
       },
       {
-        title: 'Spa zonalari',
+        title: 'SPA zona',
         detail:
-          'Basseynlarda tongdan kechgacha suzish va tog‘ manzarasida dam olish mumkin. Turk hammomi va sauna tanani yengillashtirib, hushyorlik beradi. Professional massajlar esa mushaklarni bo‘shashtirib, ichki sokinlikni tiklaydi. Har bir hududda tozalik, iliq harorat va eʼtiborli servis kutadi.',
+          "SPA zona 09:00 dan 23:00 gacha ishlaydi, ayollar vaqti 09:00-15:00. Xamam, basseyn, sauna, solyanaya komnata va massaj xonalari dam olishni to'liq qiladi. Solyanaya komnata, fito-bar ichimliklari va massaj alohida to'lanadi.",
         image: amenityService,
         imageAlt: 'Spa zonalari',
         images: [
@@ -418,16 +417,16 @@ const messages = {
         ],
       },
       {
-        title: "Bolalar o'yingohi",
+        title: "Zaamin bo'ylab sayohatlar",
         detail:
-          "Bolalar uchun maxsus o'yingoh xavfsiz va qulay muhitda tashkil etilgan. Rang-barang o'yinchoqlar, yumshoq qoplamalar va qulay zonalar kichkintoylarga quvonch bag'ishlaydi. Ota-onalar esa yaqin hududda bemalol dam olishlari mumkin. Har kuni tozalash va nazorat orqali sokin, toza muhit ta'minlanadi.",
+          "Kurort atrofida kanat yo'li, zipline, djamping, Sherbuloq manbai, Baxt shisha ko'prigi, Bobo-yong'oq va Suffa radioteleskopi kabi manzillar bor. Zaamin tabiati va faunasi mehmonlarga alohida taassurot qoldiradi.",
         image: servicePlayground,
         imageAlt: "Bolalar o'yingohi",
       },
       {
-        title: 'Fitnes zona',
+        title: 'Fitnes va faol dam olish',
         detail:
-          'Zamonaviy trenajorlar, erkin vaznlar va kardio uskunalari bilan jihozlangan sport zali. Tonggi energiya yoki kechki mashg‘ulot uchun qulay muhit yaratilgan. Mutanosib yoritish, shamollatish va toza havo mashg‘ulotni yanada yoqimli qiladi. Ixtiyoriy sport dasturlari bilan sog‘lom ritmni ushlab turing.',
+          "Trenajor zali tarifga kiritilgan. Tog' havosi, piyoda sayrlar va yaqin attraksionlar bilan kun davomida faol dam olish mumkin.",
         image: gymOne,
         imageAlt: 'Fitnes zona',
         images: [
@@ -436,13 +435,13 @@ const messages = {
         ],
       },
       {
-        title: "Za'faron Restaurant",
+        title: "Konferens-zal",
         detail:
-          "Za'faron Restaurant — milliy va yevropa taomlari uyg‘unligini taklif etuvchi nafis maskan. Nonushta va kechki ovqat paytida keng menyu, yangi mahsulotlar va muvozanatli taʼm sizni kutadi. Yorug‘, keng interyer va sokin musiqa muhiti dam olishni yanada yoqimli qiladi. Har bir xizmatda eʼtiborli servis va nozik taqdimot ustuvor.",
+          "Konferens-zal 60-70 kishiga mo'ljallangan. Ijaraga LCD proektor, ekran, 2 ta radiomikrofon, flipchart, lazer ko'rsatkichlari, noutbuk, kantselyariya, Wi-Fi va mineral suv kiradi.",
         image: serviceRestaurantOne,
-        imageAlt: "Za'faron Restaurant interyeri",
+        imageAlt: "Zamindor Restaurant interyeri",
         images: [
-          { src: serviceRestaurantOne, alt: "Za'faron Restaurant" },
+          { src: serviceRestaurantOne, alt: "Zamindor Restaurant" },
           { src: serviceRestaurantTwo, alt: 'Restaurant taomlari' },
           { src: serviceRestaurantThree, alt: 'Restaurant muhit' },
         ],
@@ -450,48 +449,48 @@ const messages = {
     ],
     roomsSection: {
       label: 'Xonalar',
-      title: "Za'faron Premium Hotel xonalari",
+      title: "Zamindor Resort xonalari",
       description:
-        'Mahalliy dizayn, hunarmand dekor va odobli servis. Sizga mos bo‘lgan xonani tanlang.',
+        "Standartdan Korolevskiy lyuksgacha: tog' manzarasi, qulay interyer va premium servis.",
       viewAll: 'Hammasini ko‘rish',
     },
     rooms: {
       list: [
         {
           id: 'courtyard-king',
-          name: 'Courtyard King',
-          price_weekday: 180,
-          price_weekend: 180,
-          size: '34 m²',
-          vibe: 'Yozuv stoli va jimjit hovliga qaragan keng xona.',
-          perks: ['Rainfall dushi', 'Qalin pardalar', 'Ortapedik king-size krovat'],
+          name: 'Standart xona',
+          price_weekday: 1600000,
+          price_weekend: 1900000,
+          size: '1-2 mehmon',
+          vibe: "Zamonaviy dizayn, tog' muhitiga mos sokin interyer va barcha asosiy qulayliklar.",
+          perks: ["Shved stoli", "SPA va fitnes", "Wi-Fi"],
         },
         {
           id: 'zafaron-suite',
-          name: "Za'faron Suite",
-          price_weekday: 260,
-          price_weekend: 260,
-          size: '52 m²',
-          vibe: 'Keng yashash zonasi va katta panorama oynalar.',
-          perks: ['Shaxsiy lounge', 'Kundalik tozalash', 'Shaxsiy minibar'],
+          name: "Polulyuks",
+          price_weekday: 1900000,
+          price_weekend: 2200000,
+          size: '1-2 mehmon',
+          vibe: "Kengroq joylashuv, yumshoq mebel va tog' tomonga ochiladigan deraza.",
+          perks: ["Shved stoli", "Choy-kofe to'plami", "SPA zona"],
         },
         {
           id: 'garden-loft',
-          name: 'Garden Loft',
-          price_weekday: 320,
-          price_weekend: 320,
-          size: '64 m²',
-          vibe: 'Ikki darajali loft, balkon va yashil panorama.',
-          perks: ['Balkon', 'Kutubxona burchagi', 'Kecha aromaterapiya'],
+          name: 'Lyuks',
+          price_weekday: 2200000,
+          price_weekend: 2500000,
+          size: '1-2 mehmon',
+          vibe: "Premium interyer, keng dam olish zonasi va osoyishta tog' manzarasi.",
+          perks: ["Keng xona", "Shved stoli", "SPA va fitnes"],
         },
         {
           id: 'city-twin',
-          name: 'Mountain Twin',
-          price_weekday: 210,
-          price_weekend: 210,
-          size: '38 m²',
-          vibe: "Hamroh bilan sayohatga mos, tog' manzarali ikkita alohida krovat.",
-          perks: ["Twin krovatlar", "Tog' manzarasi", 'Ertalabgi kofe xizmati'],
+          name: 'Korolevskiy lyuks',
+          price_weekday: 24000000,
+          price_weekend: 24000000,
+          size: '6 kishigacha',
+          vibe: "270 darajali tog' va o'rmon manzarasi, balkon va yuqori darajadagi hashamat.",
+          perks: ["Balkon", "270° manzara", "Premium servis"],
         },
         {
           id: 'executive-corner',
@@ -535,59 +534,97 @@ const messages = {
     ],
     servicesPage: {
       label: 'Xizmatlar',
-      title: "Za'faron Premium Hotel — barcha xizmatlar",
+      title: "Zamindor Resort — barcha xizmatlar",
       description:
-        'Kun davomida muloyim xizmatlar: tonggi kofe, wellness, shaxsiy ovqatlanish va ko‘proq.',
+        "Yashash, shved stoli, SPA, fitnes, konferens-zal, transfer va Zaamin bo'ylab sayohat imkoniyatlari.",
       summaryTitle: '{count} xizmat',
-      summarySubtitle: 'Sokin ritmlar va eʼtiborli servis.',
+      summarySubtitle: "Kurort, restoran va wellness bir joyda.",
+    },
+    commercialSection: {
+      label: '2026 tijoriy taklif',
+      title: 'Mavsumiy tariflar va paketga kiradigan xizmatlar',
+      seasonNote: 'Past mavsum: 01.01-30.04.2026 va 01.10-31.12.2026. Yuqori mavsum: 01.05-31.09.2026.',
+      lowLabel: 'Past mavsum',
+      highLabel: 'Yuqori mavsum',
+      packageTitle: 'Tarifga kiritilgan',
+      packageItems: [
+        'Xonada yashash',
+        'Uch mahal shved stoli',
+        'SPA xizmatlari, solyanaya komnata va massajdan tashqari',
+        'Trenajor zali',
+        'Mehmonxona bo‘ylab internet',
+        'Choy va kofe to‘plami elektr choynak bilan',
+        '12% QQS',
+      ],
+      roomPrices: [
+        { name: 'Standart', low: '1 600 000 UZS dan', high: '1 900 000 UZS dan' },
+        { name: 'Polulyuks', low: '1 900 000 UZS dan', high: '2 200 000 UZS dan' },
+        { name: 'Lyuks', low: '2 200 000 UZS dan', high: '2 500 000 UZS dan' },
+        { name: 'Korolevskiy lyuks', low: '24 000 000 UZS', high: '24 000 000 UZS' },
+      ],
+      mealsTitle: "Qo'shimcha ovqatlanish",
+      meals: [
+        'Nonushta 07:00-10:00 — 250 000 UZS/person',
+        'Tushlik 12:00-15:00 — 250 000 UZS/person',
+        'Kechki ovqat 18:00-21:00 — 250 000 UZS/person',
+      ],
+      conferenceTitle: 'Konferens-zal',
+      conference:
+        '60-70 kishilik zal. Ijara narxi: kuniga 8 000 000 UZS. LCD proektor, ekran, 2 radiomikrofon, flipchart, kantselyariya, Wi-Fi va mineral suv kiritilgan.',
+      transferTitle: 'Transfer narxlari',
+      transfers: [
+        'Toshkent - Zamindor Resort: Kia Carnival 1 600 000 UZS, BAW M7 3 500 000 UZS, GAZelle Next 4 000 000 UZS',
+        'Dashtobod stansiyasi - Zamindor Resort: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
+        'Zaamin aeroporti - Zamindor Resort: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
+      ],
     },
     productsSection: {
       label: 'Bizning mahsulotlar',
-      title: "Za'faron mahsulotlari",
+      title: "Zomin mahsulotlari",
       description:
         'Mehmonxonamiz doʻkonida siz uchun tayyorlangan tabiiy va nafis mahsulotlar.',
       nameLabel: 'Mahsulot nomi',
       items: [
         {
-          nameUz: "Zafaronli asal",
+          nameUz: "Zominli asal",
           nameRu: 'Мёд с шафраном',
           nameEn: 'Honey with saffron',
           image: med,
-          imageAlt: "Zafaronli asal",
+          imageAlt: "Zominli asal",
         },
         {
-          nameUz: "Za’faronli novvot",
+          nameUz: "Zamindorli novvot",
           nameRu: 'Навват с шафраном',
           nameEn: 'Navvat with saffron',
           image: navat,
-          imageAlt: "Za’faronli novvot",
+          imageAlt: "Zamindorli novvot",
         },
         {
-          nameUz: "Zafaronli tuz",
+          nameUz: "Zominli tuz",
           nameRu: 'Соль с шафраном',
           nameEn: 'Salt with saffron',
           image: sol,
-          imageAlt: "Zafaronli tuz",
+          imageAlt: "Zominli tuz",
         },
         {
-          nameUz: "Za’faron choyi (qora va ko’k)",
+          nameUz: "Zamindor choyi (qora va ko’k)",
           nameRu: 'Чай Зафарон (чёрный и зелёный)',
-          nameEn: 'Zafaron tea (black and green)',
+          nameEn: 'Zomin tea (black and green)',
           image: chay,
-          imageAlt: "Za’faron choyi (qora va ko’k)",
+          imageAlt: "Zamindor choyi (qora va ko’k)",
         },
         {
-          nameUz: "Za’faron",
+          nameUz: "Zamindor",
           nameRu: 'Шафран',
           nameEn: 'Saffron',
           image: shafran,
-          imageAlt: "Za’faron",
+          imageAlt: "Zamindor",
         }
       ],
     },
     restaurantsPage: {
       label: 'Restoranlar',
-      title: "Za'faron Premium Hotel — barcha restoranlar",
+      title: "Zamindor Resort — barcha restoranlar",
       description:
         'Har bir restoran o‘ziga xos taʼm va kayfiyatga ega. Taomlarimizni sekin, did bilan kashf eting.',
       empty: "Hozircha restoranlar yo'q.",
@@ -597,15 +634,15 @@ const messages = {
     },
     cta: {
       label: 'Sizni kutamiz',
-      title: "Za'faron Premium Hotel — bronni hoziroq belgilang",
+      title: "Zamindor Resort — bronni hoziroq belgilang",
       description:
-        'Tinch fazo, yumshoq xizmat va zamonaviy dizayn — Zafaron Premium Hotel shahar shovqinidan uzoqda yangi manzil.',
+        'Tinch fazo, yumshoq xizmat va zamonaviy dizayn — Zamindor Resort shahar shovqinidan uzoqda yangi manzil.',
       book: 'Bron qilish',
       ask: 'Savol berish',
     },
     roomsPage: {
       label: 'Xonalar',
-      title: "Za'faron Premium Hotel — barcha xonalar",
+      title: "Zamindor Resort — barcha xonalar",
       description:
         'Har bir xona tabiat ranglari va zamonaviy minimalizm uygʻunligida. Quyi shovqinsiz tunash, yuqori servis va sokin interyer uchun sevimli variantingizni tanlang.',
       loadError: 'Xonalarni yuklashda xatolik yuz berdi.',
@@ -744,7 +781,7 @@ const messages = {
   },
   ru: {
     creat: 'Создано EDev',
-    brand: "Za'faron Premium Hotel",
+    brand: "Zamindor Resort",
     nav: {
       home: 'Главная',
       rooms: 'Номера',
@@ -784,26 +821,26 @@ const messages = {
     },
     location: {
       label: 'Адрес:',
-      address: 'Чимган, Бостанлыкский район',
+      address: 'Зааминский национальный парк, Джизакская область',
     },
     footer: {
       description:
-        'Минималистичный дизайн, тёплые коричневые тона и спокойное место для отдыха. В горах Чимгана, вдали от шума.',
+        'Zamindor Resort — премиальный курортный комплекс в сердце Зааминского национального парка с горным воздухом, ресторанами, SPA и современными номерами.',
       navTitle: 'Навигация',
       bookingTitle: 'Бронирование',
       questionsLabel: 'Для вопросов:',
-      rights: "© {year} Za'faron Premium Hotel. Все права защищены.",
-      tagline: 'Бутик-отель и заботливый комфорт',
+      rights: "© {year} Zamindor Resort. Все права защищены.",
+      tagline: 'Premium mountain resort',
     },
     hero: {
-      tagline: 'Бутик-отель — современный, спокойный и тёплый',
+      tagline: 'В сердце Зааминского национального парка',
       title:
-        "Za'faron Premium Hotel — гармония минималистичного дизайна и тёплых коричневых тонов.",
+        "Zamindor Resort — новый премиальный курортный комплекс в Зааминском национальном парке.",
       description:
-        "Уютное проживание в спокойном уголке гор Чимгана. Za'faron Premium Hotel — про природные оттенки, мягкий свет и заботу.",
+        "Горный воздух, виды на лес и горы, современные номера, шведский стол, SPA-зона, фитнес и Zamindor Restaurant для полноценного отдыха.",
       stats: {
         concierge: 'Консьерж',
-        roomTypes: 'Типов номеров',
+        roomTypes: 'Категории номеров',
         rating: 'Оценка гостей',
       },
       badge: 'Фото-тур',
@@ -848,7 +885,7 @@ const messages = {
       name: 'Имя и фамилия',
       namePlaceholder: 'Али Каримов',
       phone: 'Номер телефона',
-      phonePlaceholder: '+998 70 228 99 99',
+      phonePlaceholder: '+998 72 221 54 54',
       room: 'Номер',
       roomPlaceholder: 'Выберите номер',
       roomUnavailable: 'Занято',
@@ -926,7 +963,7 @@ const messages = {
     },
     restaurantSection: {
       label: 'Ресторан',
-      title: 'Кухня Zafaron — изысканный вкус и тёплая атмосфера',
+      title: 'Кухня Zamindor — изысканный вкус и тёплая атмосфера',
       description:
         'Локальные продукты, работа шефа и спокойная атмосфера. В каждом блюде — баланс вкуса и стиля.',
       menuLabel: 'Меню',
@@ -938,7 +975,7 @@ const messages = {
       description: 'Виртуальная прогулка по лобби, номерам и видам.',
       action: 'Открыть 360 тур',
       note: 'Лучше смотреть на большом экране.',
-      iframeTitle: "Za'faron Premium Hotel 360 тур",
+      iframeTitle: "Zamindor Resort 360 тур",
     },
     mapSection: {
       contactsLabel: 'Контакты',
@@ -957,15 +994,15 @@ const messages = {
       },
     },
     aboutNetwork: {
-      label: 'О компании',
-      title: 'Пространство, где традиции встречаются с совершенством',
+      label: 'О курорте',
+      title: 'Природа, горный воздух и современный сервис',
       description:
-        'Сеть ресторанов и отелей BMB Za’faron предлагает безупречный сервис и изысканную кухню, сочетающую национальные, европейские и турецкие традиции. Наши филиалы в Ташкенте и Джизаке создают уникальные условия для местных и иностранных гостей, отвечая высоким международным стандартам.',
+        'Zamindor Resort расположен в Зааминском национальном парке, среди арчовых лесов и горных видов. Комплекс создан для семейного отдыха, деловых поездок, wellness и спокойного отдыха на природе.',
       hotelLabel: 'О гостинице',
       hotelTitle: 'Премиальный комфорт и безопасный отдых',
       hotelDescription:
-        'Za’faron Premium Hotel — отель премиум‑класса с высоким уровнем сервиса, современной инфраструктурой и комфортной атмосферой. Мы создаем условия для удобного, безопасного и незабываемого отдыха. Идеальный выбор для семейных поездок, деловых визитов, оздоровления и отдыха.',
-      hotelCapacity: 'Отель способен одновременно принять до 202 гостей.',
+        'Гостей ждут номера категорий Стандарт, Полулюкс, Люкс и Королевский люкс, Zamindor Restaurant, SPA-зона, конференц-зал, фитнес и близкие туристические локации.',
+      hotelCapacity: 'Курорт находится в 250 км от Ташкента, 208 км от Самарканда и 113 км от Джизака.',
       gallery: [
         { alt: 'Просторное лобби отеля' },
         { alt: 'Подача изысканных блюд' },
@@ -1008,7 +1045,7 @@ const messages = {
             'Детская игровая зона.',
             'Современный фитнес‑центр.',
             'Reception 24/7 — помощь и консультации.',
-            'Магазин фирменной продукции Za’faron.',
+            'Магазин фирменной продукции Zamindor.',
             'Высокий уровень сервиса и гостеприимная атмосфера.',
           ],
         },
@@ -1031,7 +1068,7 @@ const messages = {
           {
             title: 'Высокий уровень сервиса',
             text:
-              'Отели и рестораны сети BMB Za’faron соответствуют международным стандартам, обеспечивая комфорт и удобство для каждого гостя.',
+              'Отели и рестораны сети Zamindor соответствуют международным стандартам, обеспечивая комфорт и удобство для каждого гостя.',
           },
           {
             title: 'Разнообразие кулинарных шедевров',
@@ -1149,13 +1186,13 @@ const messages = {
         ],
       },
       {
-        title: "Za'faron Restaurant",
+        title: "Zamindor Restaurant",
         detail:
-          "Za'faron Restaurant — элегантное пространство с сочетанием национальной и европейской кухни. Завтраки и ужины подаются по расширенному меню из свежих ингредиентов с выверенным вкусом. Светлый интерьер и спокойная музыка создают уютную атмосферу. Внимательный сервис и изящная подача сопровождают каждый приём пищи.",
+          "Zamindor Restaurant — элегантное пространство с сочетанием национальной и европейской кухни. Завтраки и ужины подаются по расширенному меню из свежих ингредиентов с выверенным вкусом. Светлый интерьер и спокойная музыка создают уютную атмосферу. Внимательный сервис и изящная подача сопровождают каждый приём пищи.",
         image: serviceRestaurantOne,
-        imageAlt: "Интерьер Za'faron Restaurant",
+        imageAlt: "Интерьер Zamindor Restaurant",
         images: [
-          { src: serviceRestaurantOne, alt: "Za'faron Restaurant" },
+          { src: serviceRestaurantOne, alt: "Zamindor Restaurant" },
           { src: serviceRestaurantTwo, alt: 'Блюда ресторана' },
           { src: serviceRestaurantThree, alt: 'Атмосфера ресторана' },
         ],
@@ -1163,7 +1200,7 @@ const messages = {
     ],
     roomsSection: {
       label: 'Номера',
-      title: "Номера Za'faron Premium Hotel",
+      title: "Номера Zamindor Resort",
       description: 'Локальный дизайн, ремесленный декор и вежливый сервис. Выберите номер, который подходит вам.',
       viewAll: 'Смотреть все',
     },
@@ -1180,7 +1217,7 @@ const messages = {
         },
         {
           id: 'zafaron-suite',
-          name: "Za'faron Suite",
+          name: "Zomin Suite",
           price_weekday: 260,
           price_weekend: 260,
           size: '52 м²',
@@ -1247,59 +1284,97 @@ const messages = {
     ],
     servicesPage: {
       label: 'Услуги',
-      title: "Za'faron Premium Hotel — все услуги",
+      title: "Zamindor Resort — все услуги",
       description:
-        'В течение дня мы предлагаем мягкие сервисы: утренний кофе, wellness, приватные ужины и другое.',
+        'Проживание, шведский стол, SPA, фитнес, конференц-зал, трансфер и маршруты по Заамину.',
       summaryTitle: '{count} услуг',
-      summarySubtitle: 'Спокойные ритуалы и заботливый сервис.',
+      summarySubtitle: 'Курорт, ресторан и wellness в одном месте.',
+    },
+    commercialSection: {
+      label: 'Коммерческое предложение 2026',
+      title: 'Сезонные тарифы и включенные услуги',
+      seasonNote: 'Низкий сезон: 01.01-30.04.2026 и 01.10-31.12.2026. Высокий сезон: 01.05-31.09.2026.',
+      lowLabel: 'Низкий сезон',
+      highLabel: 'Высокий сезон',
+      packageTitle: 'В тариф включено',
+      packageItems: [
+        'Проживание в номере',
+        'Трехразовое питание на основе шведского стола',
+        'SPA услуги, кроме соляной пещеры и массажа',
+        'Услуги тренажерного зала',
+        'Интернет на всей территории отеля',
+        'Набор чая и кофе с электрочайником',
+        'НДС 12%',
+      ],
+      roomPrices: [
+        { name: 'Стандарт', low: 'от 1 600 000 UZS', high: 'от 1 900 000 UZS' },
+        { name: 'Полулюкс', low: 'от 1 900 000 UZS', high: 'от 2 200 000 UZS' },
+        { name: 'Люкс', low: 'от 2 200 000 UZS', high: 'от 2 500 000 UZS' },
+        { name: 'Королевский люкс', low: '24 000 000 UZS', high: '24 000 000 UZS' },
+      ],
+      mealsTitle: 'Дополнительное питание',
+      meals: [
+        'Завтрак 07:00-10:00 — 250 000 UZS за персону',
+        'Обед 12:00-15:00 — 250 000 UZS за персону',
+        'Ужин 18:00-21:00 — 250 000 UZS за персону',
+      ],
+      conferenceTitle: 'Конференц-зал',
+      conference:
+        'Зал на 60-70 человек. Аренда: 8 000 000 UZS в день. Включены LCD проектор, экран, 2 радиомикрофона, флипчарт, канцтовары, Wi-Fi и минеральная вода.',
+      transferTitle: 'Трансфер',
+      transfers: [
+        'Ташкент - Zamindor Resort: Kia Carnival 1 600 000 UZS, BAW M7 3 500 000 UZS, GAZelle Next 4 000 000 UZS',
+        'Станция Даштабад - Zamindor Resort: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
+        'Зааминский аэропорт - Zamindor Resort: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
+      ],
     },
     productsSection: {
       label: 'Наши продукты',
-      title: "Продукты Za'faron",
+      title: "Продукты Zomin",
       description:
         'Натуральные и изысканные продукты, которые можно найти в нашем бутике.',
       nameLabel: 'Название продукта',
       items: [
         {
-          nameUz: "Zafaronli asal",
+          nameUz: "Zominli asal",
           nameRu: 'Мёд с шафраном',
           nameEn: 'Honey with saffron',
           image: med,
-          imageAlt: "Zafaronli asal",
+          imageAlt: "Zominli asal",
         },
         {
-          nameUz: "Za’faronli novvot",
+          nameUz: "Zamindorli novvot",
           nameRu: 'Навват с шафраном',
           nameEn: 'Navvat with saffron',
           image: navat,
-          imageAlt: "Za’faronli novvot",
+          imageAlt: "Zamindorli novvot",
         },
         {
-          nameUz: "Zafaronli tuz",
+          nameUz: "Zominli tuz",
           nameRu: 'Соль с шафраном',
           nameEn: 'Salt with saffron',
           image: sol,
-          imageAlt: "Zafaronli tuz",
+          imageAlt: "Zominli tuz",
         },
         {
-          nameUz: "Za’faron choyi (qora va ko’k)",
+          nameUz: "Zamindor choyi (qora va ko’k)",
           nameRu: 'Чай Зафарон (чёрный и зелёный)',
-          nameEn: 'Zafaron tea (black and green)',
+          nameEn: 'Zomin tea (black and green)',
           image: chay,
-          imageAlt: "Za’faron choyi (qora va ko’k)",
+          imageAlt: "Zamindor choyi (qora va ko’k)",
         },
         {
-          nameUz: "Za’faron",
+          nameUz: "Zamindor",
           nameRu: 'Шафран',
           nameEn: 'Saffron',
           image: shafran,
-          imageAlt: "Za’faron",
+          imageAlt: "Zamindor",
         }
       ],
     },
     restaurantsPage: {
       label: 'Рестораны',
-      title: "Za'faron Premium Hotel — все рестораны",
+      title: "Zamindor Resort — все рестораны",
       description:
         'У каждого ресторана свой вкус и настроение. Откройте нашу кухню в спокойном ритме.',
       empty: 'Пока ресторанов нет.',
@@ -1309,7 +1384,7 @@ const messages = {
     },
     cta: {
       label: 'Ждём вас',
-      title: "Za'faron Premium Hotel — забронируйте прямо сейчас",
+      title: "Zamindor Resort — забронируйте прямо сейчас",
       description:
         'Тихое пространство, мягкий сервис и современный дизайн — новый адрес вдали от городского шума.',
       book: 'Забронировать',
@@ -1317,7 +1392,7 @@ const messages = {
     },
     roomsPage: {
       label: 'Номера',
-      title: "Za'faron Premium Hotel — все номера",
+      title: "Zamindor Resort — все номера",
       description:
         'Каждый номер — сочетание природных оттенков и современного минимализма. Выберите свой вариант для спокойного отдыха, высокого сервиса и тихого интерьера.',
       loadError: 'Ошибка при загрузке номеров.',
@@ -1456,7 +1531,7 @@ const messages = {
   },
   en: {
     creat: 'Created by EDev',
-    brand: "Za'faron Premium Hotel",
+    brand: "Zamindor Resort",
     nav: {
       home: 'Home',
       rooms: 'Rooms',
@@ -1496,25 +1571,25 @@ const messages = {
     },
     location: {
       label: 'Location:',
-      address: 'Chimgan, Bostanlik district',
+      address: 'Zaamin National Park, Jizzakh region',
     },
     footer: {
       description:
-        'Minimalist design, warm brown tones, and a calm place to stay. In the Chimgan mountains, away from the noise.',
+        'Zamindor Resort is a premium mountain resort in the heart of Zaamin National Park with modern rooms, restaurants, SPA, and fresh mountain air.',
       navTitle: 'Navigation',
       bookingTitle: 'Booking',
       questionsLabel: 'For questions:',
-      rights: "© {year} Za'faron Premium Hotel. All rights reserved.",
-      tagline: 'Boutique stay & crafted comfort',
+      rights: "© {year} Zamindor Resort. All rights reserved.",
+      tagline: 'Premium mountain resort',
     },
     hero: {
-      tagline: 'Boutique stay — modern, calm, and warm',
-      title: "Za'faron Premium Hotel — a harmony of minimalist design and warm brown tones.",
+      tagline: 'In the heart of Zaamin National Park',
+      title: "Zamindor Resort — a new premium resort complex in Zaamin National Park.",
       description:
-        "Comfortable stays in a calm corner of the Chimgan mountains. Za'faron Premium Hotel is all about natural colors, soft light, and care.",
+        "Mountain air, forest and mountain views, modern rooms, buffet dining, SPA zone, fitness, and Zamindor Restaurant for a complete resort stay.",
       stats: {
         concierge: 'Concierge',
-        roomTypes: 'Room types',
+        roomTypes: 'Room categories',
         rating: 'Guest rating',
       },
       badge: 'Photo tour',
@@ -1559,7 +1634,7 @@ const messages = {
       name: 'Full name',
       namePlaceholder: 'Ali Karimov',
       phone: 'Phone number',
-      phonePlaceholder: '+998 70 228 99 99',
+      phonePlaceholder: '+998 72 221 54 54',
       room: 'Room',
       roomPlaceholder: 'Select a room',
       roomUnavailable: 'Unavailable',
@@ -1614,7 +1689,7 @@ const messages = {
     heroImages: [
       {
         title: 'Lobby lounge',
-        caption: 'Bright lobby, natural light, and warm brown details.',
+        caption: 'Bright lobby, natural light, and warm natural details.',
       },
       {
         title: 'Design suite',
@@ -1633,11 +1708,11 @@ const messages = {
       label: 'Amenities',
       title: 'A calm experience in natural tones',
       description:
-        'Warm brown colors, scent, light, and sound in every detail. You relax, we handle the rest.',
+        'Warm natural colors, scent, light, and sound in every detail. You relax, we handle the rest.',
     },
     restaurantSection: {
       label: 'Restaurant',
-      title: 'Zafaron cuisine — refined flavors and warm atmosphere',
+      title: 'Zamindor cuisine — refined flavors and warm atmosphere',
       description:
         'Local ingredients, chef craft, and a calm setting. Each dish is a balance of taste and mood.',
       menuLabel: 'Menu',
@@ -1649,7 +1724,7 @@ const messages = {
       description: 'Take a virtual walk through the lobby, rooms, and views.',
       action: 'Open 360 tour',
       note: 'Best viewed on a larger screen.',
-      iframeTitle: "Za'faron Premium Hotel 360 tour",
+      iframeTitle: "Zamindor Resort 360 tour",
     },
     mapSection: {
       contactsLabel: 'Contacts',
@@ -1668,15 +1743,15 @@ const messages = {
       },
     },
     aboutNetwork: {
-      label: 'About the company',
-      title: 'A space where tradition meets excellence',
+      label: 'About the resort',
+      title: 'Nature, mountain air, and modern service',
       description:
-        "BMB Za’faron’s network of restaurants and hotels offers impeccable service and refined cuisine that blends national, European, and Turkish traditions. Our branches in Tashkent and Jizzakh create unique conditions for local and international guests, meeting high international standards.",
+        "Zamindor Resort is located inside Zaamin National Park, surrounded by juniper forests and mountain views. The complex is designed for family vacations, business trips, wellness, and quiet nature escapes.",
       hotelLabel: 'About the hotel',
       hotelTitle: 'Premium comfort with a safe, memorable stay',
       hotelDescription:
-        "Za’faron Premium Hotel is a premium-class hotel with high-quality service, modern infrastructure, and a comfortable atmosphere. We provide convenient, safe, and unforgettable stays for guests. It is an ideal choice for family vacations, business trips, wellness, and leisure.",
-      hotelCapacity: 'The hotel can accommodate up to 202 guests at a time.',
+        "Guests can choose Standard, Junior Suite, Suite, and Royal Suite rooms, with Zamindor Restaurant, SPA zone, conference hall, fitness, and nearby tourist routes.",
+      hotelCapacity: 'The resort is 250 km from Tashkent, 208 km from Samarkand, and 113 km from Jizzakh.',
       gallery: [
         { alt: 'Spacious hotel lobby' },
         { alt: 'Refined dish presentation' },
@@ -1719,7 +1794,7 @@ const messages = {
             'Dedicated children’s play area.',
             'Modern fitness center.',
             'Reception service 24/7 for support and guidance.',
-            "Opportunity to purchase Za’faron branded products.",
+            "Opportunity to purchase Zamindor branded products.",
             'High service standards and a welcoming atmosphere.',
           ],
         },
@@ -1742,7 +1817,7 @@ const messages = {
           {
             title: 'High service standards',
             text:
-              'BMB Za’faron hotels and restaurants meet international standards, ensuring comfort and convenience for every guest.',
+              'Zamindor hotels and restaurants meet international standards, ensuring comfort and convenience for every guest.',
           },
           {
             title: 'Diverse culinary masterpieces',
@@ -1860,13 +1935,13 @@ const messages = {
         ],
       },
       {
-        title: "Za'faron Restaurant",
+        title: "Zamindor Restaurant",
         detail:
-          "Za'faron Restaurant blends national favorites with refined European cuisine. Breakfasts and dinners feature a wide menu with fresh ingredients and balanced flavors. A bright interior with calm music sets a welcoming mood. Thoughtful service and elegant plating complete the experience.",
+          "Zamindor Restaurant blends national favorites with refined European cuisine. Breakfasts and dinners feature a wide menu with fresh ingredients and balanced flavors. A bright interior with calm music sets a welcoming mood. Thoughtful service and elegant plating complete the experience.",
         image: serviceRestaurantOne,
-        imageAlt: "Za'faron Restaurant interior",
+        imageAlt: "Zamindor Restaurant interior",
         images: [
-          { src: serviceRestaurantOne, alt: "Za'faron Restaurant" },
+          { src: serviceRestaurantOne, alt: "Zamindor Restaurant" },
           { src: serviceRestaurantTwo, alt: 'Restaurant dishes' },
           { src: serviceRestaurantThree, alt: 'Restaurant ambiance' },
         ],
@@ -1874,7 +1949,7 @@ const messages = {
     ],
     roomsSection: {
       label: 'Rooms',
-      title: "Za'faron Premium Hotel rooms",
+      title: "Zamindor Resort rooms",
       description: 'Local design, artisan decor, and gracious service. Choose a room that suits you.',
       viewAll: 'View all',
     },
@@ -1891,7 +1966,7 @@ const messages = {
         },
         {
           id: 'zafaron-suite',
-          name: "Za'faron Suite",
+          name: "Zomin Suite",
           price_weekday: 260,
           price_weekend: 260,
           size: '52 m²',
@@ -1958,59 +2033,97 @@ const messages = {
     ],
     servicesPage: {
       label: 'Services',
-      title: "Za'faron Premium Hotel — all services",
+      title: "Zamindor Resort — all services",
       description:
-        'Throughout the day we offer gentle services: morning coffee, wellness, private dining, and more.',
+        'Accommodation, buffet dining, SPA, fitness, conference hall, transfer, and routes around Zaamin.',
       summaryTitle: '{count} services',
-      summarySubtitle: 'Calm rituals with thoughtful care.',
+      summarySubtitle: 'Resort, restaurant, and wellness in one place.',
+    },
+    commercialSection: {
+      label: 'Commercial offer 2026',
+      title: 'Seasonal rates and included services',
+      seasonNote: 'Low season: 01.01-30.04.2026 and 01.10-31.12.2026. High season: 01.05-31.09.2026.',
+      lowLabel: 'Low season',
+      highLabel: 'High season',
+      packageTitle: 'Included in the rate',
+      packageItems: [
+        'Room accommodation',
+        'Three buffet meals a day',
+        'SPA services, except salt cave and massage',
+        'Fitness center access',
+        'Internet across the hotel territory',
+        'Tea and coffee set with electric kettle',
+        '12% VAT',
+      ],
+      roomPrices: [
+        { name: 'Standard', low: 'from 1,600,000 UZS', high: 'from 1,900,000 UZS' },
+        { name: 'Junior Suite', low: 'from 1,900,000 UZS', high: 'from 2,200,000 UZS' },
+        { name: 'Suite', low: 'from 2,200,000 UZS', high: 'from 2,500,000 UZS' },
+        { name: 'Royal Suite', low: '24,000,000 UZS', high: '24,000,000 UZS' },
+      ],
+      mealsTitle: 'Additional buffet meals',
+      meals: [
+        'Breakfast 07:00-10:00 — 250,000 UZS per person',
+        'Lunch 12:00-15:00 — 250,000 UZS per person',
+        'Dinner 18:00-21:00 — 250,000 UZS per person',
+      ],
+      conferenceTitle: 'Conference hall',
+      conference:
+        '60-70 guests. Rental price: 8,000,000 UZS per day. Includes LCD projector, screen, 2 radio microphones, flip chart, stationery, Wi-Fi, and mineral water.',
+      transferTitle: 'Transfer prices',
+      transfers: [
+        'Tashkent - Zamindor Resort: Kia Carnival 1,600,000 UZS, BAW M7 3,500,000 UZS, GAZelle Next 4,000,000 UZS',
+        'Dashtabad station - Zamindor Resort: Kia Carnival 800,000 UZS, BAW M7 1,700,000 UZS, GAZelle Next 2,000,000 UZS',
+        'Zaamin airport - Zamindor Resort: Kia Carnival 800,000 UZS, BAW M7 1,700,000 UZS, GAZelle Next 2,000,000 UZS',
+      ],
     },
     productsSection: {
       label: 'Our products',
-      title: "Za'faron products",
+      title: "Zomin products",
       description:
         'Natural, refined products prepared for guests in our boutique corner.',
       nameLabel: 'Product name',
       items: [
         {
-          nameUz: "Zafaronli asal",
+          nameUz: "Zominli asal",
           nameRu: 'Мёд с шафраном',
           nameEn: 'Honey with saffron',
           image: med,
-          imageAlt: "Zafaronli asal",
+          imageAlt: "Zominli asal",
         },
         {
-          nameUz: "Za’faronli novvot",
+          nameUz: "Zamindorli novvot",
           nameRu: 'Навват с шафраном',
           nameEn: 'Navvat with saffron',
           image: navat,
-          imageAlt: "Za’faronli novvot",
+          imageAlt: "Zamindorli novvot",
         },
         {
-          nameUz: "Zafaronli tuz",
+          nameUz: "Zominli tuz",
           nameRu: 'Соль с шафраном',
           nameEn: 'Salt with saffron',
           image: sol,
-          imageAlt: "Zafaronli tuz",
+          imageAlt: "Zominli tuz",
         },
         {
-          nameUz: "Za’faron choyi (qora va ko’k)",
+          nameUz: "Zamindor choyi (qora va ko’k)",
           nameRu: 'Чай Зафарон (чёрный и зелёный)',
-          nameEn: 'Zafaron tea (black and green)',
+          nameEn: 'Zomin tea (black and green)',
           image: chay,
-          imageAlt: "Za’faron choyi (qora va ko’k)",
+          imageAlt: "Zamindor choyi (qora va ko’k)",
         },
         {
-          nameUz: "Za’faron",
+          nameUz: "Zamindor",
           nameRu: 'Шафран',
           nameEn: 'Saffron',
           image: shafran,
-          imageAlt: "Za’faron",
+          imageAlt: "Zamindor",
         }
       ],
     },
     restaurantsPage: {
       label: 'Restaurants',
-      title: "Za'faron Premium Hotel — all restaurants",
+      title: "Zamindor Resort — all restaurants",
       description:
         'Each restaurant has its own mood and flavor. Discover our cuisine in a calm, elegant rhythm.',
       empty: 'No restaurants yet.',
@@ -2020,15 +2133,15 @@ const messages = {
     },
     cta: {
       label: 'We are waiting for you',
-      title: "Za'faron Premium Hotel — book your stay now",
+      title: "Zamindor Resort — book your stay now",
       description:
-        'A quiet space, gentle service, and modern design — a new address in the Chimgan mountains.',
+        'A quiet space, gentle service, and modern design — a new address in the Zomin mountains.',
       book: 'Book now',
       ask: 'Ask a question',
     },
     roomsPage: {
       label: 'Rooms',
-      title: "Za'faron Premium Hotel — all rooms",
+      title: "Zamindor Resort — all rooms",
       description:
         'Each room blends natural tones and modern minimalism. Choose your favorite for a quiet stay, high service, and calm interior.',
       loadError: 'Failed to load rooms.',

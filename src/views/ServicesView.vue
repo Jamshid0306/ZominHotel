@@ -21,6 +21,26 @@ const products = computed(() => {
   return Array.isArray(items) ? items : []
 })
 
+const commercialPackage = computed(() => {
+  const items = tm('commercialSection.packageItems')
+  return Array.isArray(items) ? items : []
+})
+
+const commercialRoomPrices = computed(() => {
+  const items = tm('commercialSection.roomPrices')
+  return Array.isArray(items) ? items : []
+})
+
+const commercialMeals = computed(() => {
+  const items = tm('commercialSection.meals')
+  return Array.isArray(items) ? items : []
+})
+
+const commercialTransfers = computed(() => {
+  const items = tm('commercialSection.transfers')
+  return Array.isArray(items) ? items : []
+})
+
 const swiperModules = [Autoplay, Navigation, Pagination]
 
 const getImageSrc = (image) => (typeof image === 'string' ? image : image?.src || '')
@@ -82,7 +102,7 @@ const localeLabel = computed(() => locale.value.toUpperCase())
           </RouterLink>
         </div>
       </div>
-      <div class="rounded-2xl border border-clay-100/80 bg-white/80 px-4 py-3 shadow-sm shadow-clay-950/5">
+      <div class="rounded-lg border border-clay-100/80 bg-white/80 px-4 py-3 shadow-sm shadow-clay-950/5">
         <p class="text-sm font-semibold text-clay-800">
           {{ t('servicesPage.summaryTitle', { count: services.length }) }}
         </p>
@@ -94,11 +114,11 @@ const localeLabel = computed(() => locale.value.toUpperCase())
       <article
         v-for="(service, index) in services"
         :key="service.title"
-        class="grid items-center gap-8 rounded-3xl border border-clay-100/60 p-8 md:grid-cols-2 md:gap-12 md:p-12"
+        class="grid items-center gap-8 rounded-xl border border-clay-100/60 p-8 md:grid-cols-2 md:gap-12 md:p-12"
       >
         <div
           v-if="service.images && service.images.length"
-          class="relative overflow-hidden rounded-2xl bg-sand-50"
+          class="relative overflow-hidden rounded-lg bg-sand-50"
           :class="index % 2 === 0 ? 'md:order-2' : 'md:order-1'"
         >
           <Swiper
@@ -139,7 +159,7 @@ const localeLabel = computed(() => locale.value.toUpperCase())
 
                 ></div>
                 <div
-                  class="pointer-events-none absolute inset-0 rounded-2xl"
+                  class="pointer-events-none absolute inset-0 rounded-lg"
                   :class="
                     index % 2 === 0
                       ? 'bg-linear-to-r from-sand-200/35 via-transparent to-transparent'
@@ -171,7 +191,7 @@ const localeLabel = computed(() => locale.value.toUpperCase())
         </div>
         <div
           v-else-if="service.image"
-          class="relative overflow-hidden rounded-2xl bg-sand-50"
+          class="relative overflow-hidden rounded-lg bg-sand-50"
           :class="index % 2 === 0 ? 'md:order-2' : 'md:order-1'"
         >
           <img
@@ -186,7 +206,7 @@ const localeLabel = computed(() => locale.value.toUpperCase())
 
           ></div>
           <div
-            class="pointer-events-none absolute inset-0 rounded-2xl"
+            class="pointer-events-none absolute inset-0 rounded-lg"
  
           ></div>
         </div>
@@ -201,7 +221,81 @@ const localeLabel = computed(() => locale.value.toUpperCase())
       </article>
     </section>
 
-    <section class="mt-16 rounded-3xl border border-clay-100/80 bg-sand-50/70 p-8 sm:p-12">
+    <section class="mt-16 rounded-xl border border-clay-100/80 bg-white/85 p-8 shadow-sm shadow-clay-950/5 sm:p-12">
+      <div class="flex flex-wrap items-start justify-between gap-6">
+        <div class="max-w-3xl space-y-3">
+          <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
+            {{ t('commercialSection.label') }}
+          </p>
+          <h2 class="font-display text-3xl font-semibold text-clay-950 sm:text-4xl">
+            {{ t('commercialSection.title') }}
+          </h2>
+          <p class="text-sm leading-7 text-clay-800">
+            {{ t('commercialSection.seasonNote') }}
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div class="rounded-lg border border-clay-100 bg-sand-50/80 p-5">
+          <h3 class="text-lg font-semibold text-clay-950">
+            {{ t('commercialSection.packageTitle') }}
+          </h3>
+          <ul class="mt-4 space-y-2 text-sm text-clay-800">
+            <li v-for="item in commercialPackage" :key="item" class="flex gap-2">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-clay-500"></span>
+              <span>{{ item }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="overflow-hidden rounded-lg border border-clay-100 bg-white">
+          <div class="grid grid-cols-[1.1fr_1fr_1fr] bg-clay-800 px-4 py-3 text-xs font-bold uppercase tracking-[0.16em] text-white">
+            <span>{{ t('roomsSection.label') }}</span>
+            <span>{{ t('commercialSection.lowLabel') }}</span>
+            <span>{{ t('commercialSection.highLabel') }}</span>
+          </div>
+          <div
+            v-for="item in commercialRoomPrices"
+            :key="item.name"
+            class="grid grid-cols-[1.1fr_1fr_1fr] border-t border-clay-100 px-4 py-3 text-sm text-clay-800"
+          >
+            <span class="font-semibold text-clay-950">{{ item.name }}</span>
+            <span>{{ item.low }}</span>
+            <span>{{ item.high }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <article class="rounded-lg border border-clay-100 bg-sand-50/80 p-5">
+          <h3 class="text-base font-semibold text-clay-950">
+            {{ t('commercialSection.mealsTitle') }}
+          </h3>
+          <p v-for="item in commercialMeals" :key="item" class="mt-3 text-sm leading-6 text-clay-800">
+            {{ item }}
+          </p>
+        </article>
+        <article class="rounded-lg border border-clay-100 bg-sand-50/80 p-5">
+          <h3 class="text-base font-semibold text-clay-950">
+            {{ t('commercialSection.conferenceTitle') }}
+          </h3>
+          <p class="mt-3 text-sm leading-6 text-clay-800">
+            {{ t('commercialSection.conference') }}
+          </p>
+        </article>
+        <article class="rounded-lg border border-clay-100 bg-sand-50/80 p-5">
+          <h3 class="text-base font-semibold text-clay-950">
+            {{ t('commercialSection.transferTitle') }}
+          </h3>
+          <p v-for="item in commercialTransfers" :key="item" class="mt-3 text-sm leading-6 text-clay-800">
+            {{ item }}
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="mt-16 rounded-xl border border-clay-100/80 bg-sand-50/70 p-8 sm:p-12">
       <div class="flex flex-wrap items-end justify-between gap-6">
         <div class="max-w-2xl space-y-3">
           <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
@@ -255,7 +349,7 @@ const localeLabel = computed(() => locale.value.toUpperCase())
         >
           <SwiperSlide v-for="product in products" :key="product.nameUz">
             <article
-              class="overflow-hidden rounded-2xl border border-clay-100/80 bg-white shadow-sm shadow-clay-950/5"
+              class="overflow-hidden rounded-lg border border-clay-100/80 bg-white shadow-sm shadow-clay-950/5"
             >
             <div class="relative h-56">
               <img

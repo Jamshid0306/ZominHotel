@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { API_BASE_URL } from '../api'
+import { API_BASE_URL, SITE_KEY, buildHotelRoomsUrl } from '../api'
 
 const props = defineProps({
   open: {
@@ -227,7 +227,7 @@ const fetchRooms = async () => {
   isLoadingRooms.value = true
   roomsError.value = ''
   try {
-    const res = await fetch(`${API_BASE_URL}/hotel-rooms`)
+    const res = await fetch(buildHotelRoomsUrl())
     if (!res.ok) {
       throw new Error(t('roomsPage.loadError'))
     }
@@ -301,6 +301,7 @@ const fetchRoomAvailability = async (roomId) => {
   setRoomAvailabilityState(roomId, { isLoading: true, error: '', rangeKey })
   try {
     const query = new URLSearchParams({
+      site_key: SITE_KEY,
       room_id: String(roomId),
       start_date: calendarRange.value.start,
       end_date: calendarRange.value.end,
@@ -486,6 +487,7 @@ const fetchBlockedRooms = async () => {
 
   try {
     const query = new URLSearchParams({
+      site_key: SITE_KEY,
       start_date: booking.value.checkIn,
       end_date: booking.value.checkOut,
     })
@@ -676,7 +678,7 @@ onBeforeUnmount(() => {
           @click="close"
         ></div>
         <div
-          class="relative z-10 w-full max-w-3xl overflow-y-auto rounded-3xl border border-white/30 bg-white/95 p-6 shadow-[0_28px_80px_rgba(8,6,4,0.35)] sm:max-h-[calc(100vh-4rem)] sm:p-8 max-h-[calc(100vh-2rem)]"
+          class="relative z-10 w-full max-w-3xl overflow-y-auto rounded-xl border border-white/30 bg-white/95 p-6 shadow-[0_28px_80px_rgba(8,6,4,0.35)] sm:max-h-[calc(100vh-4rem)] sm:p-8 max-h-[calc(100vh-2rem)]"
         >
           <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
@@ -784,7 +786,7 @@ onBeforeUnmount(() => {
                     </option>
                   </select>
                 </label>
-                <div class="sm:col-span-2 rounded-2xl border border-clay-200/70 bg-white/90 px-4 py-4 text-sm text-clay-800">
+                <div class="sm:col-span-2 rounded-lg border border-clay-200/70 bg-white/90 px-4 py-4 text-sm text-clay-800">
                   <div class="flex flex-wrap items-center justify-between gap-2">
                     <span class="text-xs font-semibold uppercase tracking-[0.2em] text-clay-500">
                       {{ t('booking.calendar.title') }}
@@ -876,7 +878,7 @@ onBeforeUnmount(() => {
             </div>
             <div
               v-if="pricingSummary"
-              class="sm:col-span-2 rounded-2xl border border-clay-200/70 bg-white/90 px-4 py-4 text-sm text-clay-800"
+              class="sm:col-span-2 rounded-lg border border-clay-200/70 bg-white/90 px-4 py-4 text-sm text-clay-800"
             >
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <span class="text-xs font-semibold uppercase tracking-[0.2em] text-clay-500">
@@ -1012,7 +1014,7 @@ onBeforeUnmount(() => {
             <p
               v-if="status.key"
               :class="[
-                'sm:col-span-2 rounded-2xl border px-4 py-3 text-sm font-semibold',
+                'sm:col-span-2 rounded-lg border px-4 py-3 text-sm font-semibold',
                 status.tone === 'success'
                   ? 'border-green-200 bg-green-50 text-green-700'
                   : 'border-red-200 bg-red-50 text-red-700',
@@ -1023,7 +1025,7 @@ onBeforeUnmount(() => {
             <p
               v-if="availabilityNotice.key"
               :class="[
-                'sm:col-span-2 rounded-2xl border px-4 py-3 text-sm font-semibold',
+                'sm:col-span-2 rounded-lg border px-4 py-3 text-sm font-semibold',
                 availabilityNotice.tone === 'success'
                   ? 'border-green-200 bg-green-50 text-green-700'
                   : 'border-red-200 bg-red-50 text-red-700',

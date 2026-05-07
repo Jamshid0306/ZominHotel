@@ -67,7 +67,7 @@ onBeforeUnmount(() => {
           @click="close"
         ></div>
         <div
-          class="relative z-10 w-full max-w-md rounded-3xl border border-white/40 bg-white/95 p-6 text-center shadow-[0_28px_80px_rgba(8,6,4,0.35)] sm:p-8"
+          class="relative z-10 w-full max-w-md rounded-xl border border-white/40 bg-white/95 p-6 text-center shadow-[0_28px_80px_rgba(8,6,4,0.35)] sm:p-8"
         >
           <button
             type="button"

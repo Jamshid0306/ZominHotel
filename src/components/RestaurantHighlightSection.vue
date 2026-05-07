@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { API_BASE_URL, withBaseUrl } from '../api'
+import { API_BASE_URL, buildRestaurantsUrl, withBaseUrl } from '../api'
 
 const { t, locale } = useI18n()
 
@@ -69,7 +69,7 @@ const fetchRestaurants = async () => {
   isLoading.value = true
   error.value = ''
   try {
-    const res = await fetch(`${API_BASE_URL}/restaurants`)
+    const res = await fetch(buildRestaurantsUrl())
     if (!res.ok) {
       throw new Error(t('restaurantsPage.loadError'))
     }
@@ -173,7 +173,7 @@ onBeforeUnmount(() => {
           {{ localizedField(activeRestaurant, 'description') }}
         </p>
       </div>
-      <div class="relative overflow-hidden rounded-3xl bg-sand-50">
+      <div class="relative overflow-hidden rounded-xl bg-sand-50">
         <div
           v-for="(image, index) in restaurantImages"
           :key="image"
@@ -183,7 +183,7 @@ onBeforeUnmount(() => {
           <img
             :src="image"
             :alt="localizedField(activeRestaurant, 'name')"
-            class="w-full object-cover sm:h-96 rounded-3xl"
+            class="w-full object-cover sm:h-96 rounded-xl"
           />
         </div>
         <div
@@ -207,7 +207,7 @@ onBeforeUnmount(() => {
       </div>
       <div v-else-if="menuError" class="text-sm text-red-600">{{ menuError }}</div>
 
-      <div v-else class="overflow-hidden rounded-3xl border border-clay-100/70 bg-white/70">
+      <div v-else class="overflow-hidden rounded-xl border border-clay-100/70 bg-white/70">
         <div
           class="flex transition duration-700 ease-out"
           :style="{ transform: `translateX(-${activeMenuIndex * 100}%)` }"
@@ -221,7 +221,7 @@ onBeforeUnmount(() => {
               <img
                 :src="withBaseUrl(menu.image)"
                 :alt="localizedField(menu, 'name')"
-                class="h-28 w-full rounded-2xl object-cover"
+                class="h-28 w-full rounded-lg object-cover"
               />
               <div>
                 <h4 class="text-[20px] text-center font-semibold text-clay-950">

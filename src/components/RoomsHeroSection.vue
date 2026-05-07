@@ -2,7 +2,7 @@
 import { inject, ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { API_BASE_URL } from '../api'
+import { buildHotelRoomsUrl } from '../api'
 
 const { t } = useI18n()
 const openBookingModal = inject('openBookingModal', () => {})
@@ -15,7 +15,7 @@ const summaryTitle = computed(() =>
 
 const fetchRoomsCount = async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/hotel-rooms`)
+    const res = await fetch(buildHotelRoomsUrl())
     if (!res.ok) return
     const data = await res.json()
     roomsCount.value = Array.isArray(data) ? data.length : 0
@@ -57,7 +57,7 @@ onMounted(() => {
         </RouterLink>
       </div>
     </div>
-    <div class="rounded-2xl border border-clay-100/80 bg-white/80 px-4 py-3 shadow-sm shadow-clay-950/5">
+    <div class="rounded-lg border border-clay-100/80 bg-white/80 px-4 py-3 shadow-sm shadow-clay-950/5">
       <p class="text-sm font-semibold text-clay-800">{{ summaryTitle }}</p>
       <p class="text-xs text-clay-700">{{ t('roomsPage.summarySubtitle') }}</p>
     </div>

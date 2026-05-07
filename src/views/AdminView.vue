@@ -3,6 +3,10 @@ import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   API_BASE_URL,
+  SITE_KEY,
+  buildHotelRoomsUrl,
+  buildRestaurantMenusUrl,
+  buildRestaurantsUrl,
   withBaseUrl,
   getCookie,
   setCookie,
@@ -174,7 +178,7 @@ const fetchRooms = async () => {
   isLoadingRooms.value = true
   roomsError.value = ''
   try {
-    const res = await fetch(`${API_BASE_URL}/hotel-rooms`, {
+    const res = await fetch(buildHotelRoomsUrl(SITE_KEY), {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
@@ -192,7 +196,8 @@ const fetchBlocks = async () => {
   isLoadingBlocks.value = true
   blocksError.value = ''
   try {
-    const res = await fetch(`${API_BASE_URL}/room-blocks`, {
+    const query = new URLSearchParams({ site_key: SITE_KEY })
+    const res = await fetch(`${API_BASE_URL}/room-blocks?${query}`, {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
@@ -210,7 +215,7 @@ const fetchRestaurants = async () => {
   isLoadingRestaurants.value = true
   restaurantsError.value = ''
   try {
-    const res = await fetch(`${API_BASE_URL}/restaurants`, {
+    const res = await fetch(buildRestaurantsUrl(SITE_KEY), {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
@@ -228,7 +233,7 @@ const fetchMenus = async () => {
   isLoadingMenus.value = true
   menusError.value = ''
   try {
-    const res = await fetch(`${API_BASE_URL}/restaurant-menus`, {
+    const res = await fetch(buildRestaurantMenusUrl(SITE_KEY), {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : undefined,
     })
     if (!res.ok) {
@@ -518,6 +523,7 @@ const updateRoom = async () => {
       return
     }
     const payload = new FormData()
+    payload.append('site_key', SITE_KEY)
     payload.append('room_name_uz', form.value.room_name_uz)
     payload.append('room_name_ru', form.value.room_name_ru)
     payload.append('room_name_en', form.value.room_name_en)
@@ -564,6 +570,7 @@ const createRoom = async () => {
       return
     }
     const payload = new FormData()
+    payload.append('site_key', SITE_KEY)
     payload.append('room_name_uz', form.value.room_name_uz)
     payload.append('room_name_ru', form.value.room_name_ru)
     payload.append('room_name_en', form.value.room_name_en)
@@ -607,6 +614,7 @@ const updateRestaurant = async () => {
   clearRestaurantStatus()
   try {
     const payload = new FormData()
+    payload.append('site_key', SITE_KEY)
     payload.append('name_uz', restaurantForm.value.name_uz)
     payload.append('name_ru', restaurantForm.value.name_ru)
     payload.append('name_en', restaurantForm.value.name_en)
@@ -643,6 +651,7 @@ const createRestaurant = async () => {
   clearRestaurantStatus()
   try {
     const payload = new FormData()
+    payload.append('site_key', SITE_KEY)
     payload.append('name_uz', restaurantForm.value.name_uz)
     payload.append('name_ru', restaurantForm.value.name_ru)
     payload.append('name_en', restaurantForm.value.name_en)
@@ -842,6 +851,7 @@ const createBlock = async () => {
         ...(token.value ? { Authorization: `Bearer ${token.value}` } : {}),
       },
       body: JSON.stringify({
+        site_key: SITE_KEY,
         room_id: Number(blockForm.value.room_id),
         start_date: blockForm.value.start_date,
         end_date: blockForm.value.end_date,
@@ -897,7 +907,7 @@ onMounted(() => {
     <section class="mt-10 grid gap-6">
       <div
         v-if="!isAuthenticated"
-        class="rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
+        class="rounded-xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
       >
         <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-700">
           {{ t('admin.label') }}
@@ -941,7 +951,7 @@ onMounted(() => {
 
         <p
           v-if="status.message"
-          class="mt-4 rounded-2xl border px-4 py-3 text-sm font-semibold"
+          class="mt-4 rounded-lg border px-4 py-3 text-sm font-semibold"
           :class="
             status.tone === 'success'
               ? 'border-green-200 bg-green-50 text-green-700'
@@ -954,7 +964,7 @@ onMounted(() => {
 
       <div
         v-if="isAuthenticated"
-        class="rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
+        class="rounded-xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
       >
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -992,7 +1002,7 @@ onMounted(() => {
 
         <p
           v-if="status.message"
-          class="mt-4 rounded-2xl border px-4 py-3 text-sm font-semibold"
+          class="mt-4 rounded-lg border px-4 py-3 text-sm font-semibold"
           :class="
             status.tone === 'success'
               ? 'border-green-200 bg-green-50 text-green-700'
@@ -1011,7 +1021,7 @@ onMounted(() => {
             <article
               v-for="room in rooms"
               :key="room.id"
-              class="rounded-2xl border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-4 shadow-sm shadow-clay-950/5 transition hover:-translate-y-0.5 hover:shadow-lg"
+              class="rounded-lg border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-4 shadow-sm shadow-clay-950/5 transition hover:-translate-y-0.5 hover:shadow-lg"
               @click="openModal(room)"
             >
               <div class="flex flex-wrap items-center justify-between gap-3">
@@ -1060,7 +1070,7 @@ onMounted(() => {
 
       <div
         v-if="isAuthenticated"
-        class="rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
+        class="rounded-xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
       >
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -1123,7 +1133,7 @@ onMounted(() => {
 
         <p
           v-if="blockStatus.message"
-          class="mt-4 rounded-2xl border px-4 py-3 text-sm font-semibold"
+          class="mt-4 rounded-lg border px-4 py-3 text-sm font-semibold"
           :class="
             blockStatus.tone === 'success'
               ? 'border-green-200 bg-green-50 text-green-700'
@@ -1142,7 +1152,7 @@ onMounted(() => {
             <article
               v-for="block in roomBlocks"
               :key="block.id"
-              class="rounded-2xl border border-clay-100/90 bg-white/90 p-4 text-sm text-clay-800 shadow-sm shadow-clay-950/5"
+              class="rounded-lg border border-clay-100/90 bg-white/90 p-4 text-sm text-clay-800 shadow-sm shadow-clay-950/5"
             >
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <div>
@@ -1176,7 +1186,7 @@ onMounted(() => {
 
       <div
         v-if="isAuthenticated"
-        class="rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
+        class="rounded-xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
       >
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -1207,7 +1217,7 @@ onMounted(() => {
 
         <p
           v-if="restaurantStatus.message"
-          class="mt-4 rounded-2xl border px-4 py-3 text-sm font-semibold"
+          class="mt-4 rounded-lg border px-4 py-3 text-sm font-semibold"
           :class="
             restaurantStatus.tone === 'success'
               ? 'border-green-200 bg-green-50 text-green-700'
@@ -1226,7 +1236,7 @@ onMounted(() => {
             <article
               v-for="restaurant in restaurants"
               :key="restaurant.id"
-              class="rounded-2xl border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-4 shadow-sm shadow-clay-950/5 transition hover:-translate-y-0.5 hover:shadow-lg"
+              class="rounded-lg border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-4 shadow-sm shadow-clay-950/5 transition hover:-translate-y-0.5 hover:shadow-lg"
               @click="openRestaurantModal(restaurant)"
             >
               <div class="flex flex-wrap items-center justify-between gap-3">
@@ -1267,7 +1277,7 @@ onMounted(() => {
 
       <div
         v-if="isAuthenticated"
-        class="rounded-3xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
+        class="rounded-xl border border-clay-100/90 bg-white/80 p-6 shadow-sm shadow-clay-950/5"
       >
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -1298,7 +1308,7 @@ onMounted(() => {
 
         <p
           v-if="menuStatus.message"
-          class="mt-4 rounded-2xl border px-4 py-3 text-sm font-semibold"
+          class="mt-4 rounded-lg border px-4 py-3 text-sm font-semibold"
           :class="
             menuStatus.tone === 'success'
               ? 'border-green-200 bg-green-50 text-green-700'
@@ -1317,7 +1327,7 @@ onMounted(() => {
             <article
               v-for="menu in restaurantMenus"
               :key="menu.id"
-              class="rounded-2xl border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-4 shadow-sm shadow-clay-950/5 transition hover:-translate-y-0.5 hover:shadow-lg"
+              class="rounded-lg border border-clay-100/90 bg-gradient-to-br from-sand-50 to-sand-100 p-4 shadow-sm shadow-clay-950/5 transition hover:-translate-y-0.5 hover:shadow-lg"
               @click="openMenuModal(menu)"
             >
               <div class="flex flex-wrap items-center justify-between gap-3">
@@ -1361,7 +1371,7 @@ onMounted(() => {
     @click="closeModal"
   >
     <div
-      class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-xl"
+      class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white p-6 shadow-xl"
       @click.stop
     >
       <div class="flex items-start justify-between gap-3">
@@ -1477,7 +1487,7 @@ onMounted(() => {
           <div
             v-for="(preview, index) in imagePreviews"
             :key="preview.url"
-            class="flex items-center gap-3 rounded-2xl border border-clay-100/90 bg-sand-50 p-3"
+            class="flex items-center gap-3 rounded-lg border border-clay-100/90 bg-sand-50 p-3"
           >
             <img
               :src="preview.url"
@@ -1522,7 +1532,7 @@ onMounted(() => {
     @click="closeRestaurantModal"
   >
     <div
-      class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-xl"
+      class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white p-6 shadow-xl"
       @click.stop
     >
       <div class="flex items-start justify-between gap-3">
@@ -1620,7 +1630,7 @@ onMounted(() => {
           <div
             v-for="(preview, index) in restaurantImagePreviews"
             :key="preview.url"
-            class="flex items-center gap-3 rounded-2xl border border-clay-100/90 bg-sand-50 p-3"
+            class="flex items-center gap-3 rounded-lg border border-clay-100/90 bg-sand-50 p-3"
           >
             <img
               :src="preview.url"
@@ -1665,7 +1675,7 @@ onMounted(() => {
     @click="closeMenuModal"
   >
     <div
-      class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-xl"
+      class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white p-6 shadow-xl"
       @click.stop
     >
       <div class="flex items-start justify-between gap-3">
@@ -1742,7 +1752,7 @@ onMounted(() => {
             @change="handleMenuImageChange"
           />
         </label>
-        <div v-if="menuImagePreview" class="flex items-center gap-3 rounded-2xl border border-clay-100/90 bg-sand-50 p-3">
+        <div v-if="menuImagePreview" class="flex items-center gap-3 rounded-lg border border-clay-100/90 bg-sand-50 p-3">
           <img
             :src="menuImagePreview.url"
             :alt="menuImagePreview.name"
@@ -1762,7 +1772,7 @@ onMounted(() => {
             {{ t('common.cancel') }}
           </button>
         </div>
-        <div v-else-if="menuModalMode === 'update' && selectedMenu?.image" class="rounded-2xl border border-clay-100/90 bg-sand-50 p-3">
+        <div v-else-if="menuModalMode === 'update' && selectedMenu?.image" class="rounded-lg border border-clay-100/90 bg-sand-50 p-3">
           <p class="text-xs text-clay-600">{{ t('admin.labels.currentImage') }}</p>
           <img
             :src="withBaseUrl(selectedMenu.image)"
