@@ -185,7 +185,7 @@ onMounted(() => {
         <div class="flex items-center justify-between border-b border-clay-100 pb-3">
           <span class="text-xs font-semibold uppercase tracking-[0.2em] text-clay-700">Pricing</span>
           <span class="h-px flex-1 bg-clay-100 mx-3"></span>
-          <span class="text-xs font-semibold text-clay-500">Zamindor stay</span>
+          <span class="text-xs font-semibold text-clay-500">Zomin stay</span>
         </div>
         <div class="mt-2 space-y-1 text-sm text-clay-800">
           <div class="flex items-center justify-between">

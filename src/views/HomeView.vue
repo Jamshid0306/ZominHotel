@@ -11,6 +11,7 @@ import saffronImage from '@/assets/images/product-images/shafran.jpg'
 const { t, tm, locale } = useI18n()
 const openBookingModal = inject('openBookingModal', () => {})
 
+const tourLink = (import.meta.env.VITE_TOUR_LINK || '').trim()
 const rooms = ref([])
 const isLoadingRooms = ref(false)
 
@@ -81,7 +82,7 @@ onMounted(fetchRooms)
     <section class="grid grid-cols-1 bg-sand-50 lg:grid-cols-[72px_1fr]">
       <aside class="hidden border-r border-clay-100 bg-white/55 px-4 py-8 lg:flex lg:flex-col lg:items-center lg:justify-between">
         <span class="writing-mode-vertical text-[10px] font-bold uppercase tracking-[0.35em] text-clay-500">
-          Zamindor stay
+          Zomin stay
         </span>
         <span class="h-20 w-px bg-clay-200"></span>
       </aside>
@@ -92,7 +93,7 @@ onMounted(fetchRooms)
             <p class="inline-flex rounded-full border border-clay-200 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.26em] text-clay-600 shadow-lg shadow-clay-950/5">
               {{ t('hero.tagline') }}
             </p>
-            <h1 class="mt-8 max-w-4xl font-display text-5xl font-bold leading-[0.95] text-clay-950 sm:text-7xl xl:text-8xl">
+            <h1 class="mt-8 max-w-4xl font-display text-4xl font-bold leading-[1.02] text-clay-950 sm:text-5xl lg:text-6xl xl:text-7xl">
               {{ t('hero.title') }}
             </h1>
           </div>
@@ -142,7 +143,7 @@ onMounted(fetchRooms)
               <p class="text-xs font-bold uppercase tracking-[0.28em] text-clay-500">
                 {{ t('aboutNetwork.advantages.badge') }}
               </p>
-              <p class="mt-5 font-display text-4xl font-bold leading-none text-clay-950">Zamindor</p>
+              <p class="mt-5 font-display text-4xl font-bold leading-none text-clay-950">Zomin</p>
               <p class="mt-2 text-sm text-clay-700">{{ t('footer.tagline') }}</p>
             </div>
             <div class="col-span-3 row-span-1 overflow-hidden rounded-[2rem] shadow-xl shadow-clay-950/10 sm:col-span-2">
@@ -251,7 +252,7 @@ onMounted(fetchRooms)
       </div>
     </section>
 
-    <section class="px-5 pb-8 sm:px-8 lg:px-12">
+    <section v-if="tourLink" class="px-5 pb-8 sm:px-8 lg:px-12">
       <div class="grid overflow-hidden rounded-[2rem] border border-clay-100 bg-white shadow-2xl shadow-clay-950/10 lg:grid-cols-[0.8fr_1.2fr]">
         <div class="p-6 sm:p-8">
           <p class="text-xs font-bold uppercase tracking-[0.28em] text-clay-600">
@@ -273,7 +274,7 @@ onMounted(fetchRooms)
         </div>
         <iframe
           class="min-h-[360px] w-full"
-          src="https://app.lapentor.com/sphere/zafaron"
+          :src="tourLink"
           :title="t('tourSection.iframeTitle')"
           allow="fullscreen; vr"
           loading="lazy"

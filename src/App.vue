@@ -50,7 +50,7 @@ provide("openBookingModal", openBookingModal);
       class="sticky top-0 z-30 border-b border-clay-100/80 bg-[#f7f7f7]"
     >
       <div
-        class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2"
+        class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2"
       >
         <div class="flex items-center gap-3">
           <RouterLink
@@ -60,30 +60,30 @@ provide("openBookingModal", openBookingModal);
             <img src="/logo.png" :alt="t('common.logoAlt')" class="w-20" />
           </RouterLink>
         </div>
-        <div class="hidden items-center gap-2 md:flex">
+        <div class="hidden items-center gap-1.5 md:flex">
           <RouterLink
             to="/"
-            class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+            class="rounded-full px-3 py-1.5 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
             >{{ t("nav.home") }}</RouterLink
           >
           <RouterLink
             to="/rooms"
-            class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+            class="rounded-full px-3 py-1.5 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
             >{{ t("nav.rooms") }}</RouterLink
           >
           <RouterLink
             to="/restaurants"
-            class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+            class="rounded-full px-3 py-1.5 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
             >{{ t("nav.restaurants") }}</RouterLink
           >
           <RouterLink
             to="/services"
-            class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+            class="rounded-full px-3 py-1.5 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
             >{{ t("nav.services") }}</RouterLink
           >
           <RouterLink
             :to="{ path: '/', hash: '#contact' }"
-            class="rounded-full px-4 py-2 text-sm font-semibold text-clay-800 transition hover:bg-clay-500/10"
+            class="rounded-full px-3 py-1.5 text-xs font-semibold text-clay-800 transition hover:bg-clay-500/10"
             >{{ t("nav.contacts") }}</RouterLink
           >
           <LanguageDropdown />
@@ -91,7 +91,7 @@ provide("openBookingModal", openBookingModal);
         <div class="flex items-center gap-2">
           <button
             type="button"
-            class="hidden items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl sm:inline-flex"
+            class="hidden items-center justify-center rounded-full bg-linear-to-r from-clay-500 to-clay-300 px-3.5 py-2 text-xs font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl sm:inline-flex"
             @click="openBookingModal"
           >
             {{ t("actions.book") }}

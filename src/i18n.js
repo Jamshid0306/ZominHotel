@@ -29,7 +29,7 @@ export const supportedLocales = [
 const messages = {
   uz: {
     creat: 'EDev tomonidan yaratilgan',
-    brand: "Zamindor Resort",
+    brand: "Za’faron Premium Hotel Zomin",
     nav: {
       home: 'Bosh sahifa',
       rooms: 'Xonalar',
@@ -73,17 +73,17 @@ const messages = {
     },
     footer: {
       description:
-        "Zamindor Resort — Zaamin milliy bog'i qalbida joylashgan premium kurort majmuasi. Tog' havosi, zamonaviy xonalar, restoran, SPA va oilaviy dam olish uchun qulay muhit.",
+        "Za’faron Premium Hotel Zomin — Zaamin milliy bog'i qalbida joylashgan premium kurort majmuasi. Tog' havosi, zamonaviy xonalar, restoran, SPA va oilaviy dam olish uchun qulay muhit.",
       navTitle: 'Navigatsiya',
       bookingTitle: 'Bron',
       questionsLabel: 'Savollar uchun:',
-      rights: "© {year} Zamindor Resort. Barcha huquqlar himoyalangan.",
+      rights: "© {year} Za’faron Premium Hotel Zomin. Barcha huquqlar himoyalangan.",
       tagline: 'Premium mountain resort',
     },
     hero: {
       tagline: "Zaamin milliy bog'i markazida",
       title:
-        "Zamindor Resort — Zaamin milliy bog'i qalbidagi yangi premium kurort majmuasi.",
+        "Za’faron Premium Hotel Zomin — Zaamin milliy bog'i qalbidagi yangi premium kurort majmuasi.",
       description:
         "Sof tog' havosi, 270 darajali tog' manzarasi, zamonaviy xonalar, shved stoli, SPA zona, fitnes va Zamindor Restaurant bilan to'liq dam olish tajribasi.",
       stats: {
@@ -225,7 +225,7 @@ const messages = {
         'Virtual sayr orqali lobby, xonalar va manzarani oldindan his qiling.',
       action: '360 turni ochish',
       note: 'Katta ekranda yanada qulay.',
-      iframeTitle: "Zamindor Resort 360 tour",
+      iframeTitle: "Za’faron Premium Hotel Zomin 360 tour",
     },
     mapSection: {
       contactsLabel: 'Kontaktlar',
@@ -247,8 +247,8 @@ const messages = {
       label: 'Kurort haqida',
       title: "Tabiat, tog' havosi va zamonaviy servis uyg'unligi",
       description:
-        "Zamindor Resort Zaamin milliy bog'i hududida, archazor va tog' manzaralari orasida joylashgan premium kurort majmuasi. Majmua oilaviy dam olish, ishbilarmon safarlar, sog'lomlashtirish va tabiat qo'ynida sokin hordiq uchun yaratilgan.",
-      hotelLabel: 'Zamindor Resort',
+        "Za’faron Premium Hotel Zomin Zaamin milliy bog'i hududida, archazor va tog' manzaralari orasida joylashgan premium kurort majmuasi. Majmua oilaviy dam olish, ishbilarmon safarlar, sog'lomlashtirish va tabiat qo'ynida sokin hordiq uchun yaratilgan.",
+      hotelLabel: "Za’faron Premium Hotel Zomin",
       hotelTitle: "Zaamin milliy bog'i qalbidagi premium dam olish",
       hotelDescription:
         "Mehmonlarni standart, polulyuks, lyuks va Korolevskiy lyuks xonalari, Zamindor Restaurant, SPA zona, konferens-zal, fitnes va yaqin turistik manzillar kutadi.",
@@ -449,7 +449,7 @@ const messages = {
     ],
     roomsSection: {
       label: 'Xonalar',
-      title: "Zamindor Resort xonalari",
+      title: "Za’faron Premium Hotel Zomin xonalari",
       description:
         "Standartdan Korolevskiy lyuksgacha: tog' manzarasi, qulay interyer va premium servis.",
       viewAll: 'Hammasini ko‘rish',
@@ -534,7 +534,7 @@ const messages = {
     ],
     servicesPage: {
       label: 'Xizmatlar',
-      title: "Zamindor Resort — barcha xizmatlar",
+      title: "Za’faron Premium Hotel Zomin — barcha xizmatlar",
       description:
         "Yashash, shved stoli, SPA, fitnes, konferens-zal, transfer va Zaamin bo'ylab sayohat imkoniyatlari.",
       summaryTitle: '{count} xizmat',
@@ -573,9 +573,9 @@ const messages = {
         '60-70 kishilik zal. Ijara narxi: kuniga 8 000 000 UZS. LCD proektor, ekran, 2 radiomikrofon, flipchart, kantselyariya, Wi-Fi va mineral suv kiritilgan.',
       transferTitle: 'Transfer narxlari',
       transfers: [
-        'Toshkent - Zamindor Resort: Kia Carnival 1 600 000 UZS, BAW M7 3 500 000 UZS, GAZelle Next 4 000 000 UZS',
-        'Dashtobod stansiyasi - Zamindor Resort: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
-        'Zaamin aeroporti - Zamindor Resort: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
+        'Toshkent - Za’faron Premium Hotel Zomin: Kia Carnival 1 600 000 UZS, BAW M7 3 500 000 UZS, GAZelle Next 4 000 000 UZS',
+        'Dashtobod stansiyasi - Za’faron Premium Hotel Zomin: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
+        'Zaamin aeroporti - Za’faron Premium Hotel Zomin: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
       ],
     },
     productsSection: {
@@ -624,7 +624,7 @@ const messages = {
     },
     restaurantsPage: {
       label: 'Restoranlar',
-      title: "Zamindor Resort — barcha restoranlar",
+      title: "Za’faron Premium Hotel Zomin — barcha restoranlar",
       description:
         'Har bir restoran o‘ziga xos taʼm va kayfiyatga ega. Taomlarimizni sekin, did bilan kashf eting.',
       empty: "Hozircha restoranlar yo'q.",
@@ -634,15 +634,15 @@ const messages = {
     },
     cta: {
       label: 'Sizni kutamiz',
-      title: "Zamindor Resort — bronni hoziroq belgilang",
+      title: "Za’faron Premium Hotel Zomin — bronni hoziroq belgilang",
       description:
-        'Tinch fazo, yumshoq xizmat va zamonaviy dizayn — Zamindor Resort shahar shovqinidan uzoqda yangi manzil.',
+        'Tinch fazo, yumshoq xizmat va zamonaviy dizayn — Za’faron Premium Hotel Zomin shahar shovqinidan uzoqda yangi manzil.',
       book: 'Bron qilish',
       ask: 'Savol berish',
     },
     roomsPage: {
       label: 'Xonalar',
-      title: "Zamindor Resort — barcha xonalar",
+      title: "Za’faron Premium Hotel Zomin — barcha xonalar",
       description:
         'Har bir xona tabiat ranglari va zamonaviy minimalizm uygʻunligida. Quyi shovqinsiz tunash, yuqori servis va sokin interyer uchun sevimli variantingizni tanlang.',
       loadError: 'Xonalarni yuklashda xatolik yuz berdi.',
@@ -781,7 +781,7 @@ const messages = {
   },
   ru: {
     creat: 'Создано EDev',
-    brand: "Zamindor Resort",
+    brand: "Za’faron Premium Hotel Zomin",
     nav: {
       home: 'Главная',
       rooms: 'Номера',
@@ -825,17 +825,17 @@ const messages = {
     },
     footer: {
       description:
-        'Zamindor Resort — премиальный курортный комплекс в сердце Зааминского национального парка с горным воздухом, ресторанами, SPA и современными номерами.',
+        "Za’faron Premium Hotel Zomin — премиальный курортный комплекс в сердце Зааминского национального парка с горным воздухом, ресторанами, SPA и современными номерами.",
       navTitle: 'Навигация',
       bookingTitle: 'Бронирование',
       questionsLabel: 'Для вопросов:',
-      rights: "© {year} Zamindor Resort. Все права защищены.",
+      rights: "© {year} Za’faron Premium Hotel Zomin. Все права защищены.",
       tagline: 'Premium mountain resort',
     },
     hero: {
       tagline: 'В сердце Зааминского национального парка',
       title:
-        "Zamindor Resort — новый премиальный курортный комплекс в Зааминском национальном парке.",
+        "Za’faron Premium Hotel Zomin — новый премиальный курортный комплекс в Зааминском национальном парке.",
       description:
         "Горный воздух, виды на лес и горы, современные номера, шведский стол, SPA-зона, фитнес и Zamindor Restaurant для полноценного отдыха.",
       stats: {
@@ -975,7 +975,7 @@ const messages = {
       description: 'Виртуальная прогулка по лобби, номерам и видам.',
       action: 'Открыть 360 тур',
       note: 'Лучше смотреть на большом экране.',
-      iframeTitle: "Zamindor Resort 360 тур",
+      iframeTitle: "Za’faron Premium Hotel Zomin 360 тур",
     },
     mapSection: {
       contactsLabel: 'Контакты',
@@ -997,7 +997,7 @@ const messages = {
       label: 'О курорте',
       title: 'Природа, горный воздух и современный сервис',
       description:
-        'Zamindor Resort расположен в Зааминском национальном парке, среди арчовых лесов и горных видов. Комплекс создан для семейного отдыха, деловых поездок, wellness и спокойного отдыха на природе.',
+        "Za’faron Premium Hotel Zomin расположен в Зааминском национальном парке, среди арчовых лесов и горных видов. Комплекс создан для семейного отдыха, деловых поездок, wellness и спокойного отдыха на природе.",
       hotelLabel: 'О гостинице',
       hotelTitle: 'Премиальный комфорт и безопасный отдых',
       hotelDescription:
@@ -1200,7 +1200,7 @@ const messages = {
     ],
     roomsSection: {
       label: 'Номера',
-      title: "Номера Zamindor Resort",
+      title: "Номера Za’faron Premium Hotel Zomin",
       description: 'Локальный дизайн, ремесленный декор и вежливый сервис. Выберите номер, который подходит вам.',
       viewAll: 'Смотреть все',
     },
@@ -1284,7 +1284,7 @@ const messages = {
     ],
     servicesPage: {
       label: 'Услуги',
-      title: "Zamindor Resort — все услуги",
+      title: "Za’faron Premium Hotel Zomin — все услуги",
       description:
         'Проживание, шведский стол, SPA, фитнес, конференц-зал, трансфер и маршруты по Заамину.',
       summaryTitle: '{count} услуг',
@@ -1323,9 +1323,9 @@ const messages = {
         'Зал на 60-70 человек. Аренда: 8 000 000 UZS в день. Включены LCD проектор, экран, 2 радиомикрофона, флипчарт, канцтовары, Wi-Fi и минеральная вода.',
       transferTitle: 'Трансфер',
       transfers: [
-        'Ташкент - Zamindor Resort: Kia Carnival 1 600 000 UZS, BAW M7 3 500 000 UZS, GAZelle Next 4 000 000 UZS',
-        'Станция Даштабад - Zamindor Resort: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
-        'Зааминский аэропорт - Zamindor Resort: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
+        'Ташкент - Za’faron Premium Hotel Zomin: Kia Carnival 1 600 000 UZS, BAW M7 3 500 000 UZS, GAZelle Next 4 000 000 UZS',
+        'Станция Даштабад - Za’faron Premium Hotel Zomin: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
+        'Зааминский аэропорт - Za’faron Premium Hotel Zomin: Kia Carnival 800 000 UZS, BAW M7 1 700 000 UZS, GAZelle Next 2 000 000 UZS',
       ],
     },
     productsSection: {
@@ -1374,7 +1374,7 @@ const messages = {
     },
     restaurantsPage: {
       label: 'Рестораны',
-      title: "Zamindor Resort — все рестораны",
+      title: "Za’faron Premium Hotel Zomin — все рестораны",
       description:
         'У каждого ресторана свой вкус и настроение. Откройте нашу кухню в спокойном ритме.',
       empty: 'Пока ресторанов нет.',
@@ -1384,7 +1384,7 @@ const messages = {
     },
     cta: {
       label: 'Ждём вас',
-      title: "Zamindor Resort — забронируйте прямо сейчас",
+      title: "Za’faron Premium Hotel Zomin — забронируйте прямо сейчас",
       description:
         'Тихое пространство, мягкий сервис и современный дизайн — новый адрес вдали от городского шума.',
       book: 'Забронировать',
@@ -1392,7 +1392,7 @@ const messages = {
     },
     roomsPage: {
       label: 'Номера',
-      title: "Zamindor Resort — все номера",
+      title: "Za’faron Premium Hotel Zomin — все номера",
       description:
         'Каждый номер — сочетание природных оттенков и современного минимализма. Выберите свой вариант для спокойного отдыха, высокого сервиса и тихого интерьера.',
       loadError: 'Ошибка при загрузке номеров.',
@@ -1531,7 +1531,7 @@ const messages = {
   },
   en: {
     creat: 'Created by EDev',
-    brand: "Zamindor Resort",
+    brand: "Za’faron Premium Hotel Zomin",
     nav: {
       home: 'Home',
       rooms: 'Rooms',
@@ -1575,16 +1575,16 @@ const messages = {
     },
     footer: {
       description:
-        'Zamindor Resort is a premium mountain resort in the heart of Zaamin National Park with modern rooms, restaurants, SPA, and fresh mountain air.',
+        "Za’faron Premium Hotel Zomin is a premium mountain resort in the heart of Zaamin National Park with modern rooms, restaurants, SPA, and fresh mountain air.",
       navTitle: 'Navigation',
       bookingTitle: 'Booking',
       questionsLabel: 'For questions:',
-      rights: "© {year} Zamindor Resort. All rights reserved.",
+      rights: "© {year} Za’faron Premium Hotel Zomin. All rights reserved.",
       tagline: 'Premium mountain resort',
     },
     hero: {
       tagline: 'In the heart of Zaamin National Park',
-      title: "Zamindor Resort — a new premium resort complex in Zaamin National Park.",
+      title: "Za’faron Premium Hotel Zomin — a new premium resort complex in Zaamin National Park.",
       description:
         "Mountain air, forest and mountain views, modern rooms, buffet dining, SPA zone, fitness, and Zamindor Restaurant for a complete resort stay.",
       stats: {
@@ -1724,7 +1724,7 @@ const messages = {
       description: 'Take a virtual walk through the lobby, rooms, and views.',
       action: 'Open 360 tour',
       note: 'Best viewed on a larger screen.',
-      iframeTitle: "Zamindor Resort 360 tour",
+      iframeTitle: "Za’faron Premium Hotel Zomin 360 tour",
     },
     mapSection: {
       contactsLabel: 'Contacts',
@@ -1746,7 +1746,7 @@ const messages = {
       label: 'About the resort',
       title: 'Nature, mountain air, and modern service',
       description:
-        "Zamindor Resort is located inside Zaamin National Park, surrounded by juniper forests and mountain views. The complex is designed for family vacations, business trips, wellness, and quiet nature escapes.",
+        "Za’faron Premium Hotel Zomin is located inside Zaamin National Park, surrounded by juniper forests and mountain views. The complex is designed for family vacations, business trips, wellness, and quiet nature escapes.",
       hotelLabel: 'About the hotel',
       hotelTitle: 'Premium comfort with a safe, memorable stay',
       hotelDescription:
@@ -1949,7 +1949,7 @@ const messages = {
     ],
     roomsSection: {
       label: 'Rooms',
-      title: "Zamindor Resort rooms",
+      title: "Za’faron Premium Hotel Zomin rooms",
       description: 'Local design, artisan decor, and gracious service. Choose a room that suits you.',
       viewAll: 'View all',
     },
@@ -2033,7 +2033,7 @@ const messages = {
     ],
     servicesPage: {
       label: 'Services',
-      title: "Zamindor Resort — all services",
+      title: "Za’faron Premium Hotel Zomin — all services",
       description:
         'Accommodation, buffet dining, SPA, fitness, conference hall, transfer, and routes around Zaamin.',
       summaryTitle: '{count} services',
@@ -2072,9 +2072,9 @@ const messages = {
         '60-70 guests. Rental price: 8,000,000 UZS per day. Includes LCD projector, screen, 2 radio microphones, flip chart, stationery, Wi-Fi, and mineral water.',
       transferTitle: 'Transfer prices',
       transfers: [
-        'Tashkent - Zamindor Resort: Kia Carnival 1,600,000 UZS, BAW M7 3,500,000 UZS, GAZelle Next 4,000,000 UZS',
-        'Dashtabad station - Zamindor Resort: Kia Carnival 800,000 UZS, BAW M7 1,700,000 UZS, GAZelle Next 2,000,000 UZS',
-        'Zaamin airport - Zamindor Resort: Kia Carnival 800,000 UZS, BAW M7 1,700,000 UZS, GAZelle Next 2,000,000 UZS',
+        'Tashkent - Za’faron Premium Hotel Zomin: Kia Carnival 1,600,000 UZS, BAW M7 3,500,000 UZS, GAZelle Next 4,000,000 UZS',
+        'Dashtabad station - Za’faron Premium Hotel Zomin: Kia Carnival 800,000 UZS, BAW M7 1,700,000 UZS, GAZelle Next 2,000,000 UZS',
+        'Zaamin airport - Za’faron Premium Hotel Zomin: Kia Carnival 800,000 UZS, BAW M7 1,700,000 UZS, GAZelle Next 2,000,000 UZS',
       ],
     },
     productsSection: {
@@ -2123,7 +2123,7 @@ const messages = {
     },
     restaurantsPage: {
       label: 'Restaurants',
-      title: "Zamindor Resort — all restaurants",
+      title: "Za’faron Premium Hotel Zomin — all restaurants",
       description:
         'Each restaurant has its own mood and flavor. Discover our cuisine in a calm, elegant rhythm.',
       empty: 'No restaurants yet.',
@@ -2133,7 +2133,7 @@ const messages = {
     },
     cta: {
       label: 'We are waiting for you',
-      title: "Zamindor Resort — book your stay now",
+      title: "Za’faron Premium Hotel Zomin — book your stay now",
       description:
         'A quiet space, gentle service, and modern design — a new address in the Zomin mountains.',
       book: 'Book now',
@@ -2141,7 +2141,7 @@ const messages = {
     },
     roomsPage: {
       label: 'Rooms',
-      title: "Zamindor Resort — all rooms",
+      title: "Za’faron Premium Hotel Zomin — all rooms",
       description:
         'Each room blends natural tones and modern minimalism. Choose your favorite for a quiet stay, high service, and calm interior.',
       loadError: 'Failed to load rooms.',
