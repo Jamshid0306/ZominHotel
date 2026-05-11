@@ -154,25 +154,53 @@ onMounted(fetchRooms)
       </div>
     </section>
 
-    <section class="grid border-y border-clay-100 bg-white lg:grid-cols-[0.85fr_1.15fr]">
-      <div class="px-5 py-12 sm:px-8 lg:px-16">
-        <p class="text-xs font-bold uppercase tracking-[0.28em] text-clay-600">
-          {{ t('aboutNetwork.label') }}
-        </p>
-        <h2 class="mt-4 max-w-xl font-display text-4xl font-bold leading-tight text-clay-950 sm:text-6xl">
-          {{ t('aboutNetwork.title') }}
-        </h2>
-      </div>
-      <div class="grid border-t border-clay-100 lg:grid-cols-3 lg:border-l lg:border-t-0">
-        <article
-          v-for="item in advantages"
-          :key="item.title"
-          class="border-b border-clay-100 p-6 transition hover:bg-sand-50 lg:border-b-0 lg:border-r last:border-r-0"
-        >
-          <span class="block h-1 w-10 rounded-full bg-clay-400"></span>
-          <h3 class="mt-8 text-lg font-bold text-clay-950">{{ item.title }}</h3>
-          <p class="mt-3 text-sm leading-7 text-clay-700">{{ item.text }}</p>
-        </article>
+    <section class="relative overflow-hidden bg-pine-900 px-5 py-16 text-white sm:px-8 lg:px-12 lg:py-20">
+      <img
+        :src="heroImage"
+        :alt="t('aboutNetwork.label')"
+        class="absolute inset-0 h-full w-full object-cover opacity-42"
+        loading="lazy"
+      />
+      <div class="absolute inset-0 bg-linear-to-r from-pine-900 via-pine-900/82 to-clay-950/50"></div>
+      <div class="relative grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+        <div class="max-w-2xl">
+          <p class="text-xs font-bold uppercase tracking-[0.32em] text-sand-200">
+            {{ t('aboutNetwork.label') }}
+          </p>
+          <h2 class="mt-5 font-display text-5xl font-bold leading-[0.95] text-white sm:text-7xl">
+            {{ t('aboutNetwork.title') }}
+          </h2>
+          <p class="mt-6 max-w-xl text-base leading-8 text-sand-100/90">
+            {{ t('aboutNetwork.description') }}
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <RouterLink
+              to="/rooms"
+              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-bold text-pine-900 shadow-xl shadow-clay-950/25 transition hover:-translate-y-0.5 hover:bg-sand-100"
+            >
+              {{ t('actions.viewRooms') }}
+            </RouterLink>
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full border border-white/45 bg-white/10 px-6 py-3 text-sm font-bold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/18"
+              @click="openBookingModal"
+            >
+              {{ t('actions.book') }}
+            </button>
+          </div>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-3">
+          <article
+            v-for="item in advantages"
+            :key="item.title"
+            class="border border-white/18 bg-white/12 p-5 shadow-2xl shadow-clay-950/18 backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/18"
+          >
+            <span class="block h-1 w-10 rounded-full bg-gold-500"></span>
+            <h3 class="mt-8 text-lg font-bold text-white">{{ item.title }}</h3>
+            <p class="mt-3 text-sm leading-7 text-sand-100/86">{{ item.text }}</p>
+          </article>
+        </div>
       </div>
     </section>
 

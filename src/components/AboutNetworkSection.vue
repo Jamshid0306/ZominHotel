@@ -53,16 +53,35 @@ const hotelBlocks = computed(() => {
 <template>
   <section class="mt-20">
     <div class="grid gap-10 lg:grid-cols-[0.78fr_1.22fr]">
-      <div class="space-y-5 rounded-[1.5rem] border border-clay-100 bg-white/75 p-7 shadow-2xl shadow-clay-950/10">
-        <p class="text-xs font-semibold uppercase tracking-[0.28em] text-clay-600">
-          {{ t('aboutNetwork.label') }}
-        </p>
-        <h2 class="font-display text-4xl font-semibold leading-tight text-clay-950 sm:text-5xl">
-          {{ t('aboutNetwork.title') }}
-        </h2>
-        <p class="text-base leading-8 text-clay-800">
-          {{ t('aboutNetwork.description') }}
-        </p>
+      <div class="relative overflow-hidden rounded-[1.5rem] bg-pine-900 p-7 text-white shadow-2xl shadow-clay-950/18">
+        <div class="absolute inset-0 bg-linear-to-br from-pine-700/92 via-pine-900 to-clay-950"></div>
+        <div class="absolute -right-16 -top-16 h-44 w-44 rounded-full border border-gold-500/25"></div>
+        <div class="absolute -bottom-20 left-8 h-52 w-52 rounded-full border border-white/10"></div>
+        <div class="relative space-y-5">
+          <p class="inline-flex rounded-full border border-white/18 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-sand-100 backdrop-blur">
+            {{ t('aboutNetwork.label') }}
+          </p>
+          <h2 class="font-display text-4xl font-semibold leading-tight text-white sm:text-5xl">
+            {{ t('aboutNetwork.title') }}
+          </h2>
+          <p class="text-base leading-8 text-sand-100/88">
+            {{ t('aboutNetwork.description') }}
+          </p>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <span class="rounded-full bg-white px-4 py-2 text-xs font-bold text-pine-900">
+              {{ t('aboutNetwork.advantages.badge') }}
+            </span>
+            <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold text-white">
+              {{ t('aboutNetwork.hotelCapacity') }}
+            </span>
+          </div>
+          <RouterLink
+            to="/rooms"
+            class="inline-flex items-center justify-center rounded-full bg-linear-to-r from-gold-500 to-clay-300 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-clay-950/20 transition hover:-translate-y-0.5 hover:shadow-xl"
+          >
+            {{ t('actions.viewRooms') }}
+          </RouterLink>
+        </div>
       </div>
       <div class="grid grid-cols-6 gap-3">
         <div

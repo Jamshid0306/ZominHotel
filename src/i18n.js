@@ -245,9 +245,9 @@ const messages = {
     },
     aboutNetwork: {
       label: 'Kurort haqida',
-      title: "Tabiat, tog' havosi va zamonaviy servis uyg'unligi",
+      title: "Zaaminda esda qoladigan premium hordiq",
       description:
-        "Za’faron Premium Hotel Zomin Zaamin milliy bog'i hududida, archazor va tog' manzaralari orasida joylashgan premium kurort majmuasi. Majmua oilaviy dam olish, ishbilarmon safarlar, sog'lomlashtirish va tabiat qo'ynida sokin hordiq uchun yaratilgan.",
+        "Za’faron Premium Hotel Zomin archazorlar, musaffo tog' havosi va nafis servis birlashgan maskan. Bu yerda oilaviy dam olish, wellness, biznes safar va tabiat qo'ynidagi sokin lahzalar bir tajribaga aylanadi.",
       hotelLabel: "Za’faron Premium Hotel Zomin",
       hotelTitle: "Zaamin milliy bog'i qalbidagi premium dam olish",
       hotelDescription:
@@ -995,9 +995,9 @@ const messages = {
     },
     aboutNetwork: {
       label: 'О курорте',
-      title: 'Природа, горный воздух и современный сервис',
+      title: 'Заамин, куда хочется вернуться',
       description:
-        "Za’faron Premium Hotel Zomin расположен в Зааминском национальном парке, среди арчовых лесов и горных видов. Комплекс создан для семейного отдыха, деловых поездок, wellness и спокойного отдыха на природе.",
+        "Za’faron Premium Hotel Zomin — это место, где арчовые леса, чистый горный воздух и премиальный сервис создают ощущение настоящего отдыха. Здесь легко провести семейные выходные, wellness-паузу, деловую поездку или спокойные дни среди природы.",
       hotelLabel: 'О гостинице',
       hotelTitle: 'Премиальный комфорт и безопасный отдых',
       hotelDescription:
@@ -1062,23 +1062,23 @@ const messages = {
       ],
       advantages: {
         label: 'Преимущества',
-        title: 'Качество, соответствующее международным стандартам',
-        badge: '30 000+ гостей ежегодно',
+        title: 'Премиальный отдых среди гор Заамина',
+        badge: '250 км от Ташкента',
         items: [
           {
-            title: 'Высокий уровень сервиса',
+            title: 'В сердце нацпарка',
             text:
-              'Отели и рестораны сети Zamindor соответствуют международным стандартам, обеспечивая комфорт и удобство для каждого гостя.',
+              'Курорт расположен среди горных пейзажей и арчовых лесов Зааминского национального парка.',
           },
           {
-            title: 'Разнообразие кулинарных шедевров',
+            title: 'Всё для отдыха',
             text:
-              'Предлагаем национальные, европейские, турецкие блюда, а также уникальные шафрановые рецепты для самых взыскательных гурманов.',
+              'Номера, питание, SPA, фитнес, интернет и зоны отдыха собраны в одном комфортном комплексе.',
           },
           {
-            title: 'Признание гостей',
+            title: 'Рядом впечатления',
             text:
-              'Более 30 000 довольных клиентов ежегодно подтверждают наше стремление к совершенству.',
+              'Канатная дорога, zipline, Шербулок, стеклянный мост, Бобо-ёнгок и Suffa доступны для насыщенных маршрутов.',
           },
         ],
       },
@@ -1744,9 +1744,9 @@ const messages = {
     },
     aboutNetwork: {
       label: 'About the resort',
-      title: 'Nature, mountain air, and modern service',
+      title: 'Zaamin, made to be remembered',
       description:
-        "Za’faron Premium Hotel Zomin is located inside Zaamin National Park, surrounded by juniper forests and mountain views. The complex is designed for family vacations, business trips, wellness, and quiet nature escapes.",
+        "Za’faron Premium Hotel Zomin brings together juniper forests, clean mountain air, and premium service in one calm resort experience. It is made for family weekends, wellness pauses, business stays, and peaceful days in nature.",
       hotelLabel: 'About the hotel',
       hotelTitle: 'Premium comfort with a safe, memorable stay',
       hotelDescription:
@@ -1811,23 +1811,23 @@ const messages = {
       ],
       advantages: {
         label: 'Advantages',
-        title: 'Quality aligned with international standards',
-        badge: '30,000+ guests yearly',
+        title: 'Premium rest in the Zaamin mountains',
+        badge: '250 km from Tashkent',
         items: [
           {
-            title: 'High service standards',
+            title: 'Inside the national park',
             text:
-              'Zamindor hotels and restaurants meet international standards, ensuring comfort and convenience for every guest.',
+              'The resort sits among mountain scenery and juniper forests in Zaamin National Park.',
           },
           {
-            title: 'Diverse culinary masterpieces',
+            title: 'Everything in one place',
             text:
-              'We offer national, European, and Turkish dishes, along with unique saffron recipes for discerning gourmets.',
+              'Rooms, dining, SPA, fitness, internet, and leisure areas come together in one comfortable complex.',
           },
           {
-            title: 'Guest recognition',
+            title: 'Experiences nearby',
             text:
-              'Over 30,000 satisfied guests each year affirm our commitment to excellence.',
+              'Cable car, zipline, Sherbulok, the glass bridge, Bobo-yongok, and Suffa are close for memorable routes.',
           },
         ],
       },
